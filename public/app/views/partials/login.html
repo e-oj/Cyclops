@@ -1,0 +1,31 @@
+<form ng-controller="accessController as access"
+      name="login-form"
+      novalidate
+      class="login"
+      ng-submit="access.logIn()">
+
+    <div class="error" ng-show="access.reply.failed || access.reply.message">
+        <p>{{access.reply.message}}</p>
+    </div>
+
+    <div class="username">
+        <input type="text"
+               id="usr"
+               ng-model="access.credentials.username"
+               placeholder="Username"/>
+    </div>
+
+    <div class="password">
+        <input type="password"
+               id="pswd"
+               ng-model="access.credentials.password"
+               placeholder="Password"/><br>
+    </div>
+
+    <button type="submit"
+            ng-class="{'processing': access.reply.processing}"
+            ng-disabled="access.reply.processing">
+        <span ng-hide="access.reply.processing">Login</span>
+        <span ng-show="access.reply.processing"><img src="../../assets/img/processing.gif"/></span>
+    </button>
+</form>

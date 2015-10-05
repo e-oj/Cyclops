@@ -1,0 +1,42 @@
+<div class="post-author">
+    <!--  ng-class="{'ghost-div': post.files.length > 0 && !post.files[0].audio}"-->
+
+    <video ng-if="post.author.profileMedia.mediaType == 'video' "
+           ng-src="{{home.getMediaUrl(post.author.profileMedia.media) | trustUrl}}" controls preload="metadata"
+           class="profile-media">
+    </video>
+
+    <img ng-if="post.author.profileMedia.mediaType == 'image' "
+         ng-src="{{home.getMediaUrl(post.author.profileMedia.media)}}"
+         class="profile-media"/>
+
+    <span class="username">{{post.author.username}}</span>
+    <span class="date">{{home.parseDate(post.date)}}</span>
+
+</div>
+
+<div class="media" ng-if="post.files.length" ng-repeat="file in post.files">
+
+    <video ng-if="file.mediaType == 'video' "
+           ng-src="{{home.getMediaUrl(file.media) | trustUrl}}" controls preload="metadata" >
+    </video>
+
+    <video ng-if="file.mediaType == 'audio' "
+           ng-src="{{home.getMediaUrl(file.media) | trustUrl}}" controls preload="metadata" >
+    </video>
+
+    <img ng-if="file.mediaType == 'image' "
+         ng-src="{{home.getMediaUrl(file.media)}}" />
+</div>
+
+<div class="text line-space">
+    <p ng-bind-html="home.postText(post.body)"></p>
+</div>
+
+<div class="tags-container">
+    <div class="tags" id="tags">
+        <div onMouseOver= "move(this)" id="{{'tags-' + $index}}">
+            <span ng-repeat="tag in post.tags">{{"#" + tag.split(',')[0] + " "}}</span>
+        </div>
+    </div>
+</div>

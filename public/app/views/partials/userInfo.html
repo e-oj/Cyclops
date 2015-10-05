@@ -1,0 +1,37 @@
+<div class="info" ng-controller="infoController as info">
+    <div class="user-info">
+        <div class="profile-media-div">
+            <video ng-if="info.meInfo.result.profileMedia.mediaType == 'video' "
+                   ng-src="{{info.meInfo.getMediaUrl(info.meInfo.result.profileMedia.media) | trustUrl}}" controls preload="metadata"
+                   class="profile-media">
+            </video>
+
+            <img ng-if="info.meInfo.result.profileMedia.mediaType == 'image' "
+                 ng-src="{{info.getMediaUrl(info.meInfo.result.profileMedia.media)}}"
+                 class="profile-media"/>
+
+            <h1>{{info.meInfo.result.username}}</h1>
+
+            <p ng-show="info.meInfo.result.profileMsg"
+               class="profile-msg">{{info.meInfo.result.profileMsg}}</p>
+        </div>
+
+        <div class="stats">
+            <div class="user-stats">
+                <div class="stat-item right-border">
+                    <p>{{info.meInfo.result.followers}}</p>
+                    <p>Followers<p>
+                </div>
+                <div class="stat-item right-border">
+                    <p>{{info.meInfo.result.following}}</p>
+                    <p>Following<p>
+                </div>
+                <div class="stat-item">
+                    <p>{{info.meInfo.result.reputation}}</p>
+                    <p>Reputation<p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
