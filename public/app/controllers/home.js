@@ -117,9 +117,7 @@ angular.module('Home', ['Post', 'ngSanitize', 'ngResource', 'ConstFactory'])
 
             //if reduceBy is 1, the year is displayed.
             //if reduceBy is 2, the year is not displayed
-            var reduceBy = 1;
-            if(sameYear(localDate, now))
-                reduceBy = 2;
+            var reduceBy = sameYear(localDate, now)? 2 : 1;
 
             for (var i = 1; i < splitDate.length - reduceBy; i++) {
                 var num = splitDate[i];

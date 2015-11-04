@@ -39,13 +39,15 @@ app.use('/api', apiRouter);
 
 //homepage
 app.get('/home', function(req, res){
+    //res.send("Hello World");
     res.sendFile(path.join(__dirname, '/public/app/views/index.html'));
 });
 
-////demo uploader
-//app.get('/home', function(req, res){
-//    res.sendFile(path.join(__dirname, '/public/app/development/uploadTest/index.html'));
-//});
+//uploader
+app.get('/makepost', function(req, res){
+    //res.send("Hello World");
+    res.sendFile(path.join(__dirname, '/public/app/services/uploadTest/index.html'));
+});
 
 // development error handler
 // will print stacktrace
