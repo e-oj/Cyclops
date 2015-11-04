@@ -62,7 +62,7 @@ module.exports = function(mongoose, fs, gfs){
                 if(req.headers.range) {
                     var range = req.headers.range;
 
-                    //parse the range header to get the requested range
+                    //parse the range header to get the requested range.
                     var parts = range.replace(/bytes=/, "").split("-");
                     var partialStart = parts[0];//the start of the range
                     var partialEnd = parts[1];//end of the range
