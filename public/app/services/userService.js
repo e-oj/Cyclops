@@ -1,9 +1,9 @@
-angular.module('UserService', ['ngResource'])
-    .factory('User', ['$resource', function($resource){
+angular.module('UserService', ['ngResource', 'ConstFactory'])
+    .factory('User', ['$resource','constants', function($resource, constants){
         var userFactory = {};
 
         userFactory.getMe = function(){
-            var meRoute = $resource("http://localhost:8080/api/me/info");
+            var meRoute = $resource(constants.api + "/me/info");
             return meRoute.get();
         };
 

@@ -38,10 +38,10 @@ angular.module('Home', ['Post', 'ngSanitize', 'ngResource', 'ConstFactory'])
                 }, 200);
                 setTimeout(function () {
                     loadCards();
-                }, 500);
+                }, 1000);
                 setTimeout(function () {
                     loadCards();
-                }, 100);
+                }, 5000);
             });
         });
 

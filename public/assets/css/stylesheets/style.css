@@ -393,3 +393,17 @@ form input{
     /* font-style: italic; */
     font-family: tahoma, sans-serif;
 }
+
+#post-button{
+    width: 30%;
+    position: relative;
+    margin: auto;
+}
+
+#post-button button{
+    background: blue;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}

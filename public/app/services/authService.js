@@ -1,4 +1,4 @@
-angular.module('authService', ['ngResource'])
+angular.module('authService', ['ngResource', 'ConstFactory'])
     //===========================================
     // auth factory to login and get information
     // inject $http for communicating with the api
@@ -11,7 +11,7 @@ angular.module('authService', ['ngResource'])
         $resourceProvider.defaults.stripTrailingSlashes = false;
     }])
 
-    .factory('Auth', ['$resource', 'AuthToken', function($resource, AuthToken){
+    .factory('Auth', ['$resource', 'AuthToken', 'constants', function($resource, AuthToken, constants){
 
         //create auth factory object
         var authFactory = {};
@@ -19,7 +19,7 @@ angular.module('authService', ['ngResource'])
         //handle login
         authFactory.login = function(credentials, reply){
             //return the promise object and it's data
-            var loginRoute = $resource("http://localhost:8080/api/access/login");
+            var loginRoute = $resource(constants.api + "/access/login");
             //setTimeout(function() {
                 loginRoute.save({}, credentials, function (res, resHeaders) {
                     if (res.success) {
@@ -48,10 +48,7 @@ angular.module('authService', ['ngResource'])
         //check if a user is logged in
         //checks if there's a local token
         authFactory.isLoggedIn = function(){
-            if(AuthToken.getToken())
-                return true;
-            else
-                return false;
+            return AuthToken.getToken()? true : false;
         };
 
         return authFactory;

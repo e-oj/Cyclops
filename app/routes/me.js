@@ -128,15 +128,18 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
             }
 
             if(req.mediaIds.length){
-                if(req.me.profileMedia) mediaSuite.removeMedia(req.me.profileMedia.media);
+                if(req.me.profileMedia && req.me.profileMedia.media){
+                    //console.log("found media: " + req.me.profileMedia);
+                    mediaSuite.removeMedia(req.me.profileMedia.media);
+                }
                 info = true;
                 req.me.profileMedia = req.mediaIds[0];
             }
 
-            if(req.body.profileMsg &&  req.body.profileMsg.length  > 200){
+            if(req.body.profileMsg &&  req.body.profileMsg.length  > 500){
                 res.json({
                     success: false,
-                    message: 'Profile message cannot exceed 200 characters'
+                    message: 'Profile message cannot exceed 500 characters'
                 });
             }
 
@@ -393,7 +396,6 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
                                 error.errors = [];
                                 if (err.errors.user) error.errors.push(err.errors.user.message);
                                 if (err.errors.follows) error.errors.push(err.errors.follows.message);
-                                res.status(403);
                                 res.send(error.errors);
                             }
                         }
@@ -422,7 +424,7 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
                 if(err) throw err;
 
                 if(found) {
-                    Follow.remove({user: req.decoded._id, follows: req.user._id}, function (err) {//Add code to handle err
+                    Follow.remove({user: req.decoded._id, follows: req.user._id}, function (err) {
                         User.update({_id: req.user._id}, {$inc: {followers: -1}}, function () {
                             User.update({_id: req.decoded._id}, {$inc: {following: -1}}, function () {
                                 res.json({

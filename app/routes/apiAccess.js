@@ -30,6 +30,7 @@ module.exports = function(express, User, multer, mediaSuite){
         putSingleFilesInArray: true
     }));
 
+
     accessRouter.use('/register', mediaSuite.saveMedia);
 
     accessRouter.post('/register', function(req, res){
@@ -66,6 +67,7 @@ module.exports = function(express, User, multer, mediaSuite){
     });
 
     accessRouter.post('/login', function(req, res){
+        console.log("Go it!!!!!!!!!!");
         //make sure the username and password exist.
         if(!(req.body.username&&req.body.password)){
             //res.status(404);
