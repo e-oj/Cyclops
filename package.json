@@ -22,6 +22,8 @@
     "morgan": "~1.5.3",
     "multer": "^0.1.8",
     "serve-favicon": "~2.2.1",
+    "stream-buffers": "^2.2.0",
+    "streamifier": "^0.1.1",
     "underscore": "^1.8.3",
     "validator": "^3.40.1"
   }

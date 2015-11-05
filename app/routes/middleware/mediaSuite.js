@@ -1,5 +1,6 @@
 module.exports = function(mongoose, fs, gfs){
     var gm = require('gm').subClass({imageMagick: true});
+    var streamifier = require('streamifier');
     var mediaSuite = {};
 
     mediaSuite.saveMedia = function(req, res,next){
@@ -14,14 +15,11 @@ module.exports = function(mongoose, fs, gfs){
 
                 if(files) {
                     for (var i = 0; i < files.length; i++) {
+                        console.log("File ===> ", files[i]);
                         //id to be assigned to file in GridFS
                         var id = mongoose.Types.ObjectId();
+                        var write = false;
                         var buffer = files[i].buffer;
-
-                        if((files[i].mimetype).indexOf('image') > -1) req.mediaIds.push({media: id, mediaType: 'image'});
-                        else if((files[i].mimetype).indexOf('audio') > -1) req.mediaIds.push({media: id, mediaType: 'audio'});
-                        else if((files[i].mimetype).indexOf('video') > -1) req.mediaIds.push({media: id, mediaType: 'video'});
-
                         var writeStream = gfs.createWriteStream({
                             _id: id
                             , filename: files[i].name
@@ -33,10 +31,38 @@ module.exports = function(mongoose, fs, gfs){
                             console.log(file.filename + ' has been uploaded');
                         });
 
-                        gm(buffer, files[i].name)
-                            .resize(500)
-                            .stream()
-                            .pipe(writeStream);
+
+                        if((files[i].mimetype).indexOf('image') > -1){
+                            req.mediaIds.push({media: id, mediaType: 'image'});
+
+                            if(files[i].mimetype.toLowerCase().indexOf('gif') < 0) {
+                                gm(buffer, files[i].name)
+                                    .resize(800)
+                                    .stream()
+                                    .pipe(writeStream);
+                            }
+
+                            else write = true;
+                        }
+                        else if ((files[i].mimetype).indexOf('audio') > -1) {
+                            req.mediaIds.push({
+                                media: id,
+                                mediaType: 'audio'
+                            });
+                            write = true
+                        }
+                        else if ((files[i].mimetype).indexOf('video') > -1) {
+                            req.mediaIds.push({
+                                media: id,
+                                mediaType: 'video'
+                            });
+                            write = true
+                        }
+
+                        if(write){
+                            streamifier.createReadStream(buffer).pipe(writeStream);
+                        }
+
                     }
                 }
             }
@@ -116,9 +142,7 @@ module.exports = function(mongoose, fs, gfs){
         gfs.findOne({_id: id}, function(err, found){
             if(err) throw err;
 
-            else if(found) return true;
-
-            else return false;
+            return (found)? true : false;
         });
     };
 

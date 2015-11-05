@@ -68,6 +68,7 @@ angular.module('NewPostService', ['ngResource'])
 
             if(file.type.toLowerCase().indexOf('image') > -1) {
                 media = document.createElement('img');
+                media.width = 100;
             }
             else if(file.type.toLowerCase().indexOf('video') > -1) {
                 media = document.createElement('video');
@@ -81,43 +82,10 @@ angular.module('NewPostService', ['ngResource'])
             var reader = new FileReader();
             reader.onload = function(e){
                 media.src = e.target.result;
-                if(file.type.indexOf("gif") === -1 && file.type.indexOf("image") > -1 )
-                    media =  resize(media);
-                //else{
-                //    post.fileList.push(media.src);
-                //    console.log("Length: " + post.fileList.length);
-                //}
             };
             reader.readAsDataURL(file);
 
             return media;
-        }
-
-        function resize(img){
-            //alert("resizing");
-            var canvas = document.createElement("canvas");
-            var MAX_WIDTH = 500;
-            var width = img.width;
-            var height = img.height;
-            var ratio = width/height;
-
-            if(width > MAX_WIDTH){
-                width = MAX_WIDTH;
-                height = MAX_WIDTH/ratio;
-            }
-
-            //img.width = width;
-            //img.height = height;
-
-            canvas.width = width;
-            canvas.height = height;
-            var ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-            //alert(canvas.mozGetAsFile());
-            img.src = canvas.toDataURL("image");
-            //post.fileList.push(img.src);
-            //console.log(post.fileList.length);
-            return img;
         }
 
         post.saveFiles = function(body, tags){

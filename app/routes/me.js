@@ -47,12 +47,15 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
         ,fileFilter: function(req, file, cb){
             var allowedTypes = ['image', 'video', 'audio'];
 
-            if(file.mimetype.toLowerCase().indexOf(allowedTypes[i]) > -1) {
-                console.log("we're good to go");
-                cb(null, true);
-            }
-            else{
-                cb(null, false);
+            for(var i=0; i<allowedTypes.length; i++) {
+                if (file.mimetype.toLowerCase().indexOf(allowedTypes[i]) > -1) {
+                    console.log("we're good to go");
+                    cb(null, true);
+                    break;
+                }
+                else {
+                    cb(null, false);
+                }
             }
         }
         ,inMemory: true
