@@ -45,17 +45,11 @@ module.exports = function(mongoose, fs, gfs){
                             else write = true;
                         }
                         else if ((files[i].mimetype).indexOf('audio') > -1) {
-                            req.mediaIds.push({
-                                media: id,
-                                mediaType: 'audio'
-                            });
+                            req.mediaIds.push({media: id, mediaType: 'audio'});
                             write = true
                         }
                         else if ((files[i].mimetype).indexOf('video') > -1) {
-                            req.mediaIds.push({
-                                media: id,
-                                mediaType: 'video'
-                            });
+                            req.mediaIds.push({media: id, mediaType: 'video'});
                             write = true
                         }
 
