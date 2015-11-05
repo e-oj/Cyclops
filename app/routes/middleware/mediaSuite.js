@@ -1,4 +1,5 @@
 module.exports = function(mongoose, fs, gfs){
+    var gm = require('gm').subClass({imageMagick: true});
     var mediaSuite = {};
 
     mediaSuite.saveMedia = function(req, res,next){
@@ -15,13 +16,12 @@ module.exports = function(mongoose, fs, gfs){
                     for (var i = 0; i < files.length; i++) {
                         //id to be assigned to file in GridFS
                         var id = mongoose.Types.ObjectId();
+                        var buffer = files[i].buffer;
 
-                        //sort the files into their respective arrays based on their type
                         if((files[i].mimetype).indexOf('image') > -1) req.mediaIds.push({media: id, mediaType: 'image'});
                         else if((files[i].mimetype).indexOf('audio') > -1) req.mediaIds.push({media: id, mediaType: 'audio'});
                         else if((files[i].mimetype).indexOf('video') > -1) req.mediaIds.push({media: id, mediaType: 'video'});
 
-                        var readStream = fs.createReadStream('./' + files[i].path);
                         var writeStream = gfs.createWriteStream({
                             _id: id
                             , filename: files[i].name
@@ -31,16 +31,12 @@ module.exports = function(mongoose, fs, gfs){
                         //when the file has been written to GridFS
                         writeStream.on('close', function (file) {
                             console.log(file.filename + ' has been uploaded');
-
-                            //delete file from ./uploads
-                            fs.unlink('./uploads/' + file.filename, function (err) {
-                                if (err) throw err;
-                                else console.log(file.filename + ' uploaded to db, deleted from fs')
-                            });
                         });
 
-                        //start writing to GridFS
-                        readStream.pipe(writeStream);
+                        gm(buffer, files[i].name)
+                            .resize(500)
+                            .stream()
+                            .pipe(writeStream);
                     }
                 }
             }

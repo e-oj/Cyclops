@@ -41,13 +41,25 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
     });
 
     //upload media to ./uploads (temporarily)
-    meRouter.use('/info', multer({
-        dest: './uploads/',
-        putSingleFilesInArray: true
+    meRouter.use(multer({
+        dest: './uploads/'
+        ,putSingleFilesInArray: true
+        ,fileFilter: function(req, file, cb){
+            var allowedTypes = ['image', 'video', 'audio'];
+
+            if(file.mimetype.toLowerCase().indexOf(allowedTypes[i]) > -1) {
+                console.log("we're good to go");
+                cb(null, true);
+            }
+            else{
+                cb(null, false);
+            }
+        }
+        ,inMemory: true
     }));
 
     //stream files from ./uploads to GridFS
-    meRouter.use('/info', mediaSuite.saveMedia);
+    meRouter.use(mediaSuite.saveMedia);
 
     meRouter.get('/pollInfo', function(req, res){
         var me = req.me;
@@ -236,15 +248,6 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
                 }
             });
     });
-
-    //upload media to ./uploads (temporarily)
-    meRouter.use('/posts', multer({
-        dest: './uploads/',
-        putSingleFilesInArray: true
-    }));
-
-    //stream files from ./uploads to GridFS
-    meRouter.use('/posts', mediaSuite.saveMedia);
 
     //saves posts to the database
     meRouter.route('/posts')
