@@ -49,7 +49,7 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
         ,inMemory: true
     }));
 
-    //Perform all necessary operations and save to GridFS
+    //Perform all necessary operations and save media to GridFS
     meRouter.use(mediaSuite.saveMedia);
 
     meRouter.get('/pollInfo', function(req, res){
@@ -171,7 +171,7 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
             stream.on('error', function (err) {
                 res.json({
                     error: err.msg,
-                    result: 'Could not load timeline'
+                    result: 'Error loading timeline'
                 })
             });
 
@@ -380,14 +380,16 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
 
                 if(found) {
                     Follow.remove({user: req.decoded._id, follows: req.user._id}, function (err) {
-                        User.update({_id: req.user._id}, {$inc: {followers: -1}}, function () {
-                            User.update({_id: req.decoded._id}, {$inc: {following: -1}}, function () {
-                                res.json({
-                                    success: true,
-                                    message: "User Unfollowed"
+                        if(!err) {
+                            User.update({_id: req.user._id}, {$inc: {followers: -1}}, function () {
+                                User.update({_id: req.decoded._id}, {$inc: {following: -1}}, function () {
+                                    res.json({
+                                        success: true,
+                                        message: "User Unfollowed"
+                                    });
                                 });
                             });
-                        });
+                        }
                     });
                 }
 

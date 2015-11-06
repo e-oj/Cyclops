@@ -16,6 +16,7 @@ module.exports = function(mongoose, fs, gfs){
                 if(files) {
                     for (var i = 0; i < files.length; i++) {
                         //console.log("File ===> ", files[i]);
+
                         //id to be assigned to file in GridFS
                         var id = mongoose.Types.ObjectId();
                         var IMAGE_SIZE = 800;
