@@ -15,10 +15,11 @@
  * @param valUser ------Find&Save User to req
  * @param gfs ----------GridFS for storing files
  * @param _ ------------Underscore
+ * @param pollSuite -----pollSuite
  * ==============================================
  * @returns postRouter
  */
-module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs, _){
+module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs, _, pollSuite){
     var postRouter = express.Router();
 
     //get the top 20 posts ranked by number of likes
@@ -59,68 +60,8 @@ module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs,
     postRouter.get('/pollTop50', function(req, res){
         var posts = req.top50;
         var count = 0;
-        pollMe(req, res, posts, count);
+        pollSuite.pollTop50(req, res, posts, count);
     });
-
-    function pollMe(request, response, oldTop50, depth) {
-        Post.find({})
-            .populate('author', 'username profileMedia')
-            .sort({'meta.likes':-1})
-            .limit(50)
-            .exec(function (err, posts) {
-                //console.log()
-                //console.log('depth: ' + depth);
-                //console.log('==================================================================================================================');
-                if (err || !posts) {
-                    response.json({
-                        success: false,
-                        result: 'Could not find posts'
-                    });
-                }
-
-                else {
-                    //console.log('Posts: ');
-                    //console.log(oldTop50.slice(0, 5));
-                    if ((notEqual(posts, oldTop50)) || depth >= 45) {
-                        //console.log('depth: ' + depth);
-                        //console.log('=========================================================');
-                        if(depth >= 45 && !notEqual(posts, oldTop50)){
-                            response.json({
-                                success: false
-                            });
-                        }
-                        else {
-                            response.json({
-                                success: true,
-                                result: posts
-                            });
-                        }
-                    }
-
-                    else {
-                        setTimeout(function () {
-                            depth++;
-                            pollMe(request, response, oldTop50, depth);
-                        }, 2000);
-                    }
-                }
-            });
-    }
-
-    function notEqual(arr1, arr2){
-        if(arr1.length != arr2.length)
-            return true;
-
-        for(var i = 0; i < arr1.length; i++) {
-            var obj1 = JSON.parse(JSON.stringify(arr1[i]));
-            var obj2 = JSON.parse(JSON.stringify(arr2[i]));
-            if(!_.isEqual(obj1, obj2)){
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     postRouter.use(tkRouter);
 

@@ -15,11 +15,13 @@
  * @param tkRouter -----Token router
  * @param valUser ------Find&Save User to req
  * @param mediaSuite ---mediaSuite
+ * @param _ ------------UnderScore Util Lib
+ * @param pollSuite ----UnderScore Util Lib
  * ============================================
  * @returns meRouter
  */
 
-module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRouter, valUser, mediaSuite, multer, _){
+module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRouter, valUser, mediaSuite, multer, _, pollSuite){
     var meRouter = express.Router();
 
     meRouter.use(tkRouter);
@@ -40,74 +42,21 @@ module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRout
         })
     });
 
-    //upload media to ./uploads (temporarily)
+    //saves media in a buffer
     meRouter.use(multer({
         dest: './uploads/'
         ,putSingleFilesInArray: true
-        ,fileFilter: function(req, file, cb){
-            var allowedTypes = ['image', 'video', 'audio'];
-
-            for(var i=0; i<allowedTypes.length; i++) {
-                if (file.mimetype.toLowerCase().indexOf(allowedTypes[i]) > -1) {
-                    console.log("we're good to go");
-                    cb(null, true);
-                    break;
-                }
-                else {
-                    cb(null, false);
-                }
-            }
-        }
         ,inMemory: true
     }));
 
-    //stream files from ./uploads to GridFS
+    //Perform all necessary operations and save to GridFS
     meRouter.use(mediaSuite.saveMedia);
 
     meRouter.get('/pollInfo', function(req, res){
         var me = req.me;
         var count = 0;
-        pollMe(req, res, me, count);
+        pollSuite.pollMe(req, res, me, count);
     });
-
-    function pollMe(request, response, oldMe, depth){
-        User.findById(request.decoded._id, function (err, me) {
-            //console.log()
-            //console.log('depth: ' + depth);
-            //console.log('==================================================================================================================');
-            if (err || !me) {
-                response.json({
-                    success: false,
-                    result: 'Could not find user'
-                });
-            }
-
-            else {
-                if ((notEqual(me, oldMe)) || depth >= 45) {
-                    //console.log('depth: ' + depth);
-                    //console.log('=========================================================');
-                    response.json({
-                        success: true,
-                        result: me
-                    });
-                }
-
-                else {
-                    setTimeout(function(){
-                        depth++;
-                        pollMe(request, response, oldMe, depth);
-                    }, 2000);
-                }
-            }
-        });
-    }
-
-    function notEqual(me1, me2){
-        var obj1 = JSON.parse(JSON.stringify(me1));
-        var obj2 = JSON.parse(JSON.stringify(me2));
-
-        return !_.isEqual(obj1, obj2);
-    }
 
     meRouter.route('/info')
         //get the user identified by :user

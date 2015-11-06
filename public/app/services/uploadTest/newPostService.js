@@ -4,14 +4,7 @@ angular.module('NewPostService', ['ngResource'])
 
         var sendFile = $resource("/api/me/posts");
 
-        //post.previewIndex = 0;
         post.files = [];
-
-        //post.shelf = function() {
-        //    post.files = $('#file')[0].files;
-        //    preview(post.files);
-        //    //saveFile(self.files);
-        //};
 
         post.nonEvent = eventStuff;
         post.drop = function(e){
@@ -68,7 +61,6 @@ angular.module('NewPostService', ['ngResource'])
 
             if(file.type.toLowerCase().indexOf('image') > -1) {
                 media = document.createElement('img');
-                media.width = 100;
             }
             else if(file.type.toLowerCase().indexOf('video') > -1) {
                 media = document.createElement('video');
@@ -82,6 +74,7 @@ angular.module('NewPostService', ['ngResource'])
             var reader = new FileReader();
             reader.onload = function(e){
                 media.src = e.target.result;
+                media.width = 200;
             };
             reader.readAsDataURL(file);
 

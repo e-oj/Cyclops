@@ -15,9 +15,10 @@ module.exports = function(mongoose, fs, gfs){
 
                 if(files) {
                     for (var i = 0; i < files.length; i++) {
-                        console.log("File ===> ", files[i]);
+                        //console.log("File ===> ", files[i]);
                         //id to be assigned to file in GridFS
                         var id = mongoose.Types.ObjectId();
+                        var IMAGE_SIZE = 800;
                         var write = false;
                         var buffer = files[i].buffer;
                         var writeStream = gfs.createWriteStream({
@@ -36,10 +37,8 @@ module.exports = function(mongoose, fs, gfs){
                             req.mediaIds.push({media: id, mediaType: 'image'});
 
                             if(files[i].mimetype.toLowerCase().indexOf('gif') < 0) {
-                                gm(buffer, files[i].name)
-                                    .resize(800)
-                                    .stream()
-                                    .pipe(writeStream);
+                                var fileBuffer = gm(buffer, files[i].name);
+                                fileBuffer.resize(IMAGE_SIZE).stream().pipe(writeStream);
                             }
 
                             else write = true;
@@ -53,9 +52,7 @@ module.exports = function(mongoose, fs, gfs){
                             write = true
                         }
 
-                        if(write){
-                            streamifier.createReadStream(buffer).pipe(writeStream);
-                        }
+                        if(write) streamifier.createReadStream(buffer).pipe(writeStream);
 
                     }
                 }

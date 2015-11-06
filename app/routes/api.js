@@ -27,6 +27,7 @@ var _ = require('underscore');
 module.exports = function(express, mongoose) {
     var apiRouter = express.Router();
     var tokenRouter = require('./middleware/valToken')(express);
+    var pollSuite = require('./utils/pollSuite')(express, User, Post, _);
     var conn = mongoose.connection;
 
     grid.mongo = mongoose.mongo;
@@ -35,9 +36,9 @@ module.exports = function(express, mongoose) {
         var gfs = grid(conn.db);
         var mediaSuite = require('./middleware/mediaSuite')(mongoose,fs, gfs);
         var meRouter =
-            require('./me')(express, mongoose, Follow, User, Comment, Post, tokenRouter, valUser, mediaSuite, multer, _);
+            require('./me')(express, mongoose, Follow, User, Comment, Post, tokenRouter, valUser, mediaSuite, multer, _, pollSuite);
         var mediaRouter = require('./media')(express, mediaSuite, tokenRouter);
-        var postRouter = require('./posts')(express, mongoose, Post, User, tokenRouter, valUser, gfs, _);
+        var postRouter = require('./posts')(express, mongoose, Post, User, tokenRouter, valUser, gfs, _, pollSuite);
         var accessRouter = require('./apiAccess')(express, User, multer, mediaSuite);
 
         apiRouter.use('/access', accessRouter); //mounts the access router on /access
@@ -47,7 +48,6 @@ module.exports = function(express, mongoose) {
     });
 
     var valUser = require('./middleware/valUser'); //function that finds user by id or username
-
     //routers
     var userRouter = require('./users')(express, mongoose, User, Follow, Post, tokenRouter, valUser);
     var commentsRouter = require('./comments')(express, mongoose, Post, User, Comment, tokenRouter, valUser);
