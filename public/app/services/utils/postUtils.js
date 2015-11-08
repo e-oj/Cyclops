@@ -31,21 +31,29 @@ angular.module("PostUtils", ["ngSanitize"])
                 var theDate = new Date(localDate);
                 var current = new Date(Date.now());
                 var diff = current - theDate;
+                //convert time to minutes
                 var convDiff = Math.floor(diff / (60 * 1000));
 
+                //if less than 60 mins
                 if(convDiff < 60) {
 
+                    //if it's less than one min, it happened just now
                     if (convDiff < 1)
                         return 'Just now';
 
+                    //if it's one min, use the singular min
                     if (convDiff === 1)
                         return convDiff + ' min.';
 
                     return convDiff + ' mins.';
                 }
 
+                //if time > 60 mins(1hr) we speak in hours
                 else{
+                    //convert to hrs
                     convDiff = Math.floor(diff/(60*60*1000 ));
+
+                    //if it's one hr, use the singular hr
                     if(convDiff === 1)
                         return convDiff + ' hr.';
 
@@ -53,6 +61,7 @@ angular.module("PostUtils", ["ngSanitize"])
                 }
             }
 
+            //convert from 24hr clock to 12hr clock
             if (hour > 12) {
                 hour -= 12;
                 period = 'PM';
