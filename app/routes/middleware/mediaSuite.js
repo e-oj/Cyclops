@@ -25,7 +25,11 @@ module.exports = function(mongoose, fs, gfs){
                         var writeStream = gfs.createWriteStream({
                             _id: id
                             , filename: files[i].name
-                            , metadata: {mimeType:files[i].mimetype}
+                            , metadata: {
+                                mimeType:files[i].mimetype,
+                                date: Date.now(),
+                                author : req.decoded._id
+                            }
                         });
 
                         //when the file has been written to GridFS
