@@ -34,7 +34,7 @@ module.exports = function(express, mongoose) {
     //initialize the routes that utilize GridFS once we connect to the database.
     conn.once('open', function () {
         var gfs = grid(conn.db);
-        var mediaSuite = require('./middleware/mediaSuite')(mongoose,fs, gfs);
+        var mediaSuite = require('./middleware/mediaSuite')(mongoose, gfs);
         var meRouter =
             require('./me')(express, mongoose, Follow, User, Comment, Post, tokenRouter, valUser, mediaSuite, multer, _, pollSuite);
         var mediaRouter = require('./media')(express, mediaSuite, tokenRouter);

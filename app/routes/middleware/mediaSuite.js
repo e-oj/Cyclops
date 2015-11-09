@@ -1,4 +1,4 @@
-module.exports = function(mongoose, fs, gfs){
+module.exports = function(mongoose, gfs){
     var gm = require('gm').subClass({imageMagick: true});
     var streamifier = require('streamifier');
     var mediaSuite = {};

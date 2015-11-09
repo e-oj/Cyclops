@@ -10,9 +10,8 @@
   <component name="ChangeListManager">
     <list default="true" id="08b219a8-f92f-4b95-a07a-f3c733871fef" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/apiAccess.js" afterPath="$PROJECT_DIR$/app/routes/apiAccess.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/api.js" afterPath="$PROJECT_DIR$/app/routes/api.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/middleware/mediaSuite.js" afterPath="$PROJECT_DIR$/app/routes/middleware/mediaSuite.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/index.html" afterPath="$PROJECT_DIR$/public/app/services/uploadTest/index.html" />
     </list>
     <ignored path="WebstormProjects.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/app/routes/api.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+              <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -76,8 +75,8 @@
       <file leaf-file-name="mediaSuite.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/routes/middleware/mediaSuite.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.075178996">
-              <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.2756563">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -192,7 +191,6 @@
         <option value="$PROJECT_DIR$/app/routes/middleware/valUser.js" />
         <option value="$PROJECT_DIR$/app/routes/posts.js" />
         <option value="$PROJECT_DIR$/app/routes/utils/pollSuite.js" />
-        <option value="$PROJECT_DIR$/app/routes/api.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/app/routes/me.js" />
         <option value="$PROJECT_DIR$/public/app/views/index.html" />
@@ -201,6 +199,7 @@
         <option value="$PROJECT_DIR$/public/app/services/uploadTest/index.html" />
         <option value="$PROJECT_DIR$/app/routes/apiAccess.js" />
         <option value="$PROJECT_DIR$/app/routes/middleware/mediaSuite.js" />
+        <option value="$PROJECT_DIR$/app/routes/api.js" />
       </list>
     </option>
   </component>
@@ -216,7 +215,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1920" />
+    <option name="x" value="960" />
+    <option name="width" value="960" />
     <option name="height" value="1032" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -666,7 +666,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446945115244</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added date and author fields to file metadata in mediaSuite.saveMedia">
+      <created>1447032170599</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1447032170599</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -679,10 +685,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1032" extended-state="0" />
+    <frame x="960" y="0" width="960" height="1032" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15573333" sideWeight="0.7901376" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35628414" sideWeight="0.7901376" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295063" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -723,7 +729,8 @@
     <MESSAGE value="Did some refactoring, moved all poll functions into pollSuite.js" />
     <MESSAGE value="Did some client side refactoring. Moved tag and date functions into services.utils/postUtils.js" />
     <MESSAGE value="Added some documentation to the date function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added some documentation to the date function" />
+    <MESSAGE value="added date and author fields to file metadata in mediaSuite.saveMedia" />
+    <option name="LAST_COMMIT_MESSAGE" value="added date and author fields to file metadata in mediaSuite.saveMedia" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1061,14 +1068,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes/api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/routes/apiAccess.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1085,10 +1084,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/routes/middleware/mediaSuite.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.075178996">
-          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.2756563">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
