@@ -5,8 +5,7 @@
  * ============================================
  * DEPENDENCY INJECTIONS
  * ============================================
- * @param express ------ExpressJS
- * @param mongoose -----MongooseJS
+ * /@param express ------ExpressJS
  * @param Post ---------Post Model
  * @param Comment ------Comment Model
  * @param Follow -------Follow Model
@@ -15,14 +14,13 @@
  * @param tkRouter -----Token router
  * @param valUser ------Find&Save User to req
  * @param mediaSuite ---mediaSuite
- * @param _ ------------UnderScore Util Lib
  * @param pollSuite ----UnderScore Util Lib
  * ============================================
  * @returns meRouter
  */
 
-module.exports = function(express, mongoose, Follow, User, Comment, Post, tkRouter, valUser, mediaSuite, multer, _, pollSuite){
-    var meRouter = express.Router();
+module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaSuite, multer, pollSuite){
+    var meRouter = require('express').Router();
 
     meRouter.use(tkRouter);
 

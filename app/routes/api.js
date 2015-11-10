@@ -36,7 +36,7 @@ module.exports = function(express, mongoose) {
         var gfs = grid(conn.db);
         var mediaSuite = require('./middleware/mediaSuite')(mongoose, gfs);
         var meRouter =
-            require('./me')(express, mongoose, Follow, User, Comment, Post, tokenRouter, valUser, mediaSuite, multer, _, pollSuite);
+            require('./me')(Follow, User, Comment, Post, tokenRouter, valUser, mediaSuite, multer, pollSuite);
         var mediaRouter = require('./media')(express, mediaSuite, tokenRouter);
         var postRouter = require('./posts')(express, mongoose, Post, User, tokenRouter, valUser, gfs, _, pollSuite);
         var accessRouter = require('./apiAccess')(express, User, multer, mediaSuite);
