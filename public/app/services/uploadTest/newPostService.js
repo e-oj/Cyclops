@@ -6,6 +6,13 @@ angular.module('NewPostService', ['ngResource'])
 
         post.files = [];
 
+        post.shelf = function(){
+            alert("Shelf");
+            var files = $("#file-input")[0].files;
+
+            addFilesAndPreview(files);
+        };
+
         post.nonEvent = eventStuff;
         post.drop = function(e){
             e.preventDefault();
@@ -13,15 +20,20 @@ angular.module('NewPostService', ['ngResource'])
 
             var dt = e.dataTransfer;
 
-            for(var i=0; i<dt.files.length; i++){
-                post.files.push(dt.files[i]);
-                console.log(dt.files.length);
-                console.log(dt.files[i].type);
-                console.log(dt.files[i]);
-                console.log(validFile(dt.files[i]));
-            }
-            preview(dt.files);
+            addFilesAndPreview(dt.files);
         };
+        
+        function addFilesAndPreview(files){
+            for(var i=0; i<files.length; i++){
+                post.files.push(files[i]);
+                console.log(files.length);
+                console.log(files[i].type);
+                console.log(files[i]);
+                console.log(validFile(files[i]));
+            }
+
+            preview(files);
+        }
 
         function validFile(file){
             var allowedTypes = ['image', 'video', 'audio'];

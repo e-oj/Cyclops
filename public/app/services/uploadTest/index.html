@@ -33,7 +33,9 @@
              ondragover="$(this).controller().nonEvent(event)"
              ondrop="$(this).controller().drop(event)"
              >
-            DROP FILES HERE
+            DROP FILES HERE <br>
+
+            <input type="file" multiple id="file-input" onchange="$(this).controller().shelf()">
 
             <div id="preview">
             </div>

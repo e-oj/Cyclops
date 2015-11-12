@@ -35,11 +35,12 @@ angular.module('Home', ['Post', 'PostUtils', 'ngResource', 'ConstFactory'])
                     setTimeout(function () {
                         loadCards();
                     }, 100);
-                    setTimeout(function () {
-                        loadCards();
-                    }, 200);
                     loaded = true;
                 }
+
+                setTimeout(function () {
+                    loadCards();
+                }, 200);
                 setTimeout(function () {
                     loadCards();
                 }, 1000);

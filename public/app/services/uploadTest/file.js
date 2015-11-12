@@ -27,7 +27,7 @@ angular.module('File', ['ngResource', 'NewPostService'])
         self.postBody = "";
         self.tags = "";
 
-        self.shelf = function(){NewPost.shelf();};
+        self.shelf = NewPost.shelf;
         self.drop = function(e){NewPost.drop(e);};
         self.nonEvent = function(e){NewPost.nonEvent(e);};
         self.post =  function(){NewPost.saveFiles(self.postBody, self.tags);}
