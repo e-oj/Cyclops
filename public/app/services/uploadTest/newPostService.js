@@ -51,19 +51,14 @@ angular.module('NewPostService', ['ngResource'])
             for(var i=0; i<files.length; i++){
                 if(validFile(files[i])){
                     var file = files[i];
-                    //alert('Starting preview');
-                    if(file.type.toLowerCase().indexOf('image') > -1) {
-                        var img = readFile(files[i]);
-                        document.getElementById('preview').appendChild(img);
-                    }
-                    else if(file.type.toLowerCase().indexOf('video') > -1) {
-                        var vid = readFile(files[i]);
-                        document.getElementById('preview').appendChild(vid);
-                    }
-                    else if(file.type.toLowerCase().indexOf('audio') > -1) {
-                        var aud = readFile(files[i]);
-                        document.getElementById('preview').appendChild(aud);
-                    }
+                    var media = readFile(files[i]);
+                    var div = document.createElement("div");
+
+                    div.id = i;
+                    div.style.width = media.width;
+                    div.appendChild(media);
+
+                    document.getElementById('preview').appendChild(div);
                 }
             }
         }

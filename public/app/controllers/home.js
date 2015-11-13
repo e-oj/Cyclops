@@ -25,28 +25,29 @@ angular.module('Home', ['Post', 'PostUtils', 'ngResource', 'ConstFactory'])
         var loaded = false;
         $scope.$on('LastElementReached', function(){
             $scope.$evalAsync(function() {
+                setTimeout(function () {
+                    loadCards();
+                }, 5);
+                setTimeout(function () {
+                    loadCards();
+                }, 50);
+                setTimeout(function () {
+                    loadCards();
+                }, 100);
+
                 if(!loaded) {
                     setTimeout(function () {
                         loadCards();
-                    }, 5);
+                    }, 200);
                     setTimeout(function () {
                         loadCards();
-                    }, 50);
+                    }, 1000);
                     setTimeout(function () {
                         loadCards();
-                    }, 100);
+                    }, 5000);
+
                     loaded = true;
                 }
-
-                setTimeout(function () {
-                    loadCards();
-                }, 200);
-                setTimeout(function () {
-                    loadCards();
-                }, 1000);
-                setTimeout(function () {
-                    loadCards();
-                }, 5000);
             });
         });
 
