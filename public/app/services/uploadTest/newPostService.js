@@ -3,11 +3,11 @@ angular.module('NewPostService', ['ngResource'])
         var post = {};
 
         var sendFile = $resource("/api/me/posts");
+        var currIndex = 0;
 
         post.files = [];
 
         post.shelf = function(){
-            alert("Shelf");
             var files = $("#file-input")[0].files;
 
             addFilesAndPreview(files);
@@ -50,17 +50,41 @@ angular.module('NewPostService', ['ngResource'])
         function preview(files){
             for(var i=0; i<files.length; i++){
                 if(validFile(files[i])){
-                    var file = files[i];
                     var media = readFile(files[i]);
                     var div = document.createElement("div");
 
-                    div.id = i;
+                    div.id = currIndex;
+                    currIndex++;
                     div.style.width = media.width;
+
+                    var deleteImg = document.createElement("img");
+                    deleteImg.src = "/delete.png";
+                    deleteImg.width = 50;
+                    deleteImg.style.position = "absolute";
+                    deleteImg.style.zIndex = 100;
+                    deleteImg.addEventListener("click", function(){
+                        dropMedia(parseInt(this.parentNode.id))
+                    });
+
+                    div.appendChild(deleteImg);
                     div.appendChild(media);
 
                     document.getElementById('preview').appendChild(div);
                 }
             }
+        }
+
+        function dropMedia(index){
+            if(index<0 || index>=post.files.length) return;
+
+            var prevDiv = document.getElementById("preview");
+
+            post.files.splice(index, 1);
+            currIndex--;
+
+            prevDiv.removeChild(document.getElementById(""+index));
+
+            for(var i=0; i<prevDiv.children.length; i++) prevDiv.children[i].id = i;
         }
 
         function readFile(file){
@@ -81,7 +105,7 @@ angular.module('NewPostService', ['ngResource'])
             var reader = new FileReader();
             reader.onload = function(e){
                 media.src = e.target.result;
-                media.width = 200;
+                media.width = 280;
             };
             reader.readAsDataURL(file);
 
