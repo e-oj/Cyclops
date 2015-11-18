@@ -26,10 +26,6 @@ angular.module('NewPostService', ['ngResource'])
         function addFilesAndPreview(files){
             for(var i=0; i<files.length; i++){
                 post.files.push(files[i]);
-                console.log(files.length);
-                console.log(files[i].type);
-                console.log(files[i]);
-                console.log(validFile(files[i]));
             }
 
             preview(files);
@@ -56,12 +52,20 @@ angular.module('NewPostService', ['ngResource'])
                     div.id = currIndex;
                     currIndex++;
                     div.style.width = media.width;
+                    div.style.position = "relative";
 
                     var deleteImg = document.createElement("img");
                     deleteImg.src = "/delete.png";
                     deleteImg.width = 50;
-                    deleteImg.style.position = "absolute";
-                    deleteImg.style.zIndex = 100;
+
+                    var style = deleteImg.style;
+                    style.margin = 0;
+                    style.opacity = 0.5;
+                    style.position = "absolute";
+                    style.zIndex = 100;
+                    style.display = "block";
+                    style.background = "beige";
+
                     deleteImg.addEventListener("click", function(){
                         dropMedia(parseInt(this.parentNode.id))
                     });
@@ -106,6 +110,7 @@ angular.module('NewPostService', ['ngResource'])
             reader.onload = function(e){
                 media.src = e.target.result;
                 media.width = 280;
+                media.style.margin = 0;
             };
             reader.readAsDataURL(file);
 
