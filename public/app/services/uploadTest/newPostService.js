@@ -11,8 +11,6 @@ angular.module('NewPostService', ['ngResource'])
             var files = $("#file-input")[0].files;
 
             addFilesAndPreview(files);
-
-            files.slice(0, files.length);
         };
 
         post.nonEvent = eventStuff;
