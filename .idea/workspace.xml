@@ -9,14 +9,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08b219a8-f92f-4b95-a07a-f3c733871fef" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/public/app/services/utils/postUtils.js" afterPath="$PROJECT_DIR$/public/app/services/utils/DateUtils.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/utils/fileSuite.js" afterPath="$PROJECT_DIR$/app/routes/utils/fileSuite.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/controllers/home.js" afterPath="$PROJECT_DIR$/public/app/controllers/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/index.html" afterPath="$PROJECT_DIR$/public/app/services/uploadTest/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js" afterPath="$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/index.html" afterPath="$PROJECT_DIR$/public/app/views/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/css/stylesheets/style.css" afterPath="$PROJECT_DIR$/public/assets/css/stylesheets/style.css" />
     </list>
     <ignored path="WebstormProjects.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,8 +84,8 @@
       <file leaf-file-name="home.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/controllers/home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.25059667">
-              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.50119334">
+              <caret line="59" column="49" selection-start-line="59" selection-start-column="49" selection-end-line="59" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -750,7 +744,13 @@
       <option name="project" value="LOCAL" />
       <updated>1448000156476</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fixed same consecutive file bug on file input in file uploader">
+      <created>1448048209558</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1448048209558</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -815,7 +815,8 @@
     <MESSAGE value="Added dropMedia function to file uploader to allow users delete previously selected media before uploading files." />
     <MESSAGE value="Minor UI updates for file uploader" />
     <MESSAGE value="some modularization. More to come when sleepy I am not" />
-    <option name="LAST_COMMIT_MESSAGE" value="some modularization. More to come when sleepy I am not" />
+    <MESSAGE value="Fixed same consecutive file bug on file input in file uploader" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed same consecutive file bug on file input in file uploader" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1182,8 +1183,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controllers/home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25059667">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.50119334">
+          <caret line="59" column="49" selection-start-line="59" selection-start-column="49" selection-end-line="59" selection-end-column="49" />
           <folding />
         </state>
       </provider>
