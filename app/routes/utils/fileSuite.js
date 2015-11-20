@@ -23,6 +23,11 @@ module.exports = function(gfs){
             }
         });
 
+        //when the file has been written to GridFS
+        writeStream.on('close', function (file) {
+            console.log(file.filename + ' has been uploaded');
+        });
+
         writeToDb(req, file, id, writeStream);
     };
 
@@ -30,12 +35,6 @@ module.exports = function(gfs){
         var IMAGE_SIZE = 800;
         var write = false;
         var buffer = file.buffer;
-
-        //when the file has been written to GridFS
-        writeStream.on('close', function (file) {
-            console.log(file.filename + ' has been uploaded');
-        });
-
 
         if(fileIs('image', file)){
             req.mediaIds.push({media: id, mediaType: 'image'});

@@ -1,10 +1,10 @@
-angular.module('Home', ['Post', 'PostUtils', 'ngResource', 'ConstFactory'])
+angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
     .controller('homeController', ['top50'
         , '$scope'
-        , 'postUtils'
+        , 'dateUtils'
         , '$resource'
         , 'constants'
-        , function(top50, $scope, postUtils, $resource, constants){
+        , function(top50, $scope, dateUtils, $resource, constants){
 
         var self = this;
         var mediaUrl = constants.api + "/media/";
@@ -27,15 +27,16 @@ angular.module('Home', ['Post', 'PostUtils', 'ngResource', 'ConstFactory'])
             $scope.$evalAsync(function() {
                 setTimeout(function () {
                     loadCards();
-                }, 5);
-                setTimeout(function () {
-                    loadCards();
-                }, 50);
-                setTimeout(function () {
-                    loadCards();
-                }, 100);
+                }, 10);
 
                 if(!loaded) {
+                    setTimeout(function () {
+                        loadCards();
+                    }, 50);
+                    setTimeout(function () {
+                        loadCards();
+                    }, 100);
+
                     setTimeout(function () {
                         loadCards();
                     }, 200);
@@ -55,8 +56,8 @@ angular.module('Home', ['Post', 'PostUtils', 'ngResource', 'ConstFactory'])
             return mediaUrl+mediaId;
         };
 
-        self.postText = postUtils.addTags;
-        self.parseDate = postUtils.parseDate;
+        self.postText = dateUtils.addTags;
+        self.parseDate = dateUtils.parseDate;
     }])
 
     //lets us know when ngRepeat is over so we can

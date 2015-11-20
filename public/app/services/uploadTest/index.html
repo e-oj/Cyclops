@@ -35,7 +35,11 @@
              >
             DROP FILES HERE <br>
 
-            <input type="file" multiple id="file-input" onchange="$(this).controller().shelf()">
+            <input type="file"
+                   multiple id="file-input"
+                   onclick="this.value = null"
+                   onchange="$(this).controller().shelf()"
+            >
 
             <div id="preview">
             </div>

@@ -11,6 +11,8 @@ angular.module('NewPostService', ['ngResource'])
             var files = $("#file-input")[0].files;
 
             addFilesAndPreview(files);
+
+            files.slice(0, files.length);
         };
 
         post.nonEvent = eventStuff;
@@ -25,7 +27,7 @@ angular.module('NewPostService', ['ngResource'])
         
         function addFilesAndPreview(files){
             for(var i=0; i<files.length; i++){
-                /*if (validFile(files[i]))*/ post.files.push(files[i]);
+                if (validFile(files[i])) post.files.push(files[i]);
             }
 
             preview(files);

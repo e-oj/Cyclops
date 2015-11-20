@@ -1,5 +1,5 @@
-angular.module("PostUtils", ["ngSanitize"])
-    .factory("postUtils", ["$sce", function($sce){
+angular.module("DateUtils", ["ngSanitize"])
+    .factory("dateUtils", ["$sce", function($sce){
         var utils = {};
 
         utils.addTags = function(text){
