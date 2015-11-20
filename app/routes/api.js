@@ -28,6 +28,11 @@ module.exports = function(express, mongoose) {
     var tokenRouter = require('./middleware/valToken')(express);
     var pollSuite = require('./utils/pollSuite')(express, User, Post, _);
     var conn = mongoose.connection;
+    var valUser = require('./middleware/valUser'); //function that finds user by id or username
+    //routers
+    var userRouter = require('./users')(express, mongoose, User, Follow, Post, tokenRouter, valUser);
+    var commentsRouter = require('./comments')(express, mongoose, Post, User, Comment, tokenRouter, valUser);
+    var followRouter = require('./follow')(express, mongoose, User, Follow, tokenRouter, valUser);
 
     grid.mongo = mongoose.mongo;
     //initialize the routes that utilize GridFS once we connect to the database.
@@ -45,12 +50,6 @@ module.exports = function(express, mongoose) {
         apiRouter.use('/media', mediaRouter); //mounts the media router on /media
         apiRouter.use('/posts', postRouter); //mounts the posts router on /posts
     });
-
-    var valUser = require('./middleware/valUser'); //function that finds user by id or username
-    //routers
-    var userRouter = require('./users')(express, mongoose, User, Follow, Post, tokenRouter, valUser);
-    var commentsRouter = require('./comments')(express, mongoose, Post, User, Comment, tokenRouter, valUser);
-    var followRouter = require('./follow')(express, mongoose, User, Follow, tokenRouter, valUser);
 
     apiRouter.use('/users', userRouter); //mounts the users router on /users
     apiRouter.use('/comments', commentsRouter); //mounts the comments router on /comments
