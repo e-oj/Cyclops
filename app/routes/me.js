@@ -202,7 +202,6 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
     //saves posts to the database
     meRouter.route('/posts')
         .post(function(req, res){
-            console.log(req.files);
             if(req.me) {
                 var post = new Post();
                 var error = {};
@@ -213,7 +212,7 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
                 post.title = req.body.title;
                 post.date = Date.now();
 
-                if(!req.body.body && req.files['file']) post.body = " ";
+                if(!req.body.body && req.mediaIds.length) post.body = " ";
                 else post.body = req.body.body;
 
                 if (req.body.tags) post.tags = post.tags.concat((req.body.tags).split(' '));
@@ -229,7 +228,7 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
                             if (err.errors.title) error.errors.push(err.errors.title.message);
                             if (err.errors.body) error.errors.push(err.errors.body.message);
                             if (err.errors.date) error.errors.push(err.errors.date.message);
-                            res.send(error.errors);
+                            res.send(error);
                         }
                     }
 

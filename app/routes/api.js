@@ -20,7 +20,6 @@ var Follow =require('../models/followModel/follow');
 
 //libs
 var grid = require('gridfs-stream');
-var fs = require('fs'); //to upload to file
 var multer = require('multer');
 var _ = require('underscore');
 
@@ -34,7 +33,7 @@ module.exports = function(express, mongoose) {
     //initialize the routes that utilize GridFS once we connect to the database.
     conn.once('open', function () {
         var gfs = grid(conn.db);
-        var mediaSuite = require('./middleware/mediaSuite')(mongoose, gfs);
+        var mediaSuite = require('./middleware/mediaSuite')(gfs);
         var meRouter =
             require('./me')(Follow, User, Comment, Post, tokenRouter, valUser, mediaSuite, multer, pollSuite);
         var mediaRouter = require('./media')(express, mediaSuite, tokenRouter);

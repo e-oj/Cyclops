@@ -34,9 +34,6 @@ module.exports = function(express, User, Post, _){
             .sort({'meta.likes':-1})
             .limit(50)
             .exec(function (err, posts) {
-                //console.log()
-                //console.log('depth: ' + depth);
-                //console.log('==================================================================================================================');
                 if (err || !posts) {
                     response.json({
                         success: false,
@@ -45,11 +42,7 @@ module.exports = function(express, User, Post, _){
                 }
 
                 else {
-                    //console.log('Posts: ');
-                    //console.log(oldTop50.slice(0, 5));
                     if ((notEqualLists(posts, oldTop50)) || depth >= 45) {
-                        //console.log('depth: ' + depth);
-                        //console.log('=========================================================');
                         if(depth >= 45 && !notEqualLists(posts, oldTop50)){
                             response.json({
                                 success: false

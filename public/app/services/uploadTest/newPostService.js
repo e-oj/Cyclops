@@ -25,7 +25,7 @@ angular.module('NewPostService', ['ngResource'])
         
         function addFilesAndPreview(files){
             for(var i=0; i<files.length; i++){
-                post.files.push(files[i]);
+                /*if (validFile(files[i]))*/ post.files.push(files[i]);
             }
 
             preview(files);
