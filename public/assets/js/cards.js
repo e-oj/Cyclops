@@ -4,18 +4,23 @@ var margin = 15;
 var containerWidth = 0;
 colIndex = 0;
 
-function loadCards(){
+function loadCards(delay){
     var cards = [];
     var leftCol = $('.left-col').outerWidth();
-    cardsWidth = $(window).outerWidth() - leftCol;
+    var cardsWidth = $(window).outerWidth() - leftCol;
+    var cardStyle = $('.card');
 
     $('#cards').css({
         'width': cardsWidth,
         'left': leftCol
     });
 
+    cardStyle.css({
+        'transition': delay? 'all 0.8s ease-in-out' : 'none'
+    });
+
     containerWidth = cardsWidth;
-    colWidth = $('.card').outerWidth();
+    colWidth = cardStyle.outerWidth();
     colCount = Math.floor(containerWidth / (colWidth + margin));
 
     for (var i = 0; i < colCount; i++) {
@@ -72,6 +77,6 @@ function getMin(arr){
 
 $(window).resize(function(){
     setTimeout(function(){
-        loadCards();
+        loadCards(true);
     }, 50);
 });

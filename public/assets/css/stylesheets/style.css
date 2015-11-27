@@ -76,7 +76,6 @@ h1{
     overflow: hidden;
     background: #FFF;
     color: #272727;
-    transition: all 0.8s ease-in-out;
 }
 .card .title {
     line-height: 48px;

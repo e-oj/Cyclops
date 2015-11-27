@@ -25,30 +25,44 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
             var loaded = false;
             $scope.$on('LastElementReached', function(){
                 $scope.$evalAsync(function() {
-                    setTimeout(function () {
-                        loadCards();
-                    }, 5);
-
                     if(!loaded) {
                         setTimeout(function () {
-                            loadCards();
+                            loadCards(true);
+                        }, 10);
+
+                        setTimeout(function () {
+                            loadCards(true);
                         }, 50);
                         setTimeout(function () {
-                            loadCards();
+                            loadCards(true);
                         }, 100);
 
                         setTimeout(function () {
-                            loadCards();
+                            loadCards(true);
                         }, 200);
                         setTimeout(function () {
-                            loadCards();
+                            loadCards(true);
                         }, 1000);
                         setTimeout(function () {
-                            loadCards();
+                            loadCards(true);
                         }, 5000);
 
                         loaded = true;
                     }
+                    else{
+                        loadCards();
+
+                        setTimeout(function () {
+                            loadCards();
+                        }, 5);
+                        setTimeout(function () {
+                            loadCards();
+                        }, 10);
+                        setTimeout(function () {
+                            loadCards();
+                        }, 15);
+                    }
+
                 });
             });
 
