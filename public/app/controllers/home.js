@@ -27,7 +27,7 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
                 $scope.$evalAsync(function() {
                     setTimeout(function () {
                         loadCards();
-                    }, 10);
+                    }, 5);
 
                     if(!loaded) {
                         setTimeout(function () {

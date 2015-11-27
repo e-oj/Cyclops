@@ -174,7 +174,7 @@ module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs,
                 //boolean to determine if there's info to update user with
                 var info = false;
 
-                for(item in req.body){
+                for(var item in req.body){
                     if(req.body.hasOwnProperty(item)){
                         info = true;
                         break;

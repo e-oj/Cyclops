@@ -13,7 +13,7 @@
  */
 
 module.exports = function(express, mediaSuite, tkRouter){
-    mediaRouter = express.Router();
+    var mediaRouter = express.Router();
 
     //mediaRouter.use(tkRouter);
 
