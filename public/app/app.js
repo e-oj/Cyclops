@@ -1,4 +1,4 @@
-angular.module('cyclops', ['ngAnimate', 'ui.router', 'Access', 'Home', 'Info'])
+angular.module('cyclops', ['ngAnimate', 'ui.router', 'Access', 'Home', 'Info', 'Date'])
 
     .config(function($httpProvider, $stateProvider, $urlRouterProvider){
         $httpProvider.interceptors.push('AuthInterceptor');
@@ -11,17 +11,14 @@ angular.module('cyclops', ['ngAnimate', 'ui.router', 'Access', 'Home', 'Info'])
             .state('index', {
                 url: '/',
                 templateUrl: '/app/views/partials/home.html'
-                //templateUrl: './partials/home.html'
             })
 
             .state('index.login', {
                 templateUrl: '/app/views/partials/login.html'
-                //templateUrl: './partials/login.html'
             })
 
             .state('index.userInfo', {
                 templateUrl: '/app/views/partials/userInfo.html'
-                //templateUrl: './partials/userInfo.html'
             })
 
     })

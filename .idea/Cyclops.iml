@@ -6,5 +6,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="AngularJS" level="project" />
     <orderEntry type="library" name="WebstormProjects node_modules" level="project" />
+    <orderEntry type="library" name="jQuery" level="project" />
   </component>
 </module>

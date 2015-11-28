@@ -60,10 +60,10 @@ function positionCards(cards){
 
 //function to get the min value in array
 function getMin(arr){
-    var min;
+    var min = arr[1];
 
     for(var i=0; i<arr.length; i++){
-        if(min === undefined || arr[i].height < min.height ){
+        if(arr[i].height < min.height ){
             min = arr[i];
         }
     }
