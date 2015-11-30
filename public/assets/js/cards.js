@@ -4,27 +4,22 @@ var margin = 15;
 var containerWidth = 0;
 colIndex = 0;
 
-function loadCards(delay){
+function loadCards(){
     var cards = [];
-    var leftCol = $('.left-col').outerWidth();
-    var cardsWidth = $(window).outerWidth() - leftCol;
-    var cardStyle = $('.card');
+    var leftCol = $('.left-col').width();
+    cardsWidth = $(window).width() - leftCol;
 
     $('#cards').css({
         'width': cardsWidth,
         'left': leftCol
     });
 
-    cardStyle.css({
-        'transition': delay? 'all 0.8s ease-in-out' : 'none'
-    });
-
     containerWidth = cardsWidth;
-    colWidth = cardStyle.outerWidth();
-    colCount = Math.floor(containerWidth / (colWidth + margin));
+    colWidth = $('.card').width();
+    colCount = Math.floor(containerWidth/(colWidth + margin));
 
-    for (var i = 0; i < colCount; i++) {
-        cards.push({height: margin, top: margin, index: i});
+    for(var i=0; i<colCount; i++){
+        cards.push({height: margin, top: 15, index: i});
     }
 
     positionCards(cards);
@@ -32,7 +27,6 @@ function loadCards(delay){
 
 function positionCards(cards){
     $('.card').each(function(){
-        //alert('here');
         var min = getMin(cards);
         //var min = cards[colIndex];
         //alert('{ height: ' +min.height + ', top: ' + min.top + ', index :' + min.index + '}');
@@ -60,10 +54,10 @@ function positionCards(cards){
 
 //function to get the min value in array
 function getMin(arr){
-    var min = arr[1];
+    var min;
 
     for(var i=0; i<arr.length; i++){
-        if(arr[i].height < min.height ){
+        if(min === undefined || arr[i].height < min.height ){
             min = arr[i];
         }
     }
@@ -77,6 +71,6 @@ function getMin(arr){
 
 $(window).resize(function(){
     setTimeout(function(){
-        loadCards(true);
+        loadCards();
     }, 50);
 });

@@ -17,9 +17,9 @@ module.exports = function(gfs){
             _id: id
             , filename: file.name
             , metadata: {
-                mimeType:file.mimetype,
-                date: Date.now(),
-                author : req.decoded._id
+                mimeType:file.mimetype
+                , date: Date.now()
+                , author : req.decoded._id
             }
         });
 

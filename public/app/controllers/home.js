@@ -22,48 +22,37 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
 
             updateMe(self.top50);
 
-            var loaded = false;
             $scope.$on('LastElementReached', function(){
                 $scope.$evalAsync(function() {
-                    if(!loaded) {
-                        setTimeout(function () {
-                            loadCards(true);
-                        }, 10);
-
-                        setTimeout(function () {
-                            loadCards(true);
-                        }, 50);
-                        setTimeout(function () {
-                            loadCards(true);
-                        }, 100);
-
-                        setTimeout(function () {
-                            loadCards(true);
-                        }, 200);
-                        setTimeout(function () {
-                            loadCards(true);
-                        }, 1000);
-                        setTimeout(function () {
-                            loadCards(true);
-                        }, 5000);
-
-                        loaded = true;
-                    }
-                    else{
+                    setTimeout(function () {
                         loadCards();
+                    }, 10);
 
-                        setTimeout(function () {
-                            loadCards();
-                        }, 5);
-                        setTimeout(function () {
-                            loadCards();
-                        }, 10);
-                        setTimeout(function () {
-                            loadCards();
-                        }, 15);
-                    }
+                    setTimeout(function () {
+                        loadCards();
+                    }, 50);
 
-                });
+                    setTimeout(function () {
+                        loadCards();
+                    }, 100);
+
+                    setTimeout(function () {
+                        loadCards();
+                    }, 200);
+
+                    setTimeout(function () {
+                        loadCards();
+                    }, 500);
+
+                    setTimeout(function () {
+                        loadCards();
+                    }, 1000);
+
+                    setTimeout(function () {
+                        loadCards();
+                    }, 5000);
+
+                })
             });
 
             self.getMediaUrl = function(mediaId){
