@@ -40,8 +40,20 @@ module.exports = function(gfs){
             req.mediaIds.push({media: id, mediaType: 'image'});
 
             if(!fileIs('gif', file)) {
+                console.log(file);
                 var fileBuffer = gm(buffer, file.name);
-                fileBuffer.resize(IMAGE_SIZE).stream().pipe(writeStream);
+
+                fileBuffer.size(function(err, size){
+                    if(err) console.log(err);
+
+                    else if(size.width > 800){
+                        fileBuffer.resize(IMAGE_SIZE).stream().pipe(writeStream);
+                    }
+
+                    else{
+                        fileBuffer.stream().pipe(writeStream);
+                    }
+                });
             }
             else write = true;
         }

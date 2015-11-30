@@ -42,8 +42,7 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
 
     //saves media in a buffer
     meRouter.use(multer({
-        dest: './uploads/'
-        ,putSingleFilesInArray: true
+        putSingleFilesInArray: true
         ,inMemory: true
     }));
 
