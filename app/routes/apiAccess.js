@@ -25,9 +25,10 @@ module.exports = function(express, User, multer, mediaSuite){
     var accessRouter = express.Router();
     var error = {};//error object to store validation errors
 
-    accessRouter.use('/register', multer({
-        dest: './uploads/',
+    //saves media in a buffer
+    accessRouter.use(multer({
         putSingleFilesInArray: true
+        ,inMemory: true
     }));
 
 
