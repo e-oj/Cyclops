@@ -2,7 +2,7 @@
  * File suite
  */
 
-module.exports = function(gfs){
+module.exports = function(gfs, eventEmitter){
     var gm = require('gm').subClass({imageMagick: true});
     var streamifier = require('streamifier');
     var mongoose = require("mongoose");
@@ -26,6 +26,7 @@ module.exports = function(gfs){
         //when the file has been written to GridFS
         writeStream.on('close', function (file) {
             console.log(file.filename + ' has been uploaded');
+            eventEmitter.emit("savedFile");
         });
 
         writeToDb(req, file, id, writeStream);
@@ -40,7 +41,6 @@ module.exports = function(gfs){
             req.mediaIds.push({media: id, mediaType: 'image'});
 
             if(!fileIs('gif', file)) {
-                console.log(file);
                 var fileBuffer = gm(buffer, file.name);
 
                 fileBuffer.size(function(err, size){
@@ -66,7 +66,9 @@ module.exports = function(gfs){
             write = true
         }
 
-        if(write) streamifier.createReadStream(buffer).pipe(writeStream);
+        if(write){
+            streamifier.createReadStream(buffer).pipe(writeStream);
+        }
     }
 
     function fileIs(type, file){

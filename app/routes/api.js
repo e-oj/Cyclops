@@ -22,11 +22,12 @@ var Follow =require('../models/followModel/follow');
 var grid = require('gridfs-stream');
 var multer = require('multer');
 var _ = require('underscore');
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
 
 module.exports = function(express, mongoose) {
     var apiRouter = express.Router();
     var tokenRouter = require('./middleware/valToken')(express);
-    var pollSuite = require('./utils/pollSuite')(express, User, Post, _);
     var conn = mongoose.connection;
     var valUser = require('./middleware/valUser'); //function that finds user by id or username
     //routers
@@ -38,7 +39,8 @@ module.exports = function(express, mongoose) {
     //initialize the routes that utilize GridFS once we connect to the database.
     conn.once('open', function () {
         var gfs = grid(conn.db);
-        var mediaSuite = require('./middleware/mediaSuite')(gfs);
+        var mediaSuite = require('./middleware/mediaSuite')(gfs, eventEmitter);
+        var pollSuite = require('./utils/pollSuite')(express, User, Post, _, gfs);
         var meRouter =
             require('./me')(Follow, User, Comment, Post, tokenRouter, valUser, mediaSuite, multer, pollSuite);
         var mediaRouter = require('./media')(express, mediaSuite, tokenRouter);

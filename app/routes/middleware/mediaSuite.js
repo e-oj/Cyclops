@@ -1,7 +1,13 @@
-module.exports = function(gfs){
+module.exports = function(gfs, eventEmitter){
     var mediaSuite = {};
-    var fileSuite = require("../utils/fileSuite")(gfs);
+    var fileSuite = require("../utils/fileSuite")(gfs, eventEmitter);
 
+    /**
+     * FIX THIS!!!
+     * @param req
+     * @param res
+     * @param next
+     */
     mediaSuite.saveMedia = function(req, res,next){
         if(req.method == 'POST' || req.method == 'PUT'){
             if (req.files) {
@@ -10,20 +16,36 @@ module.exports = function(gfs){
                 req.mediaIds = [];
 
                 var files = req.files['file'];
+                var index = 0;
                 var validTypes = ["image", "video", "audio"];
-                //console.log(files);
 
-                if(files) {
+                if(files.length) {
                     for (var i = 0; i < files.length; i++) {
                         if(validTypes.indexOf(files[i].mimetype.split("/")[0]) > -1){
                             fileSuite.saveFile(req, files[i]);
                         }
                     }
-                }
-            }
-        }
 
-        next();
+                    var checkDone = function(){
+                        if(index < files.length) {
+                            if(index == files.length-1){
+                                eventEmitter.emit("doneWithUpload");
+                            }
+                            index++;
+                        }
+                    };
+
+                    eventEmitter.on("savedFile", checkDone);
+                    eventEmitter.on("doneWithUpload", function(){
+                        console.log("All files have been Uploaded");
+                    });
+                    eventEmitter.on("doneWithUpload", next);
+                }
+                else next();
+            }
+            else next();
+        }
+        else next();
     };
     
 

@@ -82,7 +82,6 @@ module.exports = function(express, User, Post, _){
     }
 
 
-
     function notEqualInfo(me1, me2){
         var obj1 = JSON.parse(JSON.stringify(me1));
         var obj2 = JSON.parse(JSON.stringify(me2));
