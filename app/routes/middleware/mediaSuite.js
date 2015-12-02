@@ -3,7 +3,7 @@ module.exports = function(gfs, eventEmitter){
     var fileSuite = require("../utils/fileSuite")(gfs, eventEmitter);
 
     /**
-     * FIX THIS!!!
+     * Saves media to database
      * @param req
      * @param res
      * @param next
@@ -19,7 +19,7 @@ module.exports = function(gfs, eventEmitter){
                 var index = 0;
                 var validTypes = ["image", "video", "audio"];
 
-                if(files.length) {
+                if(files && files.length) {
                     for (var i = 0; i < files.length; i++) {
                         if(validTypes.indexOf(files[i].mimetype.split("/")[0]) > -1){
                             fileSuite.saveFile(req, files[i]);
