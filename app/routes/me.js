@@ -5,7 +5,6 @@
  * ============================================
  * DEPENDENCY INJECTIONS
  * ============================================
- * /@param express ------ExpressJS
  * @param Post ---------Post Model
  * @param Comment ------Comment Model
  * @param Follow -------Follow Model

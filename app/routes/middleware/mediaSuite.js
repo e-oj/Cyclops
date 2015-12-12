@@ -1,15 +1,36 @@
+/**
+ * This module contains functions for saving and retrieving
+ * media.
+ *
+ * TODO: Get head out of ass and move the functions into separate files
+ *
+ * @param gfs GridFS
+ * @param eventEmitter eventEmitter module to signal complete upload
+ *
+ * @returns an object containing the saveMedia and getMedia functions
+ */
 module.exports = function(gfs, eventEmitter){
     var mediaSuite = {};
     var fileSuite = require("../utils/fileSuite")(gfs, eventEmitter);
 
     /**
-     * Saves media to database
-     * @param req
-     * @param res
-     * @param next
+     * This function is responsible for saving media files
+     * to GFS. It filters out files with unsupported formats
+     * (non image/video/audio files) and doesn't moves on to the
+     * next middleware/route until all files are done uploading
+     * and the doneWithUpload event
+     *
+     * @param req The request
+     * @param res The response
+     * @param next move to the next route/middleware
      */
     mediaSuite.saveMedia = function(req, res,next){
+
+        /**
+         * Media can only be uploaded via POST/PUT requests
+         */
         if(req.method == 'POST' || req.method == 'PUT'){
+
             if (req.files) {
 
                 //arrays for placing file ids based on their type
@@ -19,13 +40,22 @@ module.exports = function(gfs, eventEmitter){
                 var index = 0;
                 var validTypes = ["image", "video", "audio"];
 
+                //if there's a files array and it's not empty, proceed
                 if(files && files.length) {
                     for (var i = 0; i < files.length; i++) {
+                        //f the file's mime type is a validType
                         if(validTypes.indexOf(files[i].mimetype.split("/")[0]) > -1){
                             fileSuite.saveFile(req, files[i]);
                         }
                     }
 
+                    /**
+                     * Checks if all the files are done uploading.
+                     * For every file that completely uploads, it increments index and
+                     * when all the files are done uploading, i.e when index == index of
+                     * the last file in the array, it emits "doneWithUpload" which triggers
+                     * the next function and exits the middleware.
+                     */
                     var checkDone = function(){
                         if(index < files.length) {
                             if(index == files.length-1){
@@ -35,9 +65,16 @@ module.exports = function(gfs, eventEmitter){
                         }
                     };
 
+                    //calls checkDone every time a file uploads successfully.
                     eventEmitter.on("savedFile", checkDone);
+
+                    /**
+                     * when all the files are done uploading, log a message
+                     * to the console and detach the "savedFile listener"
+                     */
                     eventEmitter.on("doneWithUpload", function(){
                         console.log("All files have been Uploaded");
+                        eventEmitter.removeAllListeners("savedFile");
                     });
                     eventEmitter.on("doneWithUpload", next);
                 }
@@ -47,18 +84,31 @@ module.exports = function(gfs, eventEmitter){
         }
         else next();
     };
-    
 
+    /**
+     * This function handles media retrieval. It sends the whole
+     * file if no range is specified. A 404 is sent if the file is not
+     * found.
+     *
+     * @param req The request
+     * @param res The response
+     */
     mediaSuite.getMedia = function(req, res){
+
+        //searches the database for the requested media.
         gfs.findOne({_id: req.params.id}, function(err, file){
             if(err) throw err;
+
+            //if the file is not found, send a 404
             else if(!file){
                 res.status(404);
                 res.send('file not found');
             }
+
             else {
                 var readStream;
 
+                //if a range is specified
                 if(req.headers.range) {
                     var range = req.headers.range;
 
@@ -116,6 +166,13 @@ module.exports = function(gfs, eventEmitter){
         });
     };
 
+    /**
+     * Checks if the specified media exists.
+     *
+     * TODO: Destroy this God forsaken function. It's useless.
+     *
+     * @param id the id of the media to check for
+     */
     mediaSuite.mediaExists = function(id){
         gfs.findOne({_id: id}, function(err, found){
             if(err) throw err;
@@ -124,6 +181,11 @@ module.exports = function(gfs, eventEmitter){
         });
     };
 
+    /**
+     * Deletes the specified media from the database
+     *
+     * @param id the id of the media to be deleted
+     */
     mediaSuite.removeMedia = function(id){
         gfs.remove({_id: id}, function(err){
             if(err) throw err;

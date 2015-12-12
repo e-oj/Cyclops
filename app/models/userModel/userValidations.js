@@ -36,7 +36,8 @@ validator.extend('validPassword', function(str){
 module.exports = function(User){
     //Validation for the email field
     User.schema.path('email')
-        .validate(function (value, respond) {//make sure no other user has that email
+        //make sure no other user has that email
+        .validate(function (value, respond) {
             if(!this.isModified('email')) respond(true);
             else {
                 User.findOne({email: value}, function (err, user) {
@@ -47,7 +48,8 @@ module.exports = function(User){
             }
         }, 'This email address is already registered')
 
-        .validate(function(value){//checks that the value is an email
+        //checks that the value is an email
+        .validate(function(value){
             if(!this.isModified('email')) return true;
             else
                 return validator.isEmail(value);
@@ -55,25 +57,30 @@ module.exports = function(User){
 
     //Validation for the username field
     User.schema.path('username')
-        .validate(function(value){//check for special characters in the username
+
+        //check for special characters in the username
+        .validate(function(value){
             if(!this.isModified('username')) return true;
             else
                 return !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(value);
         }, 'Username cannot contain special characters')
 
-        .validate(function(value){//checks for whitespace in username
+        //checks for whitespace in username
+        .validate(function(value){
             if(!this.isModified('username')) return true;
             else
                 return (validator.noWhitespace(value));
         }, 'Username cannot contain whitespaces')
 
-        .validate(function(value){//check that username is the appropriate length
+        //check that username is the appropriate length
+        .validate(function(value){
             if(!this.isModified('username')) return true;
             else
                 return validator.isLength(value, 3, 20);
         }, 'Username must between 3 and 20 characters long')
 
-        .validate(function (value, respond) {//check's that no other user has username
+        //check's that no other user has username
+        .validate(function (value, respond) {
             if(!this.isModified('username')) respond(true);
             else {
                 User.findOne({username: value}, function (err, user) {
@@ -86,24 +93,29 @@ module.exports = function(User){
 
     //Validation for the password field
     User.schema.path('password')
-        .validate(function(value){//checks that password is at least 6 characters long.
+
+        //checks that password is at least 6 characters long.
+        .validate(function(value){
             if(!this.isModified('password')) return true;
             else
                 return validator.isLength(value, 6);
         }, 'password must at least 6 characters long')
 
-        .validate(function(value){//checks that password has no whitespace
+        //checks that password has no whitespace
+        .validate(function(value){
             if(!this.isModified('password')) return true;
             else
                 return (validator.noWhitespace(value));
         }, 'Password cannot contain whitespaces')
 
+        //checks that password has no whitespace
         .validate(function(value){//checks that password has no special characters
             if(!this.isModified('password')) return true;
             else
                 return !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(value);
         }, 'Password cannot contain special characters')
 
+        //checks that password has no whitespace
         .validate(function(value){
             //checks that the password has at least one uppercase letter,
             //one lowercase letter and one number.
@@ -113,33 +125,14 @@ module.exports = function(User){
         }, 'Password must contain at least one uppercase letter, one lower' +
             'case letter and one number');
 
-    //User.schema.path('profileMsg')
-    //    .validate(function(value){//checks that password is at least 6 characters long.
-    //        if(!this.isModified('profileMsg')) return true;
-    //        else
-    //            return validator.isLength(value, 0, 200);
-    //    }, 'Profile message cannot exceed 200 characters');
-    //
-        //.validate(function(value){//checks that password has no whitespace
-        //    if(!this.isModified('password')) return true;
-        //    else
-        //        return (validator.noWhitespace(value));
-        //}, 'Password cannot contain whitespaces')
-        //
-        //.validate(function(value){//checks that password has no special characters
-        //    if(!this.isModified('password')) return true;
-        //    else
-        //        return !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(value);
-        //}, 'Password cannot contain special characters')
-        //
-        //.validate(function(value){
-        //    //checks that the password has at least one uppercase letter,
-        //    //one lowercase letter and one number.
-        //    if(!this.isModified('password')) return true;
-        //    else
-        //        return validator.validPassword(value);
-        //}, 'Password must contain at least one uppercase letter, one lower' +
-        //    'case letter and one number');
+    User.schema.path('profileMsg')
+        //checks that profile message is at least 6 characters long.
+        .validate(function(value){
+            if(!this.isModified('profileMsg')) return true;
+            else
+                return validator.isLength(value, 0, 200);
+        }, 'Profile message cannot exceed 200 characters');
+
 
     return User;
 };

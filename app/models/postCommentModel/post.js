@@ -29,5 +29,6 @@ var postSchema = new Schema({
     }
 });
 
+// Box up and ship (export) the post model
 var Post = mongoose.model('Post', postSchema);
 module.exports = Post;
