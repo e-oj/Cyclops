@@ -48,7 +48,7 @@ module.exports = function(gfs, eventEmitter){
     };
 
     /**
-     * This function pipes the given file to the given writeStream.
+     * This function pipes (writes) the given file to the given writeStream.
      * It re-sizes non-gif images with a width greater than 800px before
      * piping them to the write stream. Videos, Audio and GIFs are piped
      * without any checks.

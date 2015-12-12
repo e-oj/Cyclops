@@ -71,8 +71,8 @@
       <file leaf-file-name="fileSuite.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/routes/utils/fileSuite.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38709676">
-              <caret line="91" column="30" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.66129035">
+              <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -585,7 +585,13 @@
       <option name="project" value="LOCAL" />
       <updated>1449959383071</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Added much documentation">
+      <created>1449959566201</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1449959566201</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1025,8 +1031,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/routes/utils/fileSuite.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38709676">
-          <caret line="91" column="30" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.66129035">
+          <caret line="41" column="59" selection-start-line="41" selection-start-column="59" selection-end-line="41" selection-end-column="59" />
           <folding />
         </state>
       </provider>
