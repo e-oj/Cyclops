@@ -55,10 +55,10 @@ module.exports = function(gfs, eventEmitter){
      *
      * TODO: Add video/audio compression
      *
-     * @param req
-     * @param file
-     * @param id
-     * @param writeStream
+     * @param req The request
+     * @param file the file to upload
+     * @param id the id assigned to the file
+     * @param writeStream the write stream that handles the upload
      */
     function writeToDb(req, file, id, writeStream){
         //The maximum width for any image
