@@ -34,10 +34,8 @@ h1{
 }
 .left-col{
     background-color: #FFFFFF;
-    width: 22%;
     height: 100%;
     position: fixed;
-    min-width: 340px;
     overflow-y: hidden;
 }
 
@@ -50,9 +48,6 @@ h1{
     /*animation: zoomOutDown 1.2s both ease-in;*/
 /*}*/
 
-/*.left-col .ng-enter{*/
-    /*animation: zoomOutDown*/
-/*}*/
 #cards{
     background-color: whitesmoke;
     position: relative;
@@ -71,12 +66,12 @@ h1{
 .card {
     display: inline-block;
     vertical-align: top;
-    width: 280px;
+    width: 0;
     position: absolute;
     overflow: hidden;
     background: #FFF;
     color: #272727;
-    transition: all 0.8s ease-in-out;
+    transition: top 0.8s ease-in-out, left 0.8s ease-in-out;
 }
 .card .title {
     line-height: 48px;
@@ -91,7 +86,6 @@ h1{
 }
 .card .text p {
     margin: 0;
-    /* text-align: center; */
     font-size: 1.1em;
     font-family: verdana, sans-serif;
 }
@@ -158,18 +152,6 @@ h1{
     margin-right: 10px;
     border-radius: 50%;
 }
-
-/*.body{*/
-    /*position: relative;*/
-    /*width: 400px;*/
-/*}*/
-
-/*.space{*/
-    /*width: 105%;*/
-    /*height: 105%;*/
-    /*opacity: 0;*/
-    /*position: relative;*/
-/*}*/
 
 a {
   color: #00B7FF;
@@ -294,8 +276,8 @@ form input{
 }
 
 .info .profile-media{
-    width: 200px;
-    height: 200px;
+    /*width: 200px;*/
+    /*height: 200px;*/
     display: block;
     position: relative;
     border-radius: 50%;
