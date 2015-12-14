@@ -276,8 +276,8 @@ form input{
 }
 
 .info .profile-media{
-    /*width: 200px;*/
-    /*height: 200px;*/
+    width: 200px;
+    height: 200px;
     display: block;
     position: relative;
     border-radius: 50%;
