@@ -46,11 +46,12 @@ function setDefaults(){
  */
 function loadCards(){
     var card = $('.card');
+    var left = $('.left-col');
 
-    if(card.width() == 0) setDefaults();
+    if(card.width() == 0 || left.width() == 360) setDefaults();
 
     var cards = [];
-    var leftCol = $('.left-col').width();
+    var leftCol = left.width();
     var cardsWidth = $(window).width() - leftCol;
 
     $('#cards').css({
