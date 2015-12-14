@@ -48,11 +48,11 @@ html {
     position: relative;
 }
 
-#item1{
+#web{
     border-right: 1px solid black;
 }
 
-#item1, #item2{
+#web, #computing{
     padding-top: 2%;
     padding-bottom: 2%;
     text-align: center;
@@ -62,15 +62,15 @@ html {
     margin: 0;
 }
 
-#item2-stuff{
+#computing-stuff{
     visibility: hidden;
 }
 
-#item1-stuff{
+#web-stuff{
     visibility: visible;
 }
 
-#item1-stuff, #item2-stuff{
+#web-stuff, #computing-stuff{
     position: absolute;
     background-color: white;
     background: rgba(255,255,255,.7);
