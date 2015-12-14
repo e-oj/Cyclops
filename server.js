@@ -49,6 +49,10 @@ app.get('/makepost', function(req, res){
     res.sendFile(path.join(__dirname, '/public/app/services/uploadTest/index.html'));
 });
 
+app.get("/rachel", function(req, res){
+    res.sendFile(path.join(__dirname, '/public/golisano/index.html'));
+});
+
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {

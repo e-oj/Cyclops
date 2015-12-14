@@ -1,0 +1,82 @@
+body {
+    font-family: Helvetica, sans-serif;
+}
+
+html {
+    background-image: url("blurrygolisano.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+#wrapper{
+    width: 80%;
+    position: relative;
+    margin: auto;
+    background-color: white;
+    background: rgba(255,255,255,.7);
+}
+
+#wrapper h1{
+    padding-top: 1%;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+}
+
+#container {
+    width: 90%;
+    position: relative;
+    margin: auto;
+}
+
+#subtitle {
+    text-align: center;
+    font-weight: bold;
+}
+
+#video{
+    position: relative;
+    width: 100%;
+    background-color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#toggle{
+    width: 100%;
+    background-color: lightblue;
+    position: relative;
+}
+
+#item1{
+    border-right: 1px solid black;
+}
+
+#item1, #item2{
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-align: center;
+    position: relative;
+    width: 48%;
+    display: inline-block;
+    margin: 0;
+}
+
+#item2-stuff{
+    visibility: hidden;
+}
+
+#item1-stuff{
+    visibility: visible;
+}
+
+#item1-stuff, #item2-stuff{
+    position: absolute;
+    background-color: white;
+    background: rgba(255,255,255,.7);
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+
+
