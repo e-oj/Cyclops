@@ -20,23 +20,21 @@ angular.module('authService', ['ngResource', 'ConstFactory'])
         authFactory.login = function(credentials, reply){
             //return the promise object and it's data
             var loginRoute = $resource(constants.api + "/access/login");
-            //setTimeout(function() {
-                loginRoute.save({}, credentials, function (res, resHeaders) {
-                    if (res.success) {
-                        AuthToken.setToken(res.token);
-                        reply.message = res.message;
-                        reply.failed = false;
-                        //console.log(res);
-                    }
+            loginRoute.save({}, credentials, function (res, resHeaders) {
+                if (res.success) {
+                    AuthToken.setToken(res.token);
+                    reply.message = res.message;
+                    reply.failed = false;
+                    //console.log(res);
+                }
 
-                    else {
-                        reply.message = res.message;
-                        reply.failed = true;
-                        console.log("404 not found");
-                    }
-                    reply.processing = false;
-                });
-            //}, 10000);
+                else {
+                    reply.message = res.message;
+                    reply.failed = true;
+                    console.log("404 not found");
+                }
+                reply.processing = false;
+            });
         };
 
         //handle logout by clearing token

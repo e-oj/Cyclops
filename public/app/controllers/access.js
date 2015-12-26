@@ -1,6 +1,6 @@
 angular.module('Access', ['authService'])
     .controller('accessController', ['$scope', 'Auth', function($scope, Auth){
-        self = this;
+        var self = this;
         var validator = {};
 
         validator.hasSpace = function(value){
@@ -44,14 +44,12 @@ angular.module('Access', ['authService'])
             , processing: false
         };
 
-        //$(".").flip(true);
-
         self.credentials = {
             username: null
             , password: null
         };
 
-        self.setErrMsg = function(msg){
+        var setErrMsg = function(msg){
             if(msg) self.reply.message = msg;
             else self.reply.message = 'Invalid Username or Password';
 
@@ -73,14 +71,14 @@ angular.module('Access', ['authService'])
                         || !validator.isLength(password, 6)
                         || !validator.validPassword(password)
                     ) {
-                        self.setErrMsg();
+                        setErrMsg();
                     }
                     else {
                         Auth.login(self.credentials, self.reply);
                     }
                 }
-                else self.setErrMsg();
+                else setErrMsg();
             }
-            else self.setErrMsg('Already logged in');
+            else setErrMsg('Already logged in');
         }
     }]);

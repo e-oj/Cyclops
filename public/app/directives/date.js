@@ -2,7 +2,7 @@ angular.module("Date", ["DateUtils"])
     .directive("ojDate", ["dateUtils", function(dateUtils){
         return{
             scope: {
-                itemDate: '=itemDate'
+                itemDate: '='
             }
             , restrict: 'E'
             , replace: true
@@ -13,7 +13,7 @@ angular.module("Date", ["DateUtils"])
 
                 scope.$watch(function(){return dateUtils.parseDate(scope.itemDate)}, function(value){
                     elem.html('<span class="date">' + value + '</span>');
-                })
+                });
             }
         }
     }]);

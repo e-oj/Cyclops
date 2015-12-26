@@ -11,8 +11,7 @@ angular.module('File', ['ngResource', 'NewPostService'])
                         console.log(key + ', ', value);
                     }
                 }
-                else
-                    formData.append(key, value);
+                else formData.append(key, value);
             });
             //console.log(formData);
             return formData;
@@ -30,6 +29,6 @@ angular.module('File', ['ngResource', 'NewPostService'])
         self.shelf = NewPost.shelf;
         self.drop = function(e){NewPost.drop(e);};
         self.nonEvent = function(e){NewPost.nonEvent(e);};
-        self.post =  function(){NewPost.saveFiles(self.postBody, self.tags);}
+        self.post =  function(){NewPost.saveFiles(self.postBody, self.tags, "/api/me/posts");}
     }]);
 

@@ -18,6 +18,8 @@ angular.module("DateUtils", ["ngSanitize"])
         };
 
         utils.parseDate = function(date){
+            if(!date) return "None";
+
             var localDate = new Date(date).toString();
             var splitDate = localDate.split(' GMT')[0].split(' ');
             var postDate = '';

@@ -2,7 +2,9 @@
   <dictionary name="EmmanuelOlaojo">
     <words>
       <w>conv</w>
+      <w>dest</w>
       <w>mongo</w>
+      <w>usernames</w>
     </words>
   </dictionary>
 </component>

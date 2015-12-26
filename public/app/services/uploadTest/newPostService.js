@@ -2,7 +2,6 @@ angular.module('NewPostService', ['ngResource'])
     .factory('NewPost', ['$http', '$resource', '$window', function($http, $resource, $window){
         var post = {};
 
-        var sendFile = $resource("/api/me/posts");
         var currIndex = 0;
 
         post.files = [];
@@ -117,16 +116,18 @@ angular.module('NewPostService', ['ngResource'])
             return media;
         }
 
-        post.saveFiles = function(body, tags){
+        post.saveFiles = function(body, tags, url){
+            var sendFile = $resource(url);
+
             $http.defaults.headers.post['x-access-token'] = $window.localStorage.getItem('token');
 
             sendFile.save({}, {file: post.files
                 , body: body
-                , tags: tags}, function(res){
+                , tags: tags
+            }, function(res){
                 console.log(res);
+                alert(res.success? 'Post Uploaded' : 'upload.html failed');
             });
-
-            alert('Post Uploaded');
         };
 
         function eventStuff(e){

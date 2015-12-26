@@ -159,6 +159,7 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
             var stream = Follow.find({user: user}).select('follows').stream();
 
             //when a new document comes in add the necessary info to req.users
+            //TODO: change this implementation to avoid memory overflow issues
             stream.on('data', function (doc) {
                 req.users.push(doc.follows)
             });
