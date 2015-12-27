@@ -21,17 +21,37 @@ angular.module("PostUI", ['NewPostService'])
         $httpProvider.defaults.headers.post['Content-Type'] = undefined;
     }])
 
-    //TODO: Change link to controller?
     .directive("ojPost", ["NewPost", function(newPost){
+        var controller = function(){
+            var self = this;
+            self.postBody = "";
+            self.tags = "";
+
+            self.post =  function(){newPost.saveFiles(self.postBody, self.tags, self.destUrl);}
+        };
+
+        var link = function(){
+            var dropZone = document.getElementById('drop-zone');
+            var fileInput = document.getElementById('file-input');
+
+            dropZone.addEventListener('dragenter', newPost.nonEvent);
+            dropZone.addEventListener('dragover', newPost.nonEvent);
+            dropZone.addEventListener('drop', newPost.drop);
+
+            fileInput.addEventListener('click', function(){fileInput.value = null;});
+            fileInput.addEventListener('change', newPost.shelf);
+        };
+
         return{
             scope: {
                 destUrl: '@destUrl'
             }
             , restrict: 'E'
             , replace: false
-            , templateUrl: '/app/views/upload.html.html'
-            , link: function(scope, elem){
-                elem.on("drop", function(e){newPost.drop(e)})
-            }
+            , link: link
+            , controller: controller
+            , controllerAs: 'uploadCt'
+            , bindToController: true
+            , templateUrl: '/app/views/templates/upload.html'
         }
     }]);

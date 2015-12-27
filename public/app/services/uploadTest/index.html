@@ -1,61 +1,15 @@
 <!DOCTYPE html>
-<html ng-app="File" >
+<html ng-app="PostUI" >
     <head>
         <link rel="stylesheet" href="/app/services/uploadTest/file.css">
         <meta charset="UTF-8">
         <script src="/app/services/uploadTest/jquery-2.1.3.js"></script>
         <script src="/app/services/uploadTest/angular.js"></script>
         <script src="/app/services/uploadTest/angular-resource.js"></script>
-        <script src="/app/services/uploadTest/file.js"></script>
         <script src="/app/services/uploadTest/newPostService.js"></script>
+        <script src="/app/directives/postUi.js"></script>
     </head>
-    <body ng-controller="FileCtrl as fileCt">
-        <div class="message">
-            This is a demo Uploader. Be nice to it. <br>
-            <br>
-            You can drag and drop files below and type some text where is says you can, you can add
-            tags to the post by typing them in the tags field; <b>TAGS SHOULD BE SEPARATED BY SPACES</b>
-            then click create post to upload the post and look at your page to see the update.<br>
-            You don't have to refresh it. <br>
-            <br>
-            Remember, this is a very very very early demo, like a precursor to the demo in fact, so don't
-            judge the design.<br>
-            <br>
-            <b>If you like looking at raw json and want to hit the API endpoints yourself with Postman or any other API
-            tester, email me at eoo5498[at]rit[dot]edu and I'll send you the urls</b><br>
-            <br>
-            ENJOY!!
-        </div>
-
-        <div id="drop-zone"
-             ondragenter="$(this).controller().nonEvent(event)"
-             ondragover="$(this).controller().nonEvent(event)"
-             ondrop="$(this).controller().drop(event)"
-             >
-            DROP FILES HERE <br>
-
-            <input type="file"
-                   multiple id="file-input"
-                   onclick="this.value = null"
-                   onchange="$(this).controller().shelf()"
-            >
-
-            <div id="preview">
-            </div>
-        </div>
-        <div>
-            Write post here:
-        </div>
-        <form>
-            <textarea id="body" rows="20" cols="50" ng-model="fileCt.postBody"></textarea>
-        </form>
-        <div>
-            Tags:
-        </div>
-        <form>
-            <input type="text" id="tags" ng-model="fileCt.tags">
-        </form>
-
-        <button ng-click="fileCt.post()">CREATE POST</button>
+    <body>
+        <oj-post dest-url="/api/me/posts"></oj-post>
     </body>
 </html>

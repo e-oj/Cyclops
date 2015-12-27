@@ -3,7 +3,10 @@
     <words>
       <w>conv</w>
       <w>dest</w>
+      <w>dragenter</w>
+      <w>dragover</w>
       <w>mongo</w>
+      <w>onload</w>
       <w>usernames</w>
     </words>
   </dictionary>
