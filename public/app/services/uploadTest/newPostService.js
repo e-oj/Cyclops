@@ -1,19 +1,23 @@
 angular.module('NewPostService', ['ngResource'])
     .factory('NewPost', ['$http', '$resource', '$window', function($http, $resource, $window){
         var post = {};
-        var IMG_WIDTH = 280;
+        var MEDIA_WIDTH;
         var currIndex = 0;
 
         post.files = [];
 
-        post.shelf = function(){
+        post.shelf = function(width){
+            MEDIA_WIDTH = width;
+
             var files = $("#file-input")[0].files;
 
             addFilesAndPreview(files);
         };
 
         post.nonEvent = eventStuff;
-        post.drop = function(e){
+        post.drop = function(e, width){
+            MEDIA_WIDTH = width;
+
             e.preventDefault();
             e.stopPropagation();
 
@@ -50,12 +54,13 @@ angular.module('NewPostService', ['ngResource'])
 
                     div.id = currIndex;
                     currIndex++;
-                    div.style.width = IMG_WIDTH+"px";
+                    div.style.width = MEDIA_WIDTH+"px";
                     div.style.position = "relative";
                     //div.style.marginBottom = "5px";
 
                     var deleteImg = document.createElement("img");
                     deleteImg.src = "/assets/img/delete.png";
+                    deleteImg.alt = "Cancel Selection";
                     deleteImg.width = 50;
 
                     var style = deleteImg.style;
@@ -110,7 +115,7 @@ angular.module('NewPostService', ['ngResource'])
             var reader = new FileReader();
             reader.onload = function(e){
                 media.src = e.target.result;
-                media.width = IMG_WIDTH;
+                media.width = MEDIA_WIDTH;
                 media.style.margin = 0;
             };
             reader.readAsDataURL(file);
@@ -123,12 +128,13 @@ angular.module('NewPostService', ['ngResource'])
 
             $http.defaults.headers.post['x-access-token'] = $window.localStorage.getItem('token');
 
-            sendFile.save({}, {file: post.files
+            sendFile.save({}, {
+                file: post.files
                 , body: body
                 , tags: tags
             }, function(res){
                 console.log(res);
-                alert(res.success? 'Post Uploaded' : 'upload.html failed');
+                alert(res.success? 'Post Uploaded' : 'upload failed');
             });
         };
 

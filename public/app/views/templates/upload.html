@@ -11,18 +11,30 @@
         <div id="preview">
         </div>
     </div>
+    <script>
+        function toggleFocus(elem){
+            elem.style.border = '1px solid darkcyan';
+
+            var reset = function(){
+                elem.style.border = '1px solid lightgray';
+                elem.removeEventListener('blur', reset);
+            };
+
+            elem.addEventListener('blur', reset);
+        }
+    </script>
     <form id="upload-form">
-        <textarea id="body"
+        <textarea id="post-body"
                   ng-model="uploadCt.postBody"
-                  placeholder="Share something useful..."
-                  onfocus="this.style.border = '1px solid darkcyan' "
-                  onblur="this.style.border = '1px solid lightgray' "
+                  placeholder="Enter text"
+                  onclick="toggleFocus(this)"
         >
         </textarea>
         <input type="text"
                id="tags"
                ng-model="uploadCt.tags"
                placeholder="Tag your post"
+               onclick="toggleFocus(this)"
         >
     </form>
 

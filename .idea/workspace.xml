@@ -6,20 +6,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08b219a8-f92f-4b95-a07a-f3c733871fef" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/delete.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/post.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/img/upload.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/file.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/img/assault.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/img/axiom.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/img/batthern.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/img/bg1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/img/fabric2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/delete.png" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/webResources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/directives/postUi.js" afterPath="$PROJECT_DIR$/public/app/directives/postUi.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/file.css" afterPath="$PROJECT_DIR$/public/app/services/uploadTest/file.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/index.html" afterPath="$PROJECT_DIR$/public/app/services/uploadTest/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js" afterPath="$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/index.html" afterPath="$PROJECT_DIR$/public/app/views/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/templates/upload.html" afterPath="$PROJECT_DIR$/public/app/views/templates/upload.html" />
     </list>
     <ignored path="WebstormProjects.iws" />
@@ -35,17 +28,57 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="C:\Users\NILS\Desktop\Cyclops" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="file.css" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/file.css">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="-0.28481013">
+                    <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="WebstormProjects" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.125">
+              <caret line="13" column="57" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/views/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.0">
+              <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="postUi.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/app/directives/postUi.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+              <caret line="8" column="55" selection-start-line="8" selection-start-column="55" selection-end-line="8" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -61,31 +94,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="upload.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="upload.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/app/views/templates/upload.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4113924">
-              <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+            <state vertical-scroll-proportion="-1.875">
+              <caret line="3" column="59" selection-start-line="3" selection-start-column="59" selection-end-line="3" selection-end-column="59" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="file.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/file.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.25">
-              <caret line="43" column="9" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="newPostService.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="newPostService.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="36" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.30864197">
+              <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -153,12 +176,12 @@
         <option value="$PROJECT_DIR$/app/routes/middleware/valUser.js" />
         <option value="$PROJECT_DIR$/public/app/controllers/home.js" />
         <option value="$PROJECT_DIR$/public/app/views/upload.html" />
+        <option value="$PROJECT_DIR$/public/app/views/templates/upload.html" />
         <option value="$PROJECT_DIR$/public/app/views/index.html" />
-        <option value="$PROJECT_DIR$/public/app/services/uploadTest/index.html" />
-        <option value="$PROJECT_DIR$/public/app/directives/postUi.js" />
         <option value="$PROJECT_DIR$/public/app/services/uploadTest/file.css" />
         <option value="$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js" />
-        <option value="$PROJECT_DIR$/public/app/views/templates/upload.html" />
+        <option value="$PROJECT_DIR$/public/app/directives/postUi.js" />
+        <option value="$PROJECT_DIR$/public/app/services/uploadTest/index.html" />
       </list>
     </option>
   </component>
@@ -172,9 +195,9 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="904" />
+    <option name="x" value="1012" />
     <option name="y" value="28" />
-    <option name="width" value="936" />
+    <option name="width" value="828" />
     <option name="height" value="1092" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -269,6 +292,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Cyclops" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Cyclops" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -405,7 +450,7 @@
     <property name="recentsLimit" value="5" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/node_modules" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.project" />
+    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="javascript.nodejs.core.library.configured.version" value="0.12.4" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
@@ -750,7 +795,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451249194024</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="done with alpha version of uploader">
+      <created>1451306906358</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1451306906358</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TodoView">
@@ -763,11 +814,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="904" y="28" width="936" height="1092" extended-state="0" />
-    <editor active="false" />
+    <frame x="1012" y="28" width="828" height="1092" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2612022" sideWeight="0.7901376" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26022306" sideWeight="0.7901376" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32150313" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295063" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -777,7 +829,6 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -822,8 +873,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Did some client side refactoring. Moved tag and date functions into services.utils/postUtils.js" />
-    <MESSAGE value="Added some documentation to the date function" />
     <MESSAGE value="added date and author fields to file metadata in mediaSuite.saveMedia" />
     <MESSAGE value="mediaSuite.js no longer requires fs" />
     <MESSAGE value="removed redundant dependencies" />
@@ -847,7 +896,9 @@
     <MESSAGE value="fixed profile image bug" />
     <MESSAGE value="Changed bg, added documentation started post upload directive" />
     <MESSAGE value="Got the post upload directive working. Still testing." />
-    <option name="LAST_COMMIT_MESSAGE" value="Got the post upload directive working. Still testing." />
+    <MESSAGE value="done with beta version of uploader" />
+    <MESSAGE value="done with alpha version of uploader" />
+    <option name="LAST_COMMIT_MESSAGE" value="done with alpha version of uploader" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1157,17 +1208,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/views/index.html">
+    <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/file.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.875">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+        <state vertical-scroll-proportion="-0.28481013">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.221519">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+        <state vertical-scroll-proportion="-8.125">
+          <caret line="13" column="57" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
           <folding />
         </state>
       </provider>
@@ -1175,7 +1235,7 @@
     <entry file="file://$PROJECT_DIR$/public/app/directives/postUi.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+          <caret line="8" column="55" selection-start-line="8" selection-start-column="55" selection-end-line="8" selection-end-column="55" />
           <folding />
         </state>
       </provider>
@@ -1188,26 +1248,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/file.css">
+    <entry file="file://$PROJECT_DIR$/public/app/views/templates/upload.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.25">
-          <caret line="43" column="9" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
+        <state vertical-scroll-proportion="-1.875">
+          <caret line="3" column="59" selection-start-line="3" selection-start-column="59" selection-end-line="3" selection-end-column="59" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="36" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/views/templates/upload.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4113924">
-          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.30864197">
+          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
           <folding />
         </state>
       </provider>
