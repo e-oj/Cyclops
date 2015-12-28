@@ -1,7 +1,7 @@
 angular.module('NewPostService', ['ngResource'])
     .factory('NewPost', ['$http', '$resource', '$window', function($http, $resource, $window){
         var post = {};
-
+        var IMG_WIDTH = 280;
         var currIndex = 0;
 
         post.files = [];
@@ -50,11 +50,12 @@ angular.module('NewPostService', ['ngResource'])
 
                     div.id = currIndex;
                     currIndex++;
-                    div.style.width = media.width;
+                    div.style.width = IMG_WIDTH+"px";
                     div.style.position = "relative";
+                    //div.style.marginBottom = "5px";
 
                     var deleteImg = document.createElement("img");
-                    deleteImg.src = "/delete.png";
+                    deleteImg.src = "/assets/img/delete.png";
                     deleteImg.width = 50;
 
                     var style = deleteImg.style;
@@ -64,6 +65,7 @@ angular.module('NewPostService', ['ngResource'])
                     style.zIndex = 100;
                     style.display = "block";
                     style.background = "beige";
+                    style.cursor = "pointer";
 
                     deleteImg.addEventListener("click", function(){
                         dropMedia(parseInt(this.parentNode.id))
@@ -108,7 +110,7 @@ angular.module('NewPostService', ['ngResource'])
             var reader = new FileReader();
             reader.onload = function(e){
                 media.src = e.target.result;
-                media.width = 280;
+                media.width = IMG_WIDTH;
                 media.style.margin = 0;
             };
             reader.readAsDataURL(file);

@@ -1,26 +1,41 @@
+#uploader{
+    text-align: center;
+    background: white;
+    color: darkcyan;
+    width: 280px
+}
+
 body{
-    background-color: #223a63;
-    color: lightgray;
+    background-color: lightgray;
+    color: darkcyan;
 }
 
 #drop-zone{
-    text-align: center;
-    width: 700px;
-    min-height: 300px;
-    border: 1px solid white;
+    width: 280px;
     background-color: #FFFFFF;
-    margin: 20px;
     max-height: 700px;
     overflow-y: auto;
 }
 
+#upload-form{
+    margin-top: 10px;
+}
+
 #body{
-    border: 1px solid white;
+    border: 1px solid lightgray;
     background-color: #FFFFFF;
+    resize: none;
+    outline: none;
+    display: inline-block;
+    position: relative;
+    width: 250px;
+    height: 100px;
+    margin: auto;
+    font-size: 1.1em;
+    font-family: verdana, sans-serif;
 }
 
 #preview img{
-    /*max-width: 400px;*/
     position: relative;
     margin: auto;
     margin-top: 20px;
@@ -36,5 +51,42 @@ body{
 
 #tags{
     margin: 10px;
-    width: 300px;
+    width: 250px;
+}
+
+.upload-controls{
+    border-top: 1px solid lightgray;
+}
+
+.bottom-border{
+    border-bottom: 1px solid lightgray;
+}
+
+#file-input{
+    position: absolute;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -200;
+}
+
+#file-input-label{
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    margin: 10px;
+    padding: 5px;
+    width: 150px;
+    background: lightgray;
+    color: darkcyan;
+}
+
+#upload-btn{
+    margin: 10px;
+    padding: 5px;
+    color: darkcyan;
+    background: lightgray;
+    outline: none;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
 }

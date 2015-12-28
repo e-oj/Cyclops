@@ -31,7 +31,7 @@ angular.module("PostUI", ['NewPostService'])
         };
 
         var link = function(){
-            var dropZone = document.getElementById('drop-zone');
+            var dropZone = document.getElementById('uploader');
             var fileInput = document.getElementById('file-input');
 
             dropZone.addEventListener('dragenter', newPost.nonEvent);
