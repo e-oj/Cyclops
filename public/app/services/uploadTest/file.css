@@ -1,4 +1,6 @@
 #uploader{
+    position: absolute;
+    top: 0;
     text-align: center;
     background: white;
     color: darkcyan;
@@ -90,4 +92,18 @@ body{
     border: none;
     font-size: 1em;
     cursor: pointer;
+}
+
+#upload-overlay{
+    position: absolute;
+    width: 280px;
+    height: 200px;
+    top: 0;
+    display: none;
+    box-sizing: border-box;
+    border: darkcyan 2px dashed;
+    background: lightblue;
+    opacity: 0.5;
+    font-size: 20pt;
+    color: darkgreen;
 }

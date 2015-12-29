@@ -66,6 +66,10 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
 
                     setTimeout(function () {
                         loadCards();
+                    }, 95000);
+
+                    setTimeout(function () {
+                        loadCards();
                     }, 120000);
 
                 })

@@ -21,7 +21,8 @@ angular.module('NewPostService', ['ngResource'])
             e.preventDefault();
             e.stopPropagation();
 
-            var dt = e.dataTransfer;
+            //jQuery support: the dataTransfer property is not available with jquery events
+            var dt = e.dataTransfer? e.dataTransfer : e.originalEvent.dataTransfer;
 
             addFilesAndPreview(dt.files);
         };
@@ -139,7 +140,6 @@ angular.module('NewPostService', ['ngResource'])
         };
 
         function eventStuff(e){
-            console.log('in');
             e.stopPropagation();
             e.preventDefault();
         }
