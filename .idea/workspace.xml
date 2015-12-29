@@ -5,13 +5,9 @@
     <option name="CUSTOM_SCOPE_NAME" value="Selected Files" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08b219a8-f92f-4b95-a07a-f3c733871fef" name="Default" comment="The file uploader now indicates that things can be dropped on it when something is dragged into it.">
+    <list default="true" id="08b219a8-f92f-4b95-a07a-f3c733871fef" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/controllers/home.js" afterPath="$PROJECT_DIR$/public/app/controllers/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/directives/postUi.js" afterPath="$PROJECT_DIR$/public/app/directives/postUi.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/file.css" afterPath="$PROJECT_DIR$/public/app/services/uploadTest/file.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js" afterPath="$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/views/templates/upload.html" afterPath="$PROJECT_DIR$/public/app/views/templates/upload.html" />
     </list>
     <ignored path="WebstormProjects.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/public/app/directives/postUi.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+              <caret line="57" column="40" selection-start-line="57" selection-start-column="40" selection-end-line="57" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -45,18 +41,18 @@
       <file leaf-file-name="upload.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/app/views/templates/upload.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-29.375">
-              <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+            <state vertical-scroll-proportion="-14.375">
+              <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="file.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="file.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/file.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.625">
-              <caret line="68" column="23" selection-start-line="68" selection-start-column="23" selection-end-line="68" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.5221519">
+              <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -72,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="newPostService.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="newPostService.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1863354">
-              <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -147,9 +143,9 @@
         <option value="$PROJECT_DIR$/public/app/controllers/home.js" />
         <option value="$PROJECT_DIR$/public/app/services/uploadTest/index.html" />
         <option value="$PROJECT_DIR$/public/app/views/templates/upload.html" />
-        <option value="$PROJECT_DIR$/public/app/services/uploadTest/file.css" />
         <option value="$PROJECT_DIR$/public/app/directives/postUi.js" />
         <option value="$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js" />
+        <option value="$PROJECT_DIR$/public/app/services/uploadTest/file.css" />
       </list>
     </option>
   </component>
@@ -789,7 +785,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451321764416</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="The file uploader now indicates that things can be dropped on it when something is dragged into it.">
+      <created>1451362250079</created>
+      <option name="number" value="00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1451362250079</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TodoView">
@@ -803,11 +805,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="858" y="23" width="828" height="1092" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26022306" sideWeight="0.7901376" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.328" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32150313" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295063" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1224,6 +1226,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.5">
@@ -1232,18 +1242,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/file.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.625">
-          <caret line="68" column="23" selection-start-line="68" selection-start-column="23" selection-end-line="68" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/app/views/templates/upload.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.375">
-          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+        <state vertical-scroll-proportion="-14.375">
+          <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -1251,15 +1253,15 @@
     <entry file="file://$PROJECT_DIR$/public/app/directives/postUi.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <caret line="57" column="40" selection-start-line="57" selection-start-column="40" selection-end-line="57" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/newPostService.js">
+    <entry file="file://$PROJECT_DIR$/public/app/services/uploadTest/file.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1863354">
-          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.5221519">
+          <caret line="33" column="21" selection-start-line="33" selection-start-column="21" selection-end-line="33" selection-end-column="21" />
           <folding />
         </state>
       </provider>
