@@ -4,6 +4,7 @@
       <w>conv</w>
       <w>dest</w>
       <w>dragenter</w>
+      <w>dragleave</w>
       <w>dragover</w>
       <w>mongo</w>
       <w>onload</w>

@@ -34,20 +34,9 @@ angular.module("PostUI", ['NewPostService'])
 
         var link = function(scope){
             var controller = scope.uploadCt;
+            var DEFAULT_WIDTH = 280;
             var uploader = $('#uploader');
             var overlay = $('#upload-overlay');
-
-            var getBlanks = function(){
-                //got this formula from manually adding the breaks
-                var numBlanks = Math.ceil((3*uploader.height())/300);
-                var blanks = "";
-
-                for(var i=0; i<numBlanks; i++){
-                    blanks += "<br>";
-                }
-
-                return blanks;
-            };
 
             var borderUp = function(e){
                 e.preventDefault();
@@ -56,6 +45,7 @@ angular.module("PostUI", ['NewPostService'])
                     , 'height': uploader.height() + 'px'
                     , 'top': uploader.position().top + 'px'
                     , 'display': 'block'
+                    , 'z-index': '1'
                 });
 
                 uploader.css({
@@ -63,9 +53,9 @@ angular.module("PostUI", ['NewPostService'])
                     , 'border': 'darkcyan 2px dashed'
                     , 'background': "lightblue"
                     , 'opacity': '0.5'
+                    , 'z-index': '-1'
                 });
 
-                overlay.html(getBlanks() + "Drop Media Here");
                 overlay.on('dragleave', borderDown);
             };
 
@@ -74,6 +64,7 @@ angular.module("PostUI", ['NewPostService'])
 
                 overlay.css({
                     'display': 'none'
+                    , 'z-index': '-1'
                 });
 
                 uploader.css({
@@ -81,9 +72,11 @@ angular.module("PostUI", ['NewPostService'])
                     , 'border': 'none'
                     , 'background': "white"
                     , 'opacity': '1'
+                    , 'z-index': '1'
                 });
 
                 overlay.off('dragenter');
+                overlay.off('dragleave');
             };
 
             if(!controller.destUrl) throw new Error("A destination url must be specified");
@@ -94,13 +87,13 @@ angular.module("PostUI", ['NewPostService'])
             uploader.on('dragover', newPost.nonEvent);
 
             uploader.on('drop', function(e){
-                newPost.drop(e, controller.width ? controller.width : 280);
+                newPost.drop(e, controller.width ? controller.width : DEFAULT_WIDTH);
                 borderDown(e);
             });
 
             fileInput.on('click', function(){fileInput.value = null;});
             fileInput.on('change', function(){
-                newPost.shelf(controller.width ? controller.width : 280);
+                newPost.shelf(controller.width ? controller.width : DEFAULT_WIDTH);
             });
 
             if(controller.defaultText){

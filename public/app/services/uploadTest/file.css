@@ -101,5 +101,6 @@ body{
     background: lightblue;
     opacity: 0.5;
     font-size: 20pt;
+    font-weight: bolder;
     color: darkgreen;
 }
