@@ -21,13 +21,13 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
             addFilesAndPreview(dt.files, width);
         };
         
-        function addFilesAndPreview(files, width){
+        var addFilesAndPreview = function(files, width){
             for(var i=0; i<files.length; i++){
                 if (render.validFile(files[i])) post.files.push(files[i]);
             }
 
             render.preview(files, width, post);
-        }
+        };
 
         post.saveFiles = function(body, tags, url){
             var sendFile = $resource(url);
