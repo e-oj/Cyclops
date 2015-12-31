@@ -33,7 +33,7 @@ module.exports = function(gfs, eventEmitter){
             , metadata: {
                 mimeType:file.mimetype
                 , date: Date.now()
-                , author : req.decoded._id
+                , author : req.decoded? req.decoded._id : req.body.username
             }
         });
 

@@ -2,6 +2,7 @@ angular.module("DateUtils", ["ngSanitize"])
     .factory("dateUtils", ["$sce", function($sce){
         var utils = {};
 
+        //TODO: Move all non-date function into separate module
         utils.addTags = function(text){
             var txtArr = text.split(' ');
             var post = '';
