@@ -1,20 +1,15 @@
-/**
- * This module contains the routes for access to the
- * API (login and sign up routes). It validates users
- * And gives them a token on login that validates them
- * till the token expires or is removed from the client.
- */
-
-//=============================================================
-//Dependencies
-//=============================================================
+//private variables
 var jwt = require('jsonwebtoken'); //JSON web token for authentication
 var config = require('../../config'), //Configuration
     secret = config.secret; //secret for token
 var bCrypt = require('bcrypt-nodejs'); //bcrypt for validating hashed passwords
 
 /**
- * Router module to be exported to server
+ * This module contains the routes for access to the
+ * API (login and sign up routes). It validates users
+ * And gives them a token on login that validates them
+ * till the token expires or is removed from the client.
+ *
  * @param express ------express
  * @param User ---------User model
  * @param mediaSuite ---mediaSuite
@@ -31,7 +26,7 @@ module.exports = function(express, User, multer, mediaSuite){
         ,inMemory: true
     }));
 
-
+    //saves profileMedia if any
     accessRouter.use('/register', mediaSuite.saveMedia);
 
     accessRouter.post('/register', function(req, res){
@@ -60,22 +55,21 @@ module.exports = function(express, User, multer, mediaSuite){
 
             else { //if no errors, user is saved
                 res.json({
-                    success: true,
-                    message: "User created"
+                    success: true
+                    , message: "User created"
                 });
             }
         });
     });
 
     accessRouter.post('/login', function(req, res){
-        //console.log("Go it!!!!!!!!!!");
         //make sure the username and password exist.
         if(!(req.body.username&&req.body.password)){
             //res.status(404);
 
             res.json({
-                success: false,
-                message: 'Username and Password are required'
+                success: false
+                , message: 'Username and Password are required'
             });
         }
         else { //if the credentials exist, find user and validate password
@@ -86,8 +80,8 @@ module.exports = function(express, User, multer, mediaSuite){
                     //res.status(404);
 
                     res.json({
-                        success: false,
-                        message: 'Authentication failed. Wrong username or password'
+                        success: false
+                        , message: 'Authentication failed. Wrong username or password'
                     });
 
                 }
@@ -102,16 +96,16 @@ module.exports = function(express, User, multer, mediaSuite){
 
                             var token = jwt.sign(repUser, secret, {expiresInMinutes: 1440});
                             res.json({
-                                success: true,
-                                message: user.username + ' successfully logged in',
-                                token: token
+                                success: true
+                                , message: user.username + ' successfully logged in'
+                                , token: token
                             });
                         }
 
                         else{//wrong password
                             res.json({
-                                success: false,
-                                message: 'Authentication failed. Wrong username or Password'
+                                success: false
+                                , message: 'Authentication failed. Wrong username or Password'
                             });
                         }
                     });

@@ -1,3 +1,4 @@
+//TODO: Provide support for profile videos
 angular.module('cyclops', ['ngAnimate', 'ui.router', 'Access', 'Home', 'Info', 'Date'])
 
     .config(function($httpProvider, $stateProvider, $urlRouterProvider){
