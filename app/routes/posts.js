@@ -22,7 +22,7 @@
 module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs, _, pollSuite){
     var postRouter = express.Router();
 
-    //get the top 20 posts ranked by number of likes
+    //get the top 50 posts ranked by number of likes
     postRouter.get('/top50', function(req, res){
         Post.find({})
             .populate('author', 'username profileMedia')

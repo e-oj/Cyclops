@@ -19,6 +19,7 @@ var bCrypt = require('bcrypt-nodejs'); //bcrypt for validating hashed passwords
 module.exports = function(express, User, multer, mediaSuite){
     var accessRouter = express.Router();
     var error = {};//error object to store validation errors
+    var TOKEN_LIFESPAN = 1440;
 
     //saves media in a buffer
     accessRouter.use(multer({
@@ -54,6 +55,8 @@ module.exports = function(express, User, multer, mediaSuite){
             }
 
             else { //if no errors, user is saved
+                res.status(201);
+
                 res.json({
                     success: true
                     , message: "User created"
@@ -65,7 +68,7 @@ module.exports = function(express, User, multer, mediaSuite){
     accessRouter.post('/login', function(req, res){
         //make sure the username and password exist.
         if(!(req.body.username&&req.body.password)){
-            //res.status(404);
+            res.status(403);
 
             res.json({
                 success: false
@@ -77,7 +80,7 @@ module.exports = function(express, User, multer, mediaSuite){
                 if (err) throw err;
 
                 if (!user) {//user does not exist
-                    //res.status(404);
+                    res.status(403);
 
                     res.json({
                         success: false
@@ -94,7 +97,9 @@ module.exports = function(express, User, multer, mediaSuite){
                             //assign a token
                             var repUser = {_id: user._id, username: user.username};
 
-                            var token = jwt.sign(repUser, secret, {expiresInMinutes: 1440});
+                            var token = jwt.sign(repUser, secret, {expiresInMinutes: TOKEN_LIFESPAN});
+                            res.status(202);
+
                             res.json({
                                 success: true
                                 , message: user.username + ' successfully logged in'
@@ -103,6 +108,8 @@ module.exports = function(express, User, multer, mediaSuite){
                         }
 
                         else{//wrong password
+                            res.status(403);
+
                             res.json({
                                 success: false
                                 , message: 'Authentication failed. Wrong username or Password'

@@ -13,6 +13,7 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
             function updateMe(me){
                 var top50 = $resource(constants.api + "/posts/pollTop50");
                 top50.get({}).$promise.then(function(data){
+                    console.log(data);
                     if(data.success) {
                         self.top50 = data;
                     }

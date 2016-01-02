@@ -2,6 +2,5 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{AngularJS, WebstormProjects node_modules, jQuery}" />
-    <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>

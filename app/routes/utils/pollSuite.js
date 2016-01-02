@@ -32,33 +32,50 @@ module.exports = function(express, User, Post, _){
      * call to this function, for 2secs from the current time,
      * with the updated depth.
      *
-     * @param request the request
-     * @param response the response
+     * @param req the request
+     * @param res the response
      * @param oldMe the current information
      * @param depth the number of times this function has been called
      */
-    pollSuite.pollMe = function(request, response, oldMe, depth){
+    pollSuite.pollMe = function(req, res, oldMe, depth){
 
-        User.findById(request.decoded._id, function (err, me) {
+        User.findById(req.decoded._id, function (err, me) {
             if (err || !me) {
-                response.json({
+                //403: forbidden
+                res.status(403);
+
+                res.json({
                     success: false,
                     result: 'Could not find user'
                 });
             }
 
             else {
-                if ((notEqualInfo(me, oldMe)) || depth >= 45) {
-                    response.json({
-                        success: true,
-                        result: me
-                    });
+                var equal = !notEqualInfo(me, oldMe);
+                if ((!equal || depth >= 45)){
+                    if(depth >= 45 && equal){
+                        //200: OK
+                        res.status(200);
+
+                        res.json({
+                            success: false
+                        });
+                    }
+                    else {
+                        //205: Reset Content
+                        res.status(205);
+
+                        res.json({
+                            success: true,
+                            result: me
+                        });
+                    }
                 }
 
                 else {
                     setTimeout(function(){
                         depth++;
-                        pollSuite.pollMe(request, response, oldMe, depth);
+                        pollSuite.pollMe(req, res, oldMe, depth);
                     }, 2000);
                 }
             }
@@ -83,33 +100,43 @@ module.exports = function(express, User, Post, _){
      * call to this function, for 2secs from the current time,
      * with the updated depth.
      *
-     * @param request the request
-     * @param response the response
+     * @param req the request
+     * @param res the response
      * @param oldTop50 the current information
      * @param depth the number of times this function has been called
      */
-    pollSuite.pollTop50 = function(request, response, oldTop50, depth) {
+    pollSuite.pollTop50 = function(req, res, oldTop50, depth) {
         Post.find({})
             .populate('author', 'username profileMedia')
             .sort({'meta.likes':-1})
             .limit(50)
             .exec(function (err, posts) {
                 if (err || !posts) {
-                    response.json({
+                    //200: OK
+                    res.status(200);
+
+                    res.json({
                         success: false,
                         result: 'Could not find posts'
                     });
                 }
 
                 else {
-                    if ((notEqualLists(posts, oldTop50)) || depth >= 45) {
-                        if(depth >= 45 && !notEqualLists(posts, oldTop50)){
-                            response.json({
+                    var equal = !notEqualLists(posts, oldTop50);
+                    if ((!equal || depth >= 45)){
+                        if(equal){
+                            //200: OK
+                            res.status(200);
+
+                            res.json({
                                 success: false
                             });
                         }
                         else {
-                            response.json({
+                            //200: OK
+                            res.status(200);
+
+                            res.json({
                                 success: true,
                                 result: posts
                             });
@@ -119,7 +146,7 @@ module.exports = function(express, User, Post, _){
                     else {
                         setTimeout(function () {
                             depth++;
-                            pollSuite.pollTop50(request, response, oldTop50, depth);
+                            pollSuite.pollTop50(req, res, oldTop50, depth);
                         }, 2000);
                     }
                 }

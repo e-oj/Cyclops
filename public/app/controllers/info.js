@@ -6,7 +6,7 @@ angular.module('Info', ['UserService', 'ngResource', 'ConstFactory'])
         var mediaUrl = constants.api + "/media/";
 
         var self = this;
-        self.me = null;
+        self.me = {};
 
         //self.meInfo = User.getMe();
 
@@ -14,16 +14,13 @@ angular.module('Info', ['UserService', 'ngResource', 'ConstFactory'])
             return mediaUrl+mediaId;
         };
 
-        self.meInfo = User.getMe();
+        self.me.info = User.getMe();
 
-        function updateMe(me){
+        (function updateMe(me){
             var newMe = $resource(constants.api + "/me/pollInfo");
             newMe.get({}).$promise.then(function(data){
-                self.meInfo = data;
+                if(data.success)me.info = data;
                 updateMe(me);
             });
-        }
-
-        updateMe(self.meInfo);
-
+        })(self.me);
     }]);
