@@ -23,6 +23,7 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
 
             updateMe(self.top50);
 
+            //just for demo purposes. I'm moving the card responsibilities into a directive
             $scope.$on('LastElementReached', function(){
                 $scope.$evalAsync(function() {
                     setTimeout(function () {
