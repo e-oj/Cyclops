@@ -32,11 +32,11 @@ angular.module("PostUI", ['NewPostService'])
             }
         };
 
-        var link = function(scope){
+        var link = function(scope, elem){
             var controller = scope.uploadCt;
             var DEFAULT_WIDTH = 280;
-            var uploader = $('#uploader');
-            var overlay = $('#upload-overlay');
+            var uploader = elem.find('#uploader');
+            var overlay = elem.find('#upload-overlay');
 
             var borderUp = function(e){
                 e.preventDefault();
@@ -81,7 +81,7 @@ angular.module("PostUI", ['NewPostService'])
 
             if(!controller.destUrl) throw new Error("A destination url must be specified");
 
-            var fileInput = $('#file-input');
+            var fileInput = elem.find('#file-input');
 
             uploader.on('dragenter', borderUp);
             uploader.on('dragover', newPost.nonEvent);
@@ -110,12 +110,15 @@ angular.module("PostUI", ['NewPostService'])
                 var DIFF = 30;
 
                 uploader.width(controller.width);
-                $('#post-body').width(controller.width-DIFF);
-                $('#tags').width(controller.width-DIFF);
+                elem.find('#post-body').width(controller.width-DIFF);
+                elem.find('#tags').width(controller.width-DIFF);
+                elem.find('#drop-zone').css({
+                    'max-height': (controller.width * 1.5) + "px"
+                });
             }
 
             if(controller.textHeight){
-                $('#post-body').height(controller.textHeight);
+                elem.find('#post-body').height(controller.textHeight);
             }
         };
 

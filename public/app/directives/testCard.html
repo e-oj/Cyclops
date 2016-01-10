@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="PostCard" >
+<head>
+    <link rel="stylesheet" href="/app/directives/card.css">
+    <meta charset="UTF-8">
+    <script src="/app/services/uploadTest/jquery-2.1.3.js"></script>
+    <script src="/app/services/uploadTest/angular.js"></script>
+    <script src="/app/services/uploadTest/angular-resource.js"></script>
+    <script src="/assets/libs/angular-sanitize.js"></script>
+    <script src="/app/services/constantService.js"></script>
+    <script src="/app/services/postService.js"></script>
+    <script src="/app/utils/dateUtils.js"></script>
+    <script src="/app/controllers/home.js"></script>
+    <script src="/app/directives/date.js"></script>
+    <script src="/app/directives/postCard.js"></script>
+</head>
+<body>
+    <div ng-controller="homeController as home" id="cards">
+        <oj-post-card
+                ng-repeat="item in home.top50.result"
+                body-json="{{item}}"
+                width=300
+        >
+        </oj-post-card>
+    </div>
+</body>
+</html>

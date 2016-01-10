@@ -1,0 +1,155 @@
+#cards{
+    background-color: whitesmoke;
+    position: relative;
+    left: 22%;
+    width: 78%;
+    /*animation: zoomInDown 1.2s both ease-in;*/
+    /*overflow: hidden;*/
+}
+
+.card {
+    display: inline-block;
+    vertical-align: top;
+    width: 0;
+    position: absolute;
+    margin: 10px;
+    overflow: hidden;
+    background: #FFF;
+    color: #272727;
+    transition: top 0.8s ease-in-out, left 0.8s ease-in-out;
+}
+.card .title {
+    line-height: 48px;
+    font-size: 24px;
+    font-weight: 300;
+}
+.card .text {
+    padding: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    word-wrap: break-word;
+}
+.card .text p {
+    margin: 0;
+    font-size: 1.1em;
+    font-family: verdana, sans-serif;
+}
+.card .action {
+    border-top: 1px solid rgba(160, 160, 160, 0.2);
+    padding: 20px;
+}
+.card a {
+    color: #ffab40;
+    margin-right: 20px;
+    -webkit-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.card .media {
+    position: relative;
+}
+.card .media img, .card .media video{
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+}
+.card .media .title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    color: #FFF;
+}
+
+.card .card-header {
+    font-size: 1.2em;
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+}
+
+.card .card-header .username{
+    font-size: 0.8em;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    color: darkcyan;
+}
+
+.card .card-header .date{
+    font-size: 0.54em;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    text-align: center;
+    font-family: Tahoma, sans-serif;
+}
+
+.card .profile-media{
+    width: 30px;
+    height: 30px;
+    float: left;
+    position: relative;
+    top: -5px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+a {
+    color: #00B7FF;
+}
+
+.card .ghost-div{
+    position: absolute;
+    width: 100%;
+    color: #FFFFFF;
+    border: none;
+    z-index: 10000;
+}
+
+.tags{
+    width: 90%;
+    overflow-x: hidden;
+    margin: auto;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    color: darkcyan;
+    /* font-size: 1em; */
+    /* height: 15px; */
+    font-size: 0.8em;
+    font-style: italic;
+    font-family: tahoma, sans-serif;
+    transition: all 5s ease-in-out;
+    /* font-family: monospace; */
+}
+.tags-container{
+    position: relative;
+}
+.tags:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 15%;
+    background: linear-gradient(to right,rgba(255,255,255,0) 0,white 100%);
+}
+
+.tags div{
+    left: 0;
+    padding: 3px;
+}
+
+/*.tags div:hover{*/
+/*cursor: pointer;*/
+/*}*/
+
+.text-tag{
+    color: darkcyan;
+    /* font-style: italic; */
+    font-family: tahoma, sans-serif;
+}
