@@ -91,7 +91,9 @@ angular.module("PostUI", ['NewPostService'])
                 borderDown(e);
             });
 
-            fileInput.on('click', function(){fileInput.value = null;});
+            fileInput.on('click', function(){
+                fileInput.val(null);
+            });
             fileInput.on('change', function(){
                 newPost.shelf(controller.width ? controller.width : DEFAULT_WIDTH);
             });

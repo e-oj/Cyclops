@@ -70,26 +70,50 @@ module.exports = function(gfs, eventEmitter){
         var buffer = file.buffer;
 
         if(fileIs('image', file)){
-            //save the mediaID
-            req.mediaIds.push({media: id, mediaType: 'image'});
 
-            //if the file is not a gif, resize if necessary then pipe
-            if(!fileIs('gif', file)) {
-                var fileBuffer = gm(buffer, file.name);
+            var fileBuffer = gm(buffer, file.name);
 
-                fileBuffer.size(function(err, size){
-                    if(err) console.log(err);
+            fileBuffer.size(function(err, size){
+                if(err){
+                    console.log(err);
+                }
 
-                    else if(size.width > 800){
-                        fileBuffer.resize(IMAGE_SIZE).stream().pipe(writeStream);
-                    }
+                //resize if width > 800 and image is not a gif
+                else if(size.width > 800 && !fileIs("gif", file)){
+                    fileBuffer = fileBuffer.resize(IMAGE_SIZE);
 
-                    else{
+                    fileBuffer.size(function(err, newSize){
                         fileBuffer.stream().pipe(writeStream);
-                    }
-                });
-            }
-            else write = true;
+
+                        //save the mediaID
+                        req.mediaIds.push({
+                            media: id
+                            , mediaType: 'image'
+                            , dimension: {
+                                width: newSize.width
+                                , height: newSize.height
+                            }
+                        });
+                    });
+                }
+
+                else{
+                    fileBuffer.stream().pipe(writeStream);
+
+                    //save the mediaID
+                    req.mediaIds.push({
+                        media: id
+                        , mediaType: 'image'
+                        , dimension: {
+                            width: size.width
+                            , height: size.height
+                        }
+                    });
+                }
+
+            });
+            //}
+            //else write = true;
         }
         else if (fileIs('audio', file)){
             //save the mediaID

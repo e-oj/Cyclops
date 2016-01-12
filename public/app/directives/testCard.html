@@ -10,8 +10,8 @@
     <script src="/app/services/constantService.js"></script>
     <script src="/app/services/postService.js"></script>
     <script src="/app/utils/dateUtils.js"></script>
+    <script src="/app/utils/postUtils.js"></script>
     <script src="/app/controllers/home.js"></script>
-    <script src="/app/directives/date.js"></script>
     <script src="/app/directives/postCard.js"></script>
 </head>
 <body>
@@ -19,7 +19,7 @@
         <oj-post-card
                 ng-repeat="item in home.top50.result"
                 body-json="{{item}}"
-                width=300
+                width="800"
         >
         </oj-post-card>
     </div>

@@ -1,22 +1,6 @@
-angular.module("DateUtils", ["ngSanitize"])
-    .factory("dateUtils", ["$sce", function($sce){
+angular.module("DateUtils", [])
+    .factory("dateUtils", [function(){
         var utils = {};
-
-        //TODO: Move all non-date function into separate module
-        utils.addTags = function(text){
-            var txtArr = text.split(' ');
-            var post = '';
-
-            for(var i = 0; i < txtArr.length; i++){
-                if(txtArr[i][0] === '#'){
-                    txtArr[i] = '<span class="text-tag">' + txtArr[i] + '</span>'
-                }
-
-                post += txtArr[i] + ' ';
-            }
-
-            return $sce.trustAsHtml(post);
-        };
 
         utils.parseDate = function(date){
             if(!date) return "None";

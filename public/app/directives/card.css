@@ -24,13 +24,11 @@
     font-weight: 300;
 }
 .card .text {
-    padding: 20px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding: 10px 20px 10px 20px;
     word-wrap: break-word;
 }
 .card .text p {
-    margin: 0;
+    margin: 10px 0 5px 0;
     font-size: 1.1em;
     font-family: verdana, sans-serif;
 }
@@ -69,8 +67,9 @@
 
 .card .card-header {
     font-size: 1.2em;
-    padding: 10px;
+    padding: 5px;
     border-bottom: 1px solid lightgray;
+    position: relative;
 }
 
 .card .card-header .username{
@@ -78,25 +77,37 @@
     font-family: Helvetica, sans-serif;
     font-weight: bold;
     color: darkcyan;
+    display: inline-block;
+    position: relative;
+}
+
+.card .card-header .username p{
+    margin: 0;
 }
 
 .card .card-header .date{
-    font-size: 0.54em;
+    font-size: 0.6em;
     position: absolute;
-    right: 10px;
-    top: 15px;
-    text-align: center;
+    left: 80%;
     font-family: Tahoma, sans-serif;
 }
 
 .card .profile-media{
-    width: 30px;
-    height: 30px;
-    float: left;
+    width: 10%;
     position: relative;
-    top: -5px;
-    margin-right: 10px;
+    display: inline-block;
+    margin-right: 0.5%;
     border-radius: 50%;
+    max-width: 50px;
+}
+
+.card .profile-media img,
+.card .profile-media video{
+    position: relative;
+    width: 100%;
+    display: block;
+    border-radius: 50%;
+    max-width: 50px;
 }
 
 a {
@@ -139,9 +150,11 @@ a {
     background: linear-gradient(to right,rgba(255,255,255,0) 0,white 100%);
 }
 
-.tags div{
+.tag-train{
     left: 0;
-    padding: 3px;
+    transition: all 2s ease-in-out;
+    position: relative;
+    padding: 5px 0 5px 0;
 }
 
 /*.tags div:hover{*/

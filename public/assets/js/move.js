@@ -2,11 +2,12 @@ function move(elem){
     //alert('in');
     var container = $(elem).parent().closest('div');
     var elemWidth = 0;
+    var containerWidth = container.width();
+
     $(elem).children().each(function(){
         elemWidth += $(this).width();
     });
-    var containerWidth = container.width();
-    //alert('elemWidth: ' + elemWidth + 'containerWidth: ' + containerWidth);
+
     var movable = elemWidth > (containerWidth * 0.9);
     if(movable){
         var distance = elemWidth - containerWidth;
@@ -15,6 +16,7 @@ function move(elem){
             'transition': 'all 2s ease-in-out'
             , 'position': 'relative'
             , 'left': -distance - 20 + 'px'
+            , 'padding': "5px 0px 5px 0px"
         });
 
         $(elem).mouseleave(function(){

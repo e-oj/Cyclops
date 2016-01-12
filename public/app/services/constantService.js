@@ -3,6 +3,7 @@ angular.module('ConstFactory', [])
         var statics = {};
 
         statics.api = "/api";
+        statics.media = statics.api + "/media";
 
         return statics;
     });

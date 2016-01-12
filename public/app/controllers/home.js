@@ -1,10 +1,11 @@
-angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
+angular.module('Home', ['Post', 'DateUtils', "PostUtils", 'ngResource', 'ConstFactory'])
     .controller('homeController', ['top50'
         , '$scope'
         , 'dateUtils'
+        , 'postUtils'
         , '$resource'
         , 'constants'
-        , function(top50, $scope, dateUtils, $resource, constants){
+        , function(top50, $scope, dateUtils, postUtils, $resource, constants){
 
             var self = this;
             var mediaUrl = constants.api + "/media/";
@@ -13,7 +14,6 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
             function updateMe(me){
                 var top50 = $resource(constants.api + "/posts/pollTop50");
                 top50.get({}).$promise.then(function(data){
-                    console.log(data);
                     if(data.success) {
                         self.top50 = data;
                     }
@@ -23,7 +23,7 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
 
             updateMe(self.top50);
 
-            //just for demo purposes. I'm moving the card responsibilities into a directive
+            //TODO: Get all these timeouts the fuck out of here
             $scope.$on('LastElementReached', function(){
                 $scope.$evalAsync(function() {
                     setTimeout(function () {
@@ -81,7 +81,7 @@ angular.module('Home', ['Post', 'DateUtils', 'ngResource', 'ConstFactory'])
                 return mediaUrl+mediaId;
             };
 
-            self.postText = dateUtils.addTags;
+            self.postText = postUtils.addTags;
             self.parseDate = dateUtils.parseDate;
         }
     ])
