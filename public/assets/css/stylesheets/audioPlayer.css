@@ -1,0 +1,22 @@
+.audio-div {
+    position: relative;
+    width: 100%;
+    height: inherit;
+    background-color: #f5f5f5;
+    border-left: 1px solid darkcyan;
+    border-right: 1px solid darkcyan;
+}
+
+.audio-div .img-div{
+    position: absolute;
+    width: 25%;
+    height: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.audio-div .img-div .media-img{
+    position: relative;
+    width: 100%;
+    height: inherit;
+}

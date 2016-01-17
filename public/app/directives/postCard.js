@@ -23,22 +23,27 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
                 if(post.author.profileMedia.media) {
                     var mediaId = post.author.profileMedia.media;
                     var mediaType = post.author.profileMedia.mediaType;
+                    var multiMedia = elem.find(".multimedia");
                     var profileMedia = elem.find(".profile-media");
                     var media = document.createElement(mediaType == "image"? "img" : "video");
                     var loading = document.createElement("img");
 
+                    multiMedia.width(scope.width);
                     loading.src = "/assets/img/loading.gif";
                     profileMedia.append(loading);
 
                     media.src = constants.media + "/" + mediaId;
                     media.onload = function(){
-                        angular.element(loading).replaceWith(media);
                         var $media = angular.element(media);
+
+                        angular.element(loading).replaceWith(media);
                         $media.height($media.width());
                         elem.find(".card-header").height($media.height());
+
                         username.css({
                             top: -($media.height()/3) + "px"
                         });
+
                         date.css({
                             top: ($media.height()/2.5) + "px"
                         });
@@ -50,17 +55,8 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
 
                 if(post.files.length){
                     post.files.forEach(function(file){
-                        var $mediaDiv = angular.element(document.createElement("div"));
-                        var loading = document.createElement("img");
-                        var media;
-
-                        loading.src = "/assets/img/loading.gif";
-
-                        if(file.mediaType == "image"){
-                            media = document.createElement("img");
-                            $mediaDiv.height(file.dimension.height);
-                        }
-                    })
+                        postUtils.loadMedia(scope, multiMedia, file);
+                    });
                 }
 
                 elem.find(".text").html("<p>" + postUtils.addTags(post.body) + "</p>");

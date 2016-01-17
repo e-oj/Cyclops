@@ -17,7 +17,7 @@ module.exports = function(express, mediaSuite, tkRouter){
 
     //mediaRouter.use(tkRouter);
 
-    mediaRouter.get('/:id', mediaSuite.getMedia);
+    mediaRouter.get('/:id', mediaSuite.loadMedia);
 
     return mediaRouter;
 };

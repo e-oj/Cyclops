@@ -3,6 +3,7 @@ var jwt = require('jsonwebtoken'); //JSON web token for authentication
 var config = require('../../config'), //Configuration
     secret = config.secret; //secret for token
 var bCrypt = require('bcrypt-nodejs'); //bcrypt for validating hashed passwords
+var TOKEN_LIFESPAN = 1440;
 
 /**
  * This module contains the routes for access to the
@@ -19,7 +20,6 @@ var bCrypt = require('bcrypt-nodejs'); //bcrypt for validating hashed passwords
 module.exports = function(express, User, multer, mediaSuite){
     var accessRouter = express.Router();
     var error = {};//error object to store validation errors
-    var TOKEN_LIFESPAN = 1440;
 
     //saves media in a buffer
     accessRouter.use(multer({

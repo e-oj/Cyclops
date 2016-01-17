@@ -42,12 +42,12 @@ module.exports = function(gfs, eventEmitter){
 
                 //if there's a files array and it's not empty, proceed
                 if(files && files.length) {
-                    for (var i = 0; i < files.length; i++) {
+                    files.forEach(function(file){
                         //f the file's mime type is a validType
-                        if(validTypes.indexOf(files[i].mimetype.split("/")[0]) > -1){
-                            fileSuite.saveFile(req, files[i]);
+                        if(validTypes.indexOf(file.mimetype.split("/")[0]) > -1){
+                            fileSuite.saveFile(req, file);
                         }
-                    }
+                    });
 
                     /**
                      * Checks if all the files are done uploading.
@@ -93,7 +93,7 @@ module.exports = function(gfs, eventEmitter){
      * @param req The request
      * @param res The response
      */
-    mediaSuite.getMedia = function(req, res){
+    mediaSuite.loadMedia = function(req, res){
 
         //searches the database for the requested media.
         gfs.findOne({_id: req.params.id}, function(err, file){
