@@ -80,10 +80,14 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 //TODO Remove the check for dim. It will always be available in the future
                 var useScopeWidth = dim? dim.width > scope.width : true;
                 width = useScopeWidth? scope.width : dim.width;
-                height = useScopeWidth? (width / (dim.width/dim.height)) : dim.height;
+                if(dim) height = useScopeWidth? (width / (dim.width/dim.height)) : dim.height;
+                else height = width/ASPECT_RATIO;
 
                 media.width = width;
                 media.onload = function(){
+                    mediaDiv.css({
+                        height: "auto"
+                    });
                     angular.element(loading).replaceWith(media);
                 };
             }
