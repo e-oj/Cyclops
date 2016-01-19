@@ -72,7 +72,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
             var height = 0;
             var media;
 
-            loading.src = "/assets/img/loading.gif";
+            loading.src = "/assets/img/loading.GIF";
             loading.width = scope.width * 0.05;
 
             if(file.mediaType == "image"){
