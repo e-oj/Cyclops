@@ -20,3 +20,52 @@
     width: 100%;
     height: inherit;
 }
+
+.audio-div .controls-div{
+    position: absolute;
+    width: 75%;
+    left: 25%;
+    height: inherit;
+    background-color: #d3d3d3;
+}
+
+.audio-div .controls-div .playback-div{
+    position: relative;
+    height: 25%;
+    min-height: 25px;
+    top: 25%;
+    background-color: #ffffff;
+}
+
+.audio-div .controls-div .playback-div .play-div{
+    position: absolute;
+    height: 100%;
+    width: 8%;
+    left: 1%;
+    min-width: 25px;
+    background-color: white;
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 1px solid #008b8b;
+}
+
+.audio-div .controls-div .playback-div .play-div:hover{
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
+.audio-div .controls-div .playback-div .play-div .play-img{
+    position: absolute;
+    height: 45%;
+    width: 37%;
+    top: 27%;
+    left: 37%;
+}
+
+.audio-div .controls-div .playback-div .play-div .pause-img{
+    position: absolute;
+    height: 45%;
+    width: 37%;
+    top: 28%;
+    left: 32%;
+}

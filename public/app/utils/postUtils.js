@@ -95,6 +95,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
 
                 media.width = width;
                 media.oncanplay = function(){
+                    console.log("ready");
                     media.id = file.media;
                     media.className += "video-js vjs-default-skin";
                     angular.element(loading).replaceWith(media);
@@ -120,6 +121,13 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 var playbackDiv = angular.element(document.createElement("div"));
                 var playDiv = angular.element(document.createElement("div"));
                 var playImg = document.createElement("img");
+                var pauseImg = document.createElement("img");
+                var trackDiv = angular.element(document.createElement("div"));
+                var track = document.createElement("input");
+                var playing = false;
+                var duration = 0;
+                media = document.createElement("audio");
+
 
                 audioDiv.addClass("audio-div");
 
@@ -129,16 +137,52 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 imgDiv.append(mediaImg);
                 imgDiv.addClass("img-div");
 
+                pauseImg.src = "/assets/img/pause.png";
+                pauseImg.className = "pause-img";
 
-                controlsDiv.css({
+                playbackDiv.addClass("playback-div");
+                playDiv.on("click", function(){
+                    if(playing) {
+                        media.pause();
+                        angular.element(pauseImg).replaceWith(playImg);
+                        playing = false;
+                    }
+                    else{
+                        media.play();
+                        angular.element(playImg).replaceWith(pauseImg);
+                        playing = true;
+                    }
+                });
+                playDiv.addClass("play-div");
+                playImg.src = "/assets/img/play.png";
+                playImg.className = "play-img";
+                playDiv.append(playImg);
+
+                track.type = "range";
+                track.min = 0;
+                track.max = 1;
+                track.step = 0.01;
+                track.value = 0;
+                track.style.width = "100%";
+                track.oninput = function(){
+                    media.currentTime = Math.floor(media.duration * (track.value));
+                    console.log(media.duration + "-" + media.currentTime);
+                };
+
+                trackDiv.append(track);
+                trackDiv.css({
                     position: "absolute"
-                    , width: "75%"
-                    , left: "25%"
-                    , height: "inherit"
-                    , backgroundColor: "lightgray"
+                    , width: "70%"
+                    , left: "12%"
+                    , top: "32%"
                 });
 
-                media = document.createElement("audio");
+                playbackDiv.append(playDiv);
+                playbackDiv.append(trackDiv);
+
+                controlsDiv.addClass("controls-div");
+                controlsDiv.append(playbackDiv);
+
                 width = scope.width;
                 height = width/4;
 
@@ -148,21 +192,28 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 media.oncanplay = function(){
                     angular.element(loading).replaceWith(audioDiv);
 
-                    //cancel out extra width/height added by border
-                    mediaDiv.width(scope.width - 2);
-                    mediaDiv.height(scope.height - 2);
+                    //cancel out extra width added by border
+                    mediaDiv.width(scope.width - 1);
 
-                    media.play();
-                    setTimeout(function(){
-                        media.pause();
-                    }, 10000);
+                    duration = media.duration;
+                    media.oncanplay = null;
                 };
+
+                media.ontimeupdate = function(){
+                    track.value = media.currentTime/duration;
+                };
+
+                media.onended = function(){
+                    angular.element(pauseImg).replaceWith(playImg);
+                    playing = false;
+                    media.currentTime = 0;
+                    track.value = 0;
+                }
 
             }
 
             mediaDiv.width(width);
             mediaDiv.height(height);
-            media.src = constants.media + "/" + file.media;
             //if(file.mediaType == "video" || file.mediaType == "audio")console.log(media.src);
 
 
@@ -176,6 +227,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
             loading.style.top = "45%";
             mediaDiv.append(loading);
             mediaElem.append(mediaDiv);
+            media.src = constants.media + "/" + file.media;
         };
 
         function mediaConfig(media){
