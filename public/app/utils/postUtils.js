@@ -77,7 +77,8 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
 
             if(file.mediaType == "image"){
                 media = document.createElement("img");
-                var useScopeWidth = dim.width > scope.width;
+                //TODO Remove the check for dim. It will always be available in the future
+                var useScopeWidth = dim? dim.width > scope.width : false;
                 width = useScopeWidth? scope.width : dim.width;
                 height = useScopeWidth? (width / (dim.width/dim.height)) : dim.height;
 
