@@ -168,19 +168,14 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 track.max = 1;
                 track.step = 0.01;
                 track.value = 0;
-                track.style.width = "100%";
+                track.className = "oj-slider";
                 track.oninput = function(){
                     media.currentTime = Math.floor(media.duration * (track.value));
-                    console.log(media.duration + "-" + media.currentTime);
+                    //console.log(media.duration + "-" + media.currentTime);
                 };
 
+                trackDiv.addClass("track-div");
                 trackDiv.append(track);
-                trackDiv.css({
-                    position: "absolute"
-                    , width: "70%"
-                    , left: "12%"
-                    , top: "32%"
-                });
 
                 playbackDiv.append(playDiv);
                 playbackDiv.append(trackDiv);
@@ -234,10 +229,6 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
             mediaElem.append(mediaDiv);
             media.src = constants.media + "/" + file.media;
         };
-
-        function mediaConfig(media){
-
-        }
 
         return utils;
     }]);
