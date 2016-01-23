@@ -87,10 +87,10 @@
 }
 
 .card .card-header .date{
-    font-size: 0.6em;
+    font-size: 0.7em;
     position: absolute;
     right: 10%;
-    font-family: Tahoma, sans-serif;
+    font-family: "Courier New", Tahoma, sans-serif;
 }
 
 .card .profile-media{
@@ -121,6 +121,24 @@ a {
     color: #FFFFFF;
     border: none;
     z-index: 10000;
+}
+
+.card .multimedia{
+    scrollbar-face-color: rgba(0, 139, 139, 0.6);
+    scrollbar-track-color: rgba(255, 255, 255, 0.5);
+}
+
+.card .multimedia::-webkit-scrollbar{
+    width: 4px;
+    max-height: 9px;
+}
+
+.card .multimedia::-webkit-scrollbar-thumb{
+    background-color: rgba(0, 139, 139, 0.6);
+}
+
+.card .multimedia::-webkit-scrollbar-track{
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .tags{

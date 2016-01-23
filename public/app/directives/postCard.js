@@ -17,6 +17,7 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
                 var post = angular.fromJson(scope.bodyJson);
                 var username = elem.find(".username");
                 var date = elem.find(".date");
+                var MAX_HEIGHT = scope.width * 1.8;
 
                 elem.find(".card-header").width(scope.width);
 
@@ -56,6 +57,14 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
                 if(post.files.length){
                     post.files.forEach(function(file){
                         postUtils.loadMedia(scope, multiMedia, file);
+                    });
+                }
+
+                if(multiMedia.height() > MAX_HEIGHT){
+                    multiMedia.css({
+                        maxHeight: MAX_HEIGHT
+                        , overflowY: "scroll"
+                        , overflowX: "hidden"
                     });
                 }
 
