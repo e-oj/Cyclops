@@ -30,7 +30,7 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
                     var loading = document.createElement("img");
 
                     multiMedia.width(scope.width);
-                    loading.src = "/assets/img/loading.gif";
+                    loading.src = "/assets/img/loading.GIF";
                     profileMedia.append(loading);
 
                     media.src = constants.media + "/" + mediaId;
@@ -46,8 +46,14 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
                         });
 
                         date.css({
-                            top: ($media.height()/2.5) + "px"
+                            top: ($media.height()/2) + "px"
                         });
+
+                        if(scope.width < 400){
+                            date.css({
+                                fontSize: "0.4em"
+                            });
+                        }
                     }
                 }
 
