@@ -133,7 +133,6 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 var trackColor = angular.element(document.createElement("div"));
                 var timeLeftDiv = angular.element(document.createElement("div"));
                 var playing = false;
-                var duration = 0;
                 media = document.createElement("audio");
 
 
@@ -174,6 +173,9 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 track.className = "oj-slider";
                 track.oninput = function(){
                     media.currentTime = Math.floor(media.duration * (track.value));
+                    trackingDiv.css({
+                        width: track.value * 98 + "%"
+                    });
                     timeLeftDiv.text(utils.parseSeconds(media.duration - media.currentTime));
                 };
 
@@ -226,13 +228,12 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
 
                     timeLeftDiv.text(utils.parseSeconds(media.duration));
 
-                    duration = media.duration;
                     media.oncanplay = null;
                 };
 
                 media.ontimeupdate = function(){
                     var currentTime = media.currentTime;
-                    track.value = currentTime/duration;
+                    track.value = currentTime/media.duration;
                     var trackerWidth = Math.floor(track.value * 98);
 
                     if(trackerWidth)

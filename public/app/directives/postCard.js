@@ -17,7 +17,7 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
                 var post = angular.fromJson(scope.bodyJson);
                 var username = elem.find(".username");
                 var date = elem.find(".date");
-                var MAX_HEIGHT = scope.width * 1.8;
+                var MAX_HEIGHT = scope.width * 1.5;
 
                 elem.find(".card-header").width(scope.width);
 
