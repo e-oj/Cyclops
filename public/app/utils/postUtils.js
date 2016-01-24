@@ -240,6 +240,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                     trackingDiv.css({
                         width: trackerWidth + "%"
                     });
+                    alert(utils.parseSeconds(media.duration - currentTime));
                     timeLeftDiv.text(utils.parseSeconds(media.duration - currentTime));
                 };
 
