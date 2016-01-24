@@ -226,6 +226,8 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                     //cancel out extra width added by border
                     mediaDiv.width(scope.width - 1);
 
+                    alert("we have a duration" + media.duration);
+
                     timeLeftDiv.text(utils.parseSeconds(media.duration));
 
                     media.oncanplay = null;
@@ -240,7 +242,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                     trackingDiv.css({
                         width: trackerWidth + "%"
                     });
-                    alert(utils.parseSeconds(media.duration - currentTime));
+                    alert("duration: " + media.duration + ", current time: " + currentTime);
                     timeLeftDiv.text(utils.parseSeconds(media.duration - currentTime));
                 };
 
