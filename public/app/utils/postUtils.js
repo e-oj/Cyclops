@@ -152,18 +152,20 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 pauseImg.className = "pause-img";
 
                 playbackDiv.addClass("playback-div");
-                playDiv.on("click", function(){
+                playImg.onclick =  function(){
+                    if(media.paused) {
+                        media.play();
+                        angular.element(playImg).replaceWith(pauseImg);
+                    }
+                };
+
+                pauseImg.onclick = function(){
                     if(!media.paused) {
                         media.pause();
                         angular.element(pauseImg).replaceWith(playImg);
-                        playing = false;
                     }
-                    else{
-                        media.play();
-                        angular.element(playImg).replaceWith(pauseImg);
-                        playing = true;
-                    }
-                });
+                };
+
                 playDiv.addClass("play-div");
                 playImg.src = "/assets/img/play.png";
                 playImg.className = "play-img";
@@ -219,11 +221,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
 
                 volumeIcon.src = "/assets/img/volume.png";
                 volumeIcon.className = "volume-icon";
-
-                volumeIconDiv.addClass("volume-icon-div");
-                volumeIconDiv.append(volumeIcon);
-
-                volumeIconDiv.on("click", function(){
+                volumeIcon.onclick = function(){
                     if(media.muted){
                         media.muted = false;
                         volumeIcon.src = "/assets/img/volume.png";
@@ -233,7 +231,10 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                         media.muted = true;
                         volumeIcon.src = "/assets/img/mute.png";
                     }
-                });
+                };
+
+                volumeIconDiv.addClass("volume-icon-div");
+                volumeIconDiv.append(volumeIcon);
 
                 timeLeftDiv.addClass("time-left-div");
 
