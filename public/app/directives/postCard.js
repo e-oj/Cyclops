@@ -30,7 +30,7 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
                     var loading = document.createElement("img");
 
                     multiMedia.width(scope.width);
-                    loading.src = "/assets/img/loading.gif";
+                    loading.src = "/assets/img/loading.GIF";
                     profileMedia.append(loading);
 
                     media.src = constants.media + "/" + mediaId;
