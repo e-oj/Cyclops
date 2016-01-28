@@ -72,7 +72,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
             var height = 0;
             var media;
 
-            loading.src = "/assets/img/loading.GIF";
+            loading.src = "/assets/img/loading.gif";
             loading.width = scope.width * 0.05;
 
             if(file.mediaType == "image"){
@@ -100,7 +100,6 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
 
                 media.width = width;
                 media.oncanplay = function(){
-                    console.log("ready");
                     media.id = file.media;
                     media.className += "video-js vjs-default-skin";
                     angular.element(loading).replaceWith(media);
@@ -132,9 +131,14 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 var trackingDiv = angular.element(document.createElement("div"));
                 var trackColor = angular.element(document.createElement("div"));
                 var timeLeftDiv = angular.element(document.createElement("div"));
-                var playing = false;
+                var volumeCtrlDiv = angular.element(document.createElement("div"));
+                var volumeIconDiv = angular.element(document.createElement("div"));
+                var volumeIcon = document.createElement("img");
+                var volumeDiv = angular.element(document.createElement("div"));
+                var volume = document.createElement("input");
+                var volumeLevelDiv = angular.element(document.createElement("div"));
+                var volumeColor = angular.element(document.createElement("div"));
                 media = document.createElement("audio");
-
 
                 audioDiv.addClass("audio-div");
 
@@ -149,7 +153,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
 
                 playbackDiv.addClass("playback-div");
                 playDiv.on("click", function(){
-                    if(playing) {
+                    if(!media.paused) {
                         media.pause();
                         angular.element(pauseImg).replaceWith(playImg);
                         playing = false;
@@ -187,26 +191,63 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 trackDiv.append(trackingDiv);
                 trackDiv.append(track);
 
-                timeLeftDiv.css({
-                    position: "relative"
-                    , float: "left"
-                    , width: "15%"
-                    , marginLeft: "3%"
-                    , height: "100%"
-                    , display: "flex"
-                    , flexDirection: "column"
-                    , justifyContent: "center"
-                    , fontFamily: "Courier New, Tahoma, Serif"
-                    , color: "darkcyan"
-                    , fontSize: "0.85em"
+                volume.type = "range";
+                volume.min = 0;
+                volume.max = 1;
+                volume.step = 0.1;
+                volume.value = 1;
+                volume.className = "oj-slider";
+                volume.oninput = function(){
+                    media.volume = volume.value;
+
+                    volumeLevelDiv.css({
+                        width: volume.value * 98 + "%"
+                    });
+                };
+
+                volumeLevelDiv.css({
+                    width: "98%"
                 });
+
+                volumeLevelDiv.addClass("tracking-div");
+                volumeColor.addClass("track-color");
+
+                volumeDiv.addClass("volume-track-div");
+                volumeDiv.append(volumeColor);
+                volumeDiv.append(volumeLevelDiv);
+                volumeDiv.append(volume);
+
+                volumeIcon.src = "/assets/img/volume.png";
+                volumeIcon.className = "volume-icon";
+
+                volumeIconDiv.addClass("volume-icon-div");
+                volumeIconDiv.append(volumeIcon);
+
+                volumeIconDiv.on("click", function(){
+                    if(media.muted){
+                        media.muted = false;
+                        volumeIcon.src = "/assets/img/volume.png";
+                    }
+
+                    else{
+                        media.muted = true;
+                        volumeIcon.src = "/assets/img/mute.png";
+                    }
+                });
+
+                timeLeftDiv.addClass("time-left-div");
 
                 playbackDiv.append(playDiv);
                 playbackDiv.append(trackDiv);
                 playbackDiv.append(timeLeftDiv);
 
+                volumeCtrlDiv.addClass("volume-ctrl-div");
+                volumeCtrlDiv.append(volumeIconDiv);
+                volumeCtrlDiv.append(volumeDiv);
+
                 controlsDiv.addClass("controls-div");
                 controlsDiv.append(playbackDiv);
+                controlsDiv.append(volumeCtrlDiv);
 
                 width = scope.width;
                 height = width/4;
@@ -217,16 +258,19 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 media.oncanplay = function(){
                     angular.element(loading).replaceWith(audioDiv);
 
-                    if(playDiv.width() <= 25){
+                    if(scope.width < 400){
                         trackDiv.css({
                             width: "55%"
+                        });
+                    }
+                    else if(scope.width < 500){
+                        trackDiv.css({
+                            width: "63%"
                         });
                     }
 
                     //cancel out extra width added by border
                     mediaDiv.width(scope.width - 1);
-
-                    alert("we have a duration" + media.duration);
 
                     timeLeftDiv.text(utils.parseSeconds(media.duration));
 
@@ -242,7 +286,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                     trackingDiv.css({
                         width: trackerWidth + "%"
                     });
-                    alert("duration: " + media.duration + ", current time: " + currentTime);
+
                     timeLeftDiv.text(utils.parseSeconds(media.duration - currentTime));
                 };
 
@@ -254,8 +298,9 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                     trackingDiv.css({
                         width: 0
                     });
-                }
+                };
 
+                media.volume = 1;
             }
 
             mediaDiv.width(width);

@@ -53,6 +53,34 @@
     justify-content: center;
 }
 
+.volume-ctrl-div{
+    position: relative;
+    height: 25%;
+    min-height: 25px;
+    top: 25%;
+    background-color: #ffffff;
+}
+
+.volume-icon-div{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 4%;
+    left: 25%;
+    min-width: 13px;
+    margin: 0 1% 0 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.volume-icon{
+    position: relative;
+    height: 40%;
+    width: 100%;
+    min-height: 12px;
+}
+
 .audio-div .controls-div .playback-div .play-div:hover{
     background-color: lightgrey;
     cursor: pointer;
@@ -73,7 +101,7 @@
     left: 32%;
 }
 
-.audio-div .controls-div .playback-div .track-div{
+.track-div{
     position: relative;
     width: 70%;
     height: 100%;
@@ -84,20 +112,30 @@
     justify-content: center;
 }
 
-.audio-div .controls-div .playback-div .track-div .tracking-div
-, .audio-div .controls-div .playback-div .track-div .track-color{
+.volume-track-div{
+    position: relative;
+    left: 25%;
+    width: 30%;
+    height: 100%;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tracking-div, .track-color{
     position: relative;
     height: 2px;
     margin-left: 2%;
 }
 
-.audio-div .controls-div .playback-div .track-div .tracking-div{
+.tracking-div{
     width: 0;
     background-color: #008b8b;
     top: 4px;
 }
 
-.audio-div .controls-div .playback-div .track-div .track-color{
+.track-color{
     width: 98%;
     background-color: #d3d3d3;
     top: 6px;
@@ -166,4 +204,18 @@
 
 .oj-slider:focus{
     outline: none;
+}
+
+.time-left-div{
+    position: relative;
+    float: left;
+    width: 15%;
+    margin-left: 3%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: "Courier New", Tahoma, sans-serif;
+    color: #008b8b;
+    font-size: 0.85em;
 }
