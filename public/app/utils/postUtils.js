@@ -196,7 +196,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 volume.type = "range";
                 volume.min = 0;
                 volume.max = 1;
-                volume.step = 0.1;
+                volume.step = 0.01;
                 volume.value = 1;
                 volume.className = "oj-slider";
                 volume.oninput = function(){
