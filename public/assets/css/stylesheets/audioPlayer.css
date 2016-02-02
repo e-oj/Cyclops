@@ -134,13 +134,13 @@
 .tracking-div, .track-color{
     position: relative;
     height: 2px;
-    margin-left: 2%;
 }
 
 .tracking-div{
     width: 0;
     background-color: #008b8b;
     top: 4px;
+    max-width: 98%;
 }
 
 .track-color{
@@ -157,11 +157,13 @@
     height: 2px;
     z-index: 1;
     cursor: pointer;
+    margin: 0;
 }
 
 .oj-slider::-webkit-slider-thumb{
     -webkit-appearance: none;
-    margin-top: -3px;
+    position: relative;
+    top: -2.5px;
     height: 8px;
     width: 8px;
     border-radius: 50%;

@@ -178,11 +178,11 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 track.type = "range";
                 track.min = 0;
                 track.max = 1;
-                track.step = 0.001;
+                track.step = 0.01;
                 track.value = 0;
                 track.className = "oj-slider";
                 track.oninput = function(){
-                    media.currentTime = Math.floor(media.duration * (track.value));
+                    media.currentTime = Math.floor(media.duration * track.value);
                     trackingDiv.css({
                         width: track.value * 98 + "%"
                     });
@@ -284,7 +284,6 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 };
 
                 media.onloadedmetadata = function(){
-                    console.log("Started audio");
                     angular.element(loading).replaceWith(audioDiv);
 
                     if(scope.width < 400){
@@ -297,6 +296,9 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                             width: "63%"
                         });
                     }
+
+                    trackColor.width(angular.element(track).width());
+                    volumeColor.width(angular.element(volume).width());
 
                     //cancel out extra width added by border
                     mediaDiv.width(scope.width - 1);
@@ -327,7 +329,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
         };
 
         utils.parseSeconds = function(time){
-            if(time < 60) return 0 + ":" + Math.floor(time);
+            if(time < 60) return 0 + ":" + addZero(Math.floor(time));
 
             var hours = Math.floor(time/3600);
             var mins = Math.floor(time/60);
