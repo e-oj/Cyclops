@@ -17,11 +17,13 @@ angular.module('Home', ['Post', 'DateUtils', "PostUtils", 'ngResource', 'ConstFa
                     if(data.success) {
                         self.top50 = data;
                     }
-                    updateMe(me);
+                    setTimeout(function(){
+                        updateMe(me);
+                    }, 10000);
                 });
             }
 
-            updateMe(self.top50);
+            //updateMe(self.top50);
 
             //TODO: Get all these timeouts the fuck out of here
             $scope.$on('LastElementReached', function(){

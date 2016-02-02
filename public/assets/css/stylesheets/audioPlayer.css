@@ -151,9 +151,12 @@
 
 .oj-slider{
     -webkit-appearance: none;
+    -moz-appearance: none;
     width: 100%;
     background: transparent;
+    height: 2px;
     z-index: 1;
+    cursor: pointer;
 }
 
 .oj-slider::-webkit-slider-thumb{
@@ -198,7 +201,12 @@
     width: 100%;
     height: 2px;
     cursor: pointer;
-    background-color: #d3d3d3;
+    background-color: transparent;
+}
+
+.oj-slider::-moz-focus-outer{
+    border: none;
+    outline: none;
 }
 
 .oj-slider::-ms-track{
@@ -212,6 +220,7 @@
 
 .oj-slider:focus{
     outline: none;
+    border: none;
 }
 
 .time-left-div{

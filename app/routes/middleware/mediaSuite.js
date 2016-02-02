@@ -129,7 +129,7 @@ module.exports = function(gfs, eventEmitter){
                     //set the appropriate headers for media streaming
                     res.set({
                         'Content-Type': file.metadata.mimeType
-                        //, 'Content-Length': (end-start)+1
+                        , 'Content-Length': (end-start)+1
                         , 'Accept-Ranges': 'bytes'
                         , 'Transfer-Encoding': 'chunked'
                         , 'Content-Range': "bytes " + start + "-" + end + "/" + (length)

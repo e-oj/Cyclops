@@ -16,11 +16,11 @@ angular.module('Info', ['UserService', 'ngResource', 'ConstFactory'])
 
         self.me.info = User.getMe();
 
-        (function updateMe(me){
-            var newMe = $resource(constants.api + "/me/pollInfo");
-            newMe.get({}).$promise.then(function(data){
-                if(data.success)me.info = data;
-                updateMe(me);
-            });
-        })(self.me);
+        //(function updateMe(me){
+        //    var newMe = $resource(constants.api + "/me/pollInfo");
+        //    newMe.get({}).$promise.then(function(data){
+        //        if(data.success)me.info = data;
+        //        updateMe(me);
+        //    });
+        //})(self.me);
     }]);

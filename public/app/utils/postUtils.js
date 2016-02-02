@@ -47,7 +47,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                                 'left': 0
                             })
                         }, 1000);
-                    })
+                    });
                 }
             }, 1000);
         };
@@ -58,6 +58,9 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
             tags.forEach(function(tag){
                 if(tag[0] != "#"){
                     tagHtml += "<span>#" + tag + "</span> ";
+                }
+                else{
+                    tagHtml += "<span>" + tag + "</span> ";
                 }
             });
             return tagHtml;
@@ -99,7 +102,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 height = width/ASPECT_RATIO;
 
                 media.width = width;
-                media.oncanplay = function(){
+                media.onloadedmetadata = function(){
                     media.id = file.media;
                     media.className += "video-js vjs-default-skin";
                     angular.element(loading).replaceWith(media);
@@ -113,7 +116,8 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                     mediaDiv.css({
                         height: "auto"
                     });
-                    media.oncanplay = null;
+
+                    media.onloadedmetadata = null;
                 };
             }
 
@@ -174,7 +178,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 track.type = "range";
                 track.min = 0;
                 track.max = 1;
-                track.step = 0.01;
+                track.step = 0.001;
                 track.value = 0;
                 track.className = "oj-slider";
                 track.oninput = function(){
@@ -256,28 +260,6 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 audioDiv.append(imgDiv);
                 audioDiv.append(controlsDiv);
 
-                media.oncanplay = function(){
-                    angular.element(loading).replaceWith(audioDiv);
-
-                    if(scope.width < 400){
-                        trackDiv.css({
-                            width: "55%"
-                        });
-                    }
-                    else if(scope.width < 500){
-                        trackDiv.css({
-                            width: "63%"
-                        });
-                    }
-
-                    //cancel out extra width added by border
-                    mediaDiv.width(scope.width - 1);
-
-                    timeLeftDiv.text(utils.parseSeconds(media.duration));
-
-                    media.oncanplay = null;
-                };
-
                 media.ontimeupdate = function(){
                     var currentTime = media.currentTime;
                     track.value = currentTime/media.duration;
@@ -301,6 +283,30 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                     });
                 };
 
+                media.onloadedmetadata = function(){
+                    console.log("Started audio");
+                    angular.element(loading).replaceWith(audioDiv);
+
+                    if(scope.width < 400){
+                        trackDiv.css({
+                            width: "55%"
+                        });
+                    }
+                    else if(scope.width < 500){
+                        trackDiv.css({
+                            width: "63%"
+                        });
+                    }
+
+                    //cancel out extra width added by border
+                    mediaDiv.width(scope.width - 1);
+
+                    timeLeftDiv.text(utils.parseSeconds(media.duration));
+
+                    media.onloadedmetadata = null;
+                };
+
+                media.preload = "metadata";
                 media.volume = 1;
             }
 
