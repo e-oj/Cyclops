@@ -126,27 +126,23 @@
     width: 30%;
     height: 100%;
     float: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .tracking-div, .track-color{
-    position: relative;
+    position: absolute;
+    top: 48%;
     height: 2px;
 }
 
 .tracking-div{
     width: 0;
     background-color: #008b8b;
-    top: 4px;
     max-width: 98%;
 }
 
 .track-color{
     width: 98%;
     background-color: #d3d3d3;
-    top: 6px;
 }
 
 .oj-slider{
@@ -158,6 +154,8 @@
     z-index: 1;
     cursor: pointer;
     margin: 0;
+    position: absolute;
+    top: 45%;
 }
 
 .oj-slider::-webkit-slider-thumb{
