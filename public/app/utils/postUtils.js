@@ -265,7 +265,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                     trackingDiv.css({
                         width: track.value * 98 + "%"
                     });
-                    timeLeftDiv.text(utils.parseSeconds(media.duration - currentTime));
+                    timeLeftDiv.text(utils.parseSeconds(media.duration - media.currentTime));
                 };
 
                 media.onended = function(){
