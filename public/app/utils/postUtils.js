@@ -261,12 +261,10 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                 audioDiv.append(controlsDiv);
 
                 media.ontimeupdate = function(){
-                    var currentTime = media.currentTime;
-                    var trackerWidth = Math.floor((currentTime/media.duration) * angular.element(track).width());
-
-                    trackingDiv.width(trackerWidth);
-                    track.value = currentTime/media.duration;
-
+                    track.value = media.currentTime/media.duration;
+                    trackingDiv.css({
+                        width: track.value * 98 + "%"
+                    });
                     timeLeftDiv.text(utils.parseSeconds(media.duration - currentTime));
                 };
 
