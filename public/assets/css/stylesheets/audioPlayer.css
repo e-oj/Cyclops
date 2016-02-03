@@ -179,6 +179,7 @@
     background-color: #008b8b;
     cursor: pointer;
     transition: all 0.2s;
+    border: none;
 }
 
 .oj-slider::-ms-thumb{
