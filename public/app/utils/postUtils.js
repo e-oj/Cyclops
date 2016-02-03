@@ -262,13 +262,10 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
 
                 media.ontimeupdate = function(){
                     var currentTime = media.currentTime;
-                    track.value = currentTime/media.duration;
-                    var trackerWidth = Math.floor(track.value * 98);
+                    var trackerWidth = Math.floor((currentTime/media.duration) * angular.element(track).width());
 
-                    if(trackerWidth)
-                    trackingDiv.css({
-                        width: trackerWidth + "%"
-                    });
+                    trackingDiv.width(trackerWidth);
+                    track.value = currentTime/media.duration;
 
                     timeLeftDiv.text(utils.parseSeconds(media.duration - currentTime));
                 };
