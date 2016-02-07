@@ -59,6 +59,8 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                 var confirm = angular.element(document.createElement("button"));
                 var confirmMsg = angular.element(document.createElement("p"));
 
+                console.log(res);
+
                 confirm.addClass("confirm-button");
                 confirm.text("Done");
                 confirm.on("click", function(){
