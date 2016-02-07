@@ -22,7 +22,7 @@ module.exports = function(gfs, eventEmitter){
      * has finished uploading.
      *
      * @param req The request
-     * @param file The file to upload.html
+     * @param file The file to upload
      */
     fileSuite.saveFile = function(req, file){
         //console.log("File ===> ", file);
@@ -58,9 +58,9 @@ module.exports = function(gfs, eventEmitter){
      * TODO: Add video/audio compression
      *
      * @param req The request
-     * @param file the file to upload.html
+     * @param file the file to upload
      * @param id the id assigned to the file
-     * @param writeStream the write stream that handles the upload.html
+     * @param writeStream the write stream that handles the upload
      */
     function writeToDb(req, file, id, writeStream){
         //The maximum width for any image
