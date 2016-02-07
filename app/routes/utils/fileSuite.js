@@ -140,7 +140,7 @@ module.exports = function(gfs, eventEmitter){
                     .size("800x?")
                     .aspect("16:9")
                     .autopad("white")
-                    .outputOptions("-preset faster")
+                    .outputOptions("-preset veryfast")
                     .on("end", function(){
                         var mp4Stream = fs.createReadStream(mp4Path);
 
