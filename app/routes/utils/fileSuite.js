@@ -11,6 +11,8 @@ module.exports = function(gfs, eventEmitter){
     var gm = require('gm').subClass({imageMagick: true});
     var streamifier = require('streamifier');
     var mongoose = require("mongoose");
+    var ffmpeg = require("fluent-ffmpeg");
+    var fs = require("fs");
     var fileSuite = {};
 
     /**
@@ -121,9 +123,36 @@ module.exports = function(gfs, eventEmitter){
             write = true
         }
         else if (fileIs('video', file)) {
-            //save the mediaID
-            req.mediaIds.push({media: id, mediaType: 'video'});
-            write = true
+            var vidPath = "./uploads/" + file.name;
+
+            //writes the file to the filesystem so we can convert it to mp4
+            fs.writeFile(vidPath, buffer, function(err){
+                if(err) throw err;
+
+                var video = ffmpeg(vidPath);
+                var mp4Path = "./uploads/" + id + ".mp4";
+
+                //save the mediaID
+                req.mediaIds.push({media: id, mediaType: 'video'});
+
+                //Convert the video to mp4
+                video.format("mp4")
+                    .size("800x?")
+                    .aspect("16:9")
+                    .autopad("white")
+                    .outputOptions()
+                    .on("end", function(){
+                        var mp4Stream = fs.createReadStream(mp4Path);
+
+                        mp4Stream.on("end", function(){
+                            fs.unlink(mp4Path, function(err){if(err) throw err});
+                        });
+                        mp4Stream.pipe(writeStream);
+
+                        fs.unlink(vidPath, function(err){if(err)throw err});
+                    })
+                .save(mp4Path);
+            });
         }
 
         //pipes the buffer to the writeStream if write is true

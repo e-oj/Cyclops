@@ -93,6 +93,19 @@ body{
     cursor: pointer;
 }
 
+.confirm-button{
+    padding: 5px;
+    width: 20%;
+    min-width: 70px;
+    margin: 0 auto;
+    color: green;
+    background: white;
+    outline: none;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+}
+
 #upload-overlay{
     position: absolute;
     width: 280px;
@@ -103,4 +116,22 @@ body{
     font-size: 20pt;
     font-weight: bolder;
     color: darkgreen;
+}
+
+.loading-div{
+    position: absolute;
+    top: 0;
+    background: lightblue;
+    font-family: "Courier New", Tahoma, sans-serif;
+    color: black;
+    opacity: 0.9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loading-img{
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
 }

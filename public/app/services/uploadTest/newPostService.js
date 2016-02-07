@@ -31,6 +31,23 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
 
         post.saveFiles = function(body, tags, url){
             var sendFile = $resource(url);
+            var loadingDiv = document.createElement("div");
+                loadingDiv.id = "uploadLoadingDiv";
+                loadingDiv = angular.element(loadingDiv);
+            var loadingImg = document.createElement("img");
+            var loadingMsg = angular.element(document.createElement("p"));
+            var elem = angular.element("#uploader");
+
+            loadingImg.src = "/assets/img/loading.GIF";
+            loadingImg.className = "loading-img";
+            loadingMsg.text("Uploading Post...");
+
+            loadingDiv.height(elem.height());
+            loadingDiv.width(elem.width());
+            loadingDiv.addClass("loading-div");
+            loadingDiv.append(loadingImg);
+            loadingDiv.append(loadingMsg);
+            elem.append(loadingDiv);
 
             $http.defaults.headers.post['x-access-token'] = $window.localStorage.getItem('token');
 
@@ -39,8 +56,21 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                 , body: body
                 , tags: tags
             }, function(res){
-                console.log(res);
-                alert(res.success? 'Post Uploaded' : 'upload failed');
+                var confirm = angular.element(document.createElement("button"));
+                var confirmMsg = angular.element(document.createElement("p"));
+
+                confirm.addClass("confirm-button");
+                confirm.text("Done");
+                confirm.on("click", function(){
+                    loadingDiv.remove();
+                });
+
+                confirmMsg.text("File Uploaded");
+
+                angular.element(loadingImg).remove();
+                loadingMsg.remove();
+                loadingDiv.append(confirmMsg);
+                loadingDiv.append(confirm);
             });
         };
 

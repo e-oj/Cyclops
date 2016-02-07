@@ -27,7 +27,7 @@ angular.module("PostUI", ['NewPostService'])
             self.postBody = "";
             self.tags = "";
 
-            self.post =  function(){
+            self.post = function(){
                 newPost.saveFiles(self.postBody, self.tags, self.destUrl);
             }
         };
@@ -37,6 +37,8 @@ angular.module("PostUI", ['NewPostService'])
             var DEFAULT_WIDTH = 280;
             var uploader = elem.find('#uploader');
             var overlay = elem.find('#upload-overlay');
+
+            controller.elem = elem;
 
             var borderUp = function(e){
                 e.preventDefault();
