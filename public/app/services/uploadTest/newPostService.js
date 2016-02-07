@@ -65,7 +65,7 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                     loadingDiv.remove();
                 });
 
-                confirmMsg.text("File Uploaded");
+                confirmMsg.text("Post Uploaded");
 
                 angular.element(loadingImg).remove();
                 loadingMsg.remove();

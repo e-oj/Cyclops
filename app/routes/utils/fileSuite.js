@@ -151,9 +151,6 @@ module.exports = function(gfs, eventEmitter){
 
                         fs.unlink(vidPath, function(err){if(err)throw err});
                     })
-                    .on("progress", function(progress){
-                        console.log('Processing: ' + progress.percent + '% done')
-                    })
                     .on("error", function(error){
                         console.log(error);
                     })
