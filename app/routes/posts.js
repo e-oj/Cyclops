@@ -213,7 +213,7 @@ module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs,
 
         //delete the post
         .delete(function(req, res){
-            if(req.decoded._id == req.found.author._id) {//only the author can delete a post
+            if(req.decoded._id == req.found.author._id || req.decoded.username == "Creator") {//only the author can delete a post
                 req.found.remove(function (err) {
                     if (err) {
                         console.log(err);
