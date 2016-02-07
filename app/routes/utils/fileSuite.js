@@ -127,7 +127,7 @@ module.exports = function(gfs, eventEmitter){
 
             //writes the file to the filesystem so we can convert it to mp4
             fs.writeFile(vidPath, buffer, function(err){
-                if(err) throw err;
+                if(err) console.log(err);
 
                 var video = ffmpeg(vidPath);
                 var mp4Path = "./uploads/" + id + ".mp4";
