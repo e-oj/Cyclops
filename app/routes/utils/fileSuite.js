@@ -141,9 +141,6 @@ module.exports = function(gfs, eventEmitter){
                     .aspect("16:9")
                     .autopad("white")
                     .outputOptions("-preset ultrafast")
-                    .on("start", function(){
-                        console.log("Started Conversion...")
-                    })
                     .on("end", function(){
                         var mp4Stream = fs.createReadStream(mp4Path);
 
