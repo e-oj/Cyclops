@@ -47,6 +47,7 @@ angular.module("UploadRender", [])
             style.margin = 0;
             style.opacity = 0.5;
             style.position = "absolute";
+            style.zIndex = 1;
             style.display = "block";
             style.background = "beige";
             style.cursor = "pointer";

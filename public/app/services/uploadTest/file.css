@@ -121,6 +121,7 @@ body{
 .loading-div{
     position: absolute;
     top: 0;
+    z-index: 2;
     background: lightblue;
     font-family: "Courier New", Tahoma, sans-serif;
     color: black;
