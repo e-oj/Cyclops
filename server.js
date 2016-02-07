@@ -69,6 +69,8 @@ if (app.get('env') === 'development') {
     });
 }
 
-app.listen(config.port);
+var server = app.listen(config.port);
+
+server.timeout = 60000000;
 console.log(app.get('env'));
 console.log('Running on port' + config.port);
