@@ -24,11 +24,7 @@ angular.module("UploadRender", [])
 
                     document.getElementById('preview').appendChild(div);
 
-                    readFileAsync(files[i], div).then(function(result){
-                        display(result[0], result[1]);
-                    }, function(error){
-                        alert(error);
-                    });
+                    display(readFile(files[i]), div);
                 }
             }
         };
@@ -85,40 +81,36 @@ angular.module("UploadRender", [])
             for(var i=0; i<prevDiv.children.length; i++) prevDiv.children[i].id = i;
         };
 
-        var readFileAsync = function(file, elem){
-            var readFile = function(resolve, reject){
-                if(!render.validFile(file)){
-                    reject("Unsupported file type");
+        var readFile = function(file){
+            if(render.validFile(file)){
+                var media;
+                var audio = false;
+
+                if (file.type.toLowerCase().indexOf('image') > -1) {
+                    media = document.createElement('img');
                 }
-                else {
-                    var media;
-
-                    if (file.type.toLowerCase().indexOf('image') > -1) {
-                        media = document.createElement('img');
-                    }
-                    else if (file.type.toLowerCase().indexOf('video') > -1) {
-                        media = document.createElement('video');
-                        media.type = file.type;
-                        media.controls = true;
-                    }
-                    else if (file.type.toLowerCase().indexOf('audio') > -1) {
-                        media = document.createElement('audio');
-                        media.type = file.type;
-                        media.controls = true;
-                    }
-
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        media.src = e.target.result;
-                        media.width = MEDIA_WIDTH;
-                        media.style.margin = 0;
-                        resolve([media, elem]);
-                    };
-                    reader.readAsDataURL(file);
+                else if (file.type.toLowerCase().indexOf('video') > -1) {
+                    media = document.createElement('video');
+                    media.type = file.type;
+                    media.controls = true;
                 }
-            };
+                else if (file.type.toLowerCase().indexOf('audio') > -1) {
+                    media = document.createElement('audio');
+                    media.type = file.type;
+                    media.controls = true;
+                    audio = true;
+                }
 
-            return $q(readFile);
+                window.URL = window.webkitURL || window.URL;
+
+                media.src = window.URL.createObjectURL(file);
+                media.style.width = audio? "80%" : "100%";
+                media.onload = function(){
+                    window.URL.revokeObjectURL(media.src);
+                };
+
+                return media;
+            }
         };
 
         return render;

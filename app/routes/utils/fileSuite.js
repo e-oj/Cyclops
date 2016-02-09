@@ -137,7 +137,7 @@ module.exports = function(gfs, eventEmitter){
 
                 //Convert the video to mp4
                 video.format("mp4")
-                    .size("800x?")
+                    .size("800x450")
                     .aspect("16:9")
                     .autopad("white")
                     .outputOptions("-preset ultrafast")
