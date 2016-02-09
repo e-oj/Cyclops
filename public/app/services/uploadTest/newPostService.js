@@ -38,6 +38,24 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
             var loadingMsg = angular.element(document.createElement("p"));
             var elem = angular.element("#uploader");
 
+            var loadingFeedback = function(message){
+                var confirm = angular.element(document.createElement("button"));
+                var confirmMsg = angular.element(document.createElement("p"));
+
+                confirm.addClass("confirm-button");
+                confirm.text("Done");
+                confirm.on("click", function(){
+                    loadingDiv.remove();
+                });
+
+                confirmMsg.text(message);
+
+                angular.element(loadingImg).remove();
+                loadingMsg.remove();
+                loadingDiv.append(confirmMsg);
+                loadingDiv.append(confirm);
+            };
+
             loadingImg.src = "/assets/img/loading.GIF";
             loadingImg.className = "loading-img";
             loadingMsg.text("Uploading Post...");
@@ -56,23 +74,10 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                 , body: body
                 , tags: tags
             }, function(res){
-                var confirm = angular.element(document.createElement("button"));
-                var confirmMsg = angular.element(document.createElement("p"));
-
+                loadingFeedback("Post Uploaded");
                 console.log(res);
-
-                confirm.addClass("confirm-button");
-                confirm.text("Done");
-                confirm.on("click", function(){
-                    loadingDiv.remove();
-                });
-
-                confirmMsg.text("Post Uploaded");
-
-                angular.element(loadingImg).remove();
-                loadingMsg.remove();
-                loadingDiv.append(confirmMsg);
-                loadingDiv.append(confirm);
+            }, function(err){
+                loadingFeedback(err.status == 403? "You are not logged in" : "ooops!! Something went wrong");
             });
         };
 
