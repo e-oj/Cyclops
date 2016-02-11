@@ -7,5 +7,5 @@ Currently changing the "cards" that display the posts to a reusable angular dire
 
 Audio player directive{<br/>
   code: https://github.com/oj-boss/Cyclops/blob/OJ_Cyclops/public/app/directives/AudioPlayer.js</br>
-  , viewAt: www.webct.net:8080/testAudio</br
+  , viewAt: www.webct.net:8080/testAudio<br/>
 }
