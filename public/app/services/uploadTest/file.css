@@ -15,6 +15,7 @@ body{
     background-color: #FFFFFF;
     max-height: 700px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #upload-form{

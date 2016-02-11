@@ -78,6 +78,13 @@ angular.module("AudioPlayer", [])
                 audioImg[0].src = scope.ojImgSrc;
             }
 
+            //if audio src is an objectURL, free up the space when we don't need it anymore
+            if(scope.ojObject){
+                audio.addEventListener("canplaythrough", function(){
+                    window.URL.revokeObjectURL(scope.ojSrc);
+                });
+            }
+
             audio.addEventListener("timeupdate", function(){
                 track.val(audio.currentTime/audio.duration);
 
@@ -141,6 +148,7 @@ angular.module("AudioPlayer", [])
                 ojSrc: "@"
                 , ojWidth: "="
                 , ojImgSrc: "@"
+                , ojObject: "="
             }
             , templateUrl: "/app/views/templates/audioPlayer.html"
             , restrict: "E"

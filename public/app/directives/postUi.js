@@ -38,8 +38,6 @@ angular.module("PostUI", ['NewPostService'])
             var uploader = elem.find('#uploader');
             var overlay = elem.find('#upload-overlay');
 
-            controller.elem = elem;
-
             var borderUp = function(e){
                 e.preventDefault();
                 overlay.css({

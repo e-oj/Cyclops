@@ -4,7 +4,7 @@
  */
 
 angular.module("UploadRender", [])
-    .factory("renderer", ['$q', function($q){
+    .factory("renderer", [function(){
         var render = {};
         var currIndex = 0;
         var MEDIA_WIDTH;
@@ -95,14 +95,14 @@ angular.module("UploadRender", [])
                     media.controls = true;
                 }
                 else if (file.type.toLowerCase().indexOf('audio') > -1) {
-                    media = document.createElement('audio');
+                    audio = true;
+                    media = document.createElement("audio");
                     media.type = file.type;
                     media.controls = true;
-                    audio = true;
                 }
 
                 media.src = window.URL.createObjectURL(file);
-                media.style.width = audio? "80%" : "100%";
+                media.style.width = audio ? "80%" : "100%";
                 media.onload = function(){
                     window.URL.revokeObjectURL(media.src);
                 };
