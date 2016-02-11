@@ -64,7 +64,6 @@ angular.module("AudioPlayer", [])
             volumeTracker.css({width: "98%"});
 
             volumeIcon.on("click", function(){
-                console.log("volumeIcon");
                 if(audio.muted){
                     audio.muted = false;
                     volumeIcon[0].src = "/assets/img/volume.png";
