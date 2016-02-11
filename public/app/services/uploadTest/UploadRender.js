@@ -101,8 +101,6 @@ angular.module("UploadRender", [])
                     audio = true;
                 }
 
-                window.URL = window.webkitURL || window.URL;
-
                 media.src = window.URL.createObjectURL(file);
                 media.style.width = audio? "80%" : "100%";
                 media.onload = function(){

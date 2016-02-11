@@ -22,6 +22,12 @@
     height: inherit;
 }
 
+.audio-div .img-div .audio-img{
+    position: relative;
+    width: 100%;
+    height: inherit;
+}
+
 .audio-div .controls-div{
     position: absolute;
     width: 75%;
@@ -235,4 +241,11 @@
     font-family: "Courier New", Tahoma, sans-serif;
     color: #008b8b;
     font-size: 0.85em;
+}
+
+.audio-loading-img{
+    display: block;
+    margin: auto;
+    position: relative;
+    top: 45%;
 }

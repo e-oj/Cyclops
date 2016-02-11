@@ -56,6 +56,11 @@ app.get('/testCard', function(req, res){
     res.sendFile(path.join(__dirname, '/public/app/directives/testCard.html'));
 });
 
+app.get('/testAudio', function(req, res){
+    //res.send("Hello World");
+    res.sendFile(path.join(__dirname, '/public/app/directives/testAudio.html'));
+});
+
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {

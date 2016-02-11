@@ -3,8 +3,12 @@
  * @since 12/30/15
  */
 
-angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "ConstFactory"])
-    .directive('ojPostCard', ["$resource"
+angular.module('PostCard', ["ngResource"
+    , "Home"
+    , "PostUtils"
+    , "DateUtils"
+    , "ConstFactory"
+    ]).directive('ojPostCard', ["$resource"
         , "dateUtils"
         , "postUtils"
         , "constants"
@@ -81,6 +85,9 @@ angular.module('PostCard', ["ngResource", "Home", "PostUtils", "DateUtils", "Con
                 tagsDiv.on("mouseover", function(){
                     postUtils.moveTags(tagsDiv);
                 });
+
+                //elem.append("<oj-post dest-url='/api/me/posts' width=" + scope.width + "></oj-post>");
+                //$compile(elem.contents())(scope);
             };
 
             return{

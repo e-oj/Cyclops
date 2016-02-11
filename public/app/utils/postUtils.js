@@ -230,7 +230,6 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
                         media.muted = false;
                         volumeIcon.src = "/assets/img/volume.png";
                     }
-
                     else{
                         media.muted = true;
                         volumeIcon.src = "/assets/img/mute.png";
@@ -270,7 +269,6 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
 
                 media.onended = function(){
                     angular.element(pauseImg).replaceWith(playImg);
-                    playing = false;
                     media.currentTime = 0;
                     track.value = 0;
                     trackingDiv.css({
