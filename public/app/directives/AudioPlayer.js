@@ -145,7 +145,7 @@ angular.module("AudioPlayer", [])
             }
             , templateUrl: "/app/views/templates/audioPlayer.html"
             , restrict: "E"
-            , replace: false
+            , replace: true
             , link: link
         }
     }]);
