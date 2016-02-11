@@ -123,9 +123,9 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
             }
 
             else if(file.mediaType == "audio"){
+                audio = true;
                 width = scope.width;
                 height = width/4;
-                audio = true;
 
                 $compile("<oj-audio " +
                     "oj-width=" + width +
