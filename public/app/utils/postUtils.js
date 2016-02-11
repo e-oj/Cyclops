@@ -111,8 +111,6 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                         "controls": true
                         , "autoplay": false
                         , "preload": "metadata"
-                    }, function(){
-
                     });
                     mediaDiv.css({
                         height: "auto"
