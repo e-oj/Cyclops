@@ -1,5 +1,5 @@
-angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
-    .factory("postUtils", ["$sce", "constants", function($sce, constants){
+angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
+    .factory("postUtils", ["$sce", "$compile", "constants", function($sce, $compile, constants){
         var utils = {};
 
         utils.addTags = function(text){
@@ -70,10 +70,11 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
             var dim = file.dimension;
             var mediaDiv = angular.element(document.createElement("div"));
             var loading = document.createElement("img");
-            var ASPECT_RATIO = 1.7;
+            var ASPECT_RATIO = 16/9;
             var width = 0;
             var height = 0;
             var media;
+            var audio = false;
 
             loading.src = "/assets/img/loading.GIF";
             loading.width = scope.width * 0.05;
@@ -122,187 +123,16 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
             }
 
             else if(file.mediaType == "audio"){
-                var audioDiv = angular.element(document.createElement("div"));
-                var mediaImg = document.createElement("img");
-                var imgDiv = angular.element(document.createElement("div"));
-                var controlsDiv = angular.element(document.createElement("div"));
-                var playbackDiv = angular.element(document.createElement("div"));
-                var playDiv = angular.element(document.createElement("div"));
-                var playImg = document.createElement("img");
-                var pauseImg = document.createElement("img");
-                var trackDiv = angular.element(document.createElement("div"));
-                var track = document.createElement("input");
-                var trackingDiv = angular.element(document.createElement("div"));
-                var trackColor = angular.element(document.createElement("div"));
-                var timeLeftDiv = angular.element(document.createElement("div"));
-                var volumeCtrlDiv = angular.element(document.createElement("div"));
-                var volumeIconDiv = angular.element(document.createElement("div"));
-                var volumeIcon = document.createElement("img");
-                var volumeDiv = angular.element(document.createElement("div"));
-                var volume = document.createElement("input");
-                var volumeLevelDiv = angular.element(document.createElement("div"));
-                var volumeColor = angular.element(document.createElement("div"));
-                media = document.createElement("audio");
-
-                audioDiv.addClass("audio-div");
-
-                mediaImg.src = "/assets/img/music2.svg";
-                mediaImg.className = "media-img";
-
-                imgDiv.append(mediaImg);
-                imgDiv.addClass("img-div");
-
-                pauseImg.src = "/assets/img/pause.png";
-                pauseImg.className = "pause-img";
-
-                playbackDiv.addClass("playback-div");
-                playImg.onclick =  function(){
-                    if(media.paused) {
-                        media.play();
-                        angular.element(playImg).replaceWith(pauseImg);
-                    }
-                };
-
-                pauseImg.onclick = function(){
-                    if(!media.paused) {
-                        media.pause();
-                        angular.element(pauseImg).replaceWith(playImg);
-                    }
-                };
-
-                playDiv.addClass("play-div");
-                playImg.src = "/assets/img/play.png";
-                playImg.className = "play-img";
-                playDiv.append(playImg);
-
-                track.type = "range";
-                track.min = 0;
-                track.max = 1;
-                track.step = 0.01;
-                track.value = 0;
-                track.className = "oj-slider";
-                track.oninput = function(){
-                    media.currentTime = Math.floor(media.duration * track.value);
-                    trackingDiv.css({
-                        width: track.value * 98 + "%"
-                    });
-                    timeLeftDiv.text(utils.parseSeconds(media.duration - media.currentTime));
-                };
-
-                trackingDiv.addClass("tracking-div");
-                trackColor.addClass("track-color");
-
-                trackDiv.addClass("track-div");
-                trackDiv.append(trackColor);
-                trackDiv.append(trackingDiv);
-                trackDiv.append(track);
-
-                volume.type = "range";
-                volume.min = 0;
-                volume.max = 1;
-                volume.step = 0.01;
-                volume.value = 1;
-                volume.className = "oj-slider";
-                volume.oninput = function(){
-                    media.volume = volume.value;
-
-                    volumeLevelDiv.css({
-                        width: volume.value * 98 + "%"
-                    });
-                };
-
-                volumeLevelDiv.css({
-                    width: "98%"
-                });
-
-                volumeLevelDiv.addClass("tracking-div");
-                volumeColor.addClass("track-color");
-
-                volumeDiv.addClass("volume-track-div");
-                volumeDiv.append(volumeColor);
-                volumeDiv.append(volumeLevelDiv);
-                volumeDiv.append(volume);
-
-                volumeIcon.src = "/assets/img/volume.png";
-                volumeIcon.className = "volume-icon";
-                volumeIcon.onclick = function(){
-                    if(media.muted){
-                        media.muted = false;
-                        volumeIcon.src = "/assets/img/volume.png";
-                    }
-                    else{
-                        media.muted = true;
-                        volumeIcon.src = "/assets/img/mute.png";
-                    }
-                };
-
-                volumeIconDiv.addClass("volume-icon-div");
-                volumeIconDiv.append(volumeIcon);
-
-                timeLeftDiv.addClass("time-left-div");
-
-                playbackDiv.append(playDiv);
-                playbackDiv.append(trackDiv);
-                playbackDiv.append(timeLeftDiv);
-
-                volumeCtrlDiv.addClass("volume-ctrl-div");
-                volumeCtrlDiv.append(volumeIconDiv);
-                volumeCtrlDiv.append(volumeDiv);
-
-                controlsDiv.addClass("controls-div");
-                controlsDiv.append(playbackDiv);
-                controlsDiv.append(volumeCtrlDiv);
-
                 width = scope.width;
                 height = width/4;
+                audio = true;
 
-                audioDiv.append(imgDiv);
-                audioDiv.append(controlsDiv);
-
-                media.ontimeupdate = function(){
-                    track.value = media.currentTime/media.duration;
-                    trackingDiv.css({
-                        width: track.value * 98 + "%"
-                    });
-                    timeLeftDiv.text(utils.parseSeconds(media.duration - media.currentTime));
-                };
-
-                media.onended = function(){
-                    angular.element(pauseImg).replaceWith(playImg);
-                    media.currentTime = 0;
-                    track.value = 0;
-                    trackingDiv.css({
-                        width: 0
-                    });
-                };
-
-                media.onloadedmetadata = function(){
-                    angular.element(loading).replaceWith(audioDiv);
-
-                    if(scope.width < 400){
-                        trackDiv.css({
-                            width: "55%"
-                        });
-                    }
-                    else if(scope.width < 500){
-                        trackDiv.css({
-                            width: "63%"
-                        });
-                    }
-
-                    trackColor.width(angular.element(track).width());
-                    volumeColor.width(angular.element(volume).width());
-
-                    //cancel out extra width added by border
-                    mediaDiv.width(scope.width - 1);
-
-                    timeLeftDiv.text(utils.parseSeconds(media.duration));
-
-                    media.onloadedmetadata = null;
-                };
-
-                media.preload = "metadata";
-                media.volume = 1;
+                $compile("<oj-audio " +
+                    "oj-width=" + width +
+                    " oj-src=" + constants.media + "/" + file.media +
+                    "></oj-audio>")(scope, function(cloned){
+                    mediaDiv.append(cloned);
+                });
             }
 
             mediaDiv.width(width);
@@ -316,9 +146,11 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory"])
             loading.style.margin = "0 auto";
             loading.style.position = "relative";
             loading.style.top = "45%";
-            mediaDiv.append(loading);
             mediaElem.append(mediaDiv);
-            media.src = constants.media + "/" + file.media;
+            if(!audio){
+                mediaDiv.append(loading);
+                media.src = constants.media + "/" + file.media;
+            }
         };
 
         utils.parseSeconds = function(time){
