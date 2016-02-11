@@ -5,4 +5,7 @@ Go to www.webct.net:8080/home to see the hosted version.
 
 Currently changing the "cards" that display the posts to a reusable angular directive. See the changes at www.webct.net:8080/testCard
 
-Audio player directive: www.webct.net:8080/testAudio
+Audio player directive{ 
+  code: https://github.com/oj-boss/Cyclops/blob/OJ_Cyclops/public/app/directives/AudioPlayer.js
+  , viewAt: www.webct.net:8080/testAudio
+}
