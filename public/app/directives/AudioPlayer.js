@@ -6,15 +6,16 @@ angular.module("AudioPlayer", [])
 
             var audio = document.createElement("audio");
             var audioDiv = elem.find(".audio-div");
-            var audioImg = elem.find(".audio-img");
-            var playImg = elem.find(".play-img");
-            var trackDiv = elem.find(".track-div");
-            var track = angular.element(elem.find(".oj-slider")[0]);
-            var progressTracker = angular.element(elem.find(".tracking-div")[0]);
-            var timeLeftDiv = elem.find(".time-left-div");
-            var volume = angular.element(elem.find(".oj-slider")[1]);
-            var volumeTracker = angular.element(elem.find(".tracking-div")[1]);
-            var volumeIcon = elem.find(".volume-icon");
+            var audioImg = audioDiv.find(".audio-img");
+            var loadingImg = document.createElement("img");
+            var playImg = audioDiv.find(".play-img");
+            var trackDiv = audioDiv.find(".track-div");
+            var track = angular.element(audioDiv.find(".oj-slider")[0]);
+            var progressTracker = angular.element(audioDiv.find(".tracking-div")[0]);
+            var timeLeftDiv = audioDiv.find(".time-left-div");
+            var volume = angular.element(audioDiv.find(".oj-slider")[1]);
+            var volumeTracker = angular.element(audioDiv.find(".tracking-div")[1]);
+            var volumeIcon = audioDiv.find(".volume-icon");
 
             var dimensions = {
                 width: scope.ojWidth
@@ -98,8 +99,6 @@ angular.module("AudioPlayer", [])
             });
 
             audio.addEventListener("loadedmetadata", function(){
-                var trackColors = elem.find(".track-color");
-
                 if(scope.width < 400){
                     trackDiv.css({
                         width: "55%"
@@ -110,9 +109,6 @@ angular.module("AudioPlayer", [])
                         width: "63%"
                     });
                 }
-
-                trackColors[0].style.width = track.width();
-                trackColors[1].style.width = volume.width();
 
                 timeLeftDiv.text(parseSeconds(audio.duration));
 
