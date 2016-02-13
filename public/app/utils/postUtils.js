@@ -103,6 +103,8 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                 height = width/ASPECT_RATIO;
 
                 media.width = width;
+                media.preload = "metadata";
+
                 media.onloadedmetadata = function(){
                     media.id = file.media;
                     media.className += "video-js vjs-default-skin";
@@ -117,6 +119,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                     });
 
                     media.onloadedmetadata = null;
+                    console.log("loadedmetadata");
                 };
             }
 
@@ -145,6 +148,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
             loading.style.position = "relative";
             loading.style.top = "45%";
             mediaElem.append(mediaDiv);
+
             if(!audio){
                 mediaDiv.append(loading);
                 media.src = constants.media + "/" + file.media;
