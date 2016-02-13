@@ -97,14 +97,17 @@ angular.module("AudioPlayer", [])
 
             audio.addEventListener("ended", function(){
                 playImg.attr("src", "/assets/img/pause.png");
+
                 audio.currentTime = 0;
+
                 track.val(0);
+
                 progressTracker.css({
                     width: 0
                 });
             });
 
-            audio.addEventListener("loadedmetadata", function(){
+            var initAudioPlayer = function(){
                 if(scope.width < 400){
                     trackDiv.css({
                         width: "55%"
@@ -118,10 +121,12 @@ angular.module("AudioPlayer", [])
 
                 timeLeftDiv.text(parseSeconds(audio.duration));
 
-                audio.removeEventListener("loadedmetadata");
+                audio.removeEventListener("loadedmetadata", initAudioPlayer);
 
                 angular.element(loadingImg).replaceWith(audioDiv);
-            });
+            };
+
+            audio.addEventListener("loadedmetadata", initAudioPlayer);
 
             audio.preload = "metadata";
             audio.volume = 1;
