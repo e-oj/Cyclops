@@ -96,7 +96,7 @@ angular.module("AudioPlayer", [])
             });
 
             audio.addEventListener("ended", function(){
-                playImg.attr("src", "/assets/img/pause.png");
+                playImg.attr("src", "/assets/img/play.png");
 
                 audio.currentTime = 0;
 
