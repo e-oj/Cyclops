@@ -21,6 +21,8 @@ module.exports = function (req, res, next, user) {
         //if it is, find the user and save it to req.user
         User.findById(user, function (err, found) {
             if (err || !found) {
+                if(err) throw err;
+
                 res.json({success: false, result: 'User not found'});
             }
 

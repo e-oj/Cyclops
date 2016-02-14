@@ -77,7 +77,11 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                 loadingFeedback("Post Uploaded");
                 console.log(res);
             }, function(err){
-                loadingFeedback(err.status == 403? "You are not logged in" : "ooops!! Something went wrong");
+                var notLoggedIn = "You are not logged in";
+                var emptyPost = "Can't make empty Post";
+                var unexpectedError = "ooops!! Something went wrong";
+
+                loadingFeedback(err.status == 403? notLoggedIn : err.status == 406? emptyPost : unexpectedError);
             });
         };
 

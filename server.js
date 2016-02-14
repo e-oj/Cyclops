@@ -13,25 +13,24 @@ mongoose.connect(config.database);
 //uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 
+app.use(function(req, res, next){
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization,x-access-token');
+    res.setHeader('X-Powered-By', 'None of ya business');
+    next();
+});
+
 app.use(compress({level: 7}));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-//Not sure if this is necessary but too scared to remove it.
-//More research
-app.use(function(req, res, next){
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization,x-access-token');
-    next();
-});
-
-app.options('/*', function(req, res){
-    res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with,x-access-token');
-});
+//app.options('/*', function(req, res){
+//    res.header('Access-Control-Allow-Origin', req.headers.origin || "*");
+//    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+//    res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with,x-access-token');
+//});
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));

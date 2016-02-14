@@ -36,7 +36,7 @@ module.exports = function(express, mongoose, User, Follow, Post, tkRouter, valUs
     });
 
     //delete all users
-    userRouter.delete('/all', function (req, res) {
+    userRouter.delete('/', function (req, res) {
         User.remove({}, function (err) {
             if (err) throw err;
 
@@ -51,7 +51,7 @@ module.exports = function(express, mongoose, User, Follow, Post, tkRouter, valUs
      */
     userRouter.param('user', valUser);
 
-    //allows us to get, edit or delete a user
+    //allows us to get a user
     userRouter.route('/:user')
         //get the user identified by :user
         .get(function (req, res) {

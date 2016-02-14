@@ -131,6 +131,7 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
         })
 
         //delete user from database
+        //TODO: Remove all info related to the user before removing the user
         .delete(function (req, res) {
             req.me.remove(function (err) {
                 if (err) {
@@ -150,52 +151,75 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
             });
         });
 
-    //get the people that the user follows and add them to req.users
-    meRouter.use('/newsfeed', function(req, res, next){
-        req.users = [];
-
+    meRouter.get('/newsfeed', function(req, res){
         if(req.decoded) {
             var user = req.decoded._id;
             var stream = Follow.find({user: user}).select('follows').stream();
 
-            //when a new document comes in add the necessary info to req.users
-            //TODO: change this implementation to avoid memory overflow issues
+            res.status(200);
+            res.set({
+                "Content-Type": "application/json"
+            });
+            res.write("[");
+
             stream.on('data', function (doc) {
-                req.users.push(doc.follows)
+                var postStream = Post.find({author: doc.follows})
+                    .populate('author', 'username profileMedia')
+                .stream();
+
+                postStream.on('data', function(post){
+                    res.write(JSON.stringify({post: post}));
+                    res.write(", ");
+                });
+
+                postStream.on('error', function (err) {
+                    res.write(JSON.stringify({
+                        error: err.msg
+                        , result: 'Error loading timeline'
+                    }));
+
+                    res.end("]");
+                });
             });
 
             //if there's an error
             stream.on('error', function (err) {
                 res.json({
-                    error: err.msg,
-                    result: 'Error loading timeline'
+                    error: err.msg
+                    , result: 'Error loading timeline'
                 })
             });
 
             //when the stream closes, add self to req.users
             stream.on('close', function () {
-                req.users.push(user);
-                next();
+                var postStream = Post.find({author: user})
+                    .populate('author', 'username profileMedia')
+                    .stream();
+
+                postStream.on('data', function(post){
+                    res.write(JSON.stringify({post: post}));
+                    res.write(", ");
+                });
+
+                postStream.on('error', function (err) {
+                    res.write(JSON.stringify({
+                        error: err.msg
+                        , result: 'Error loading timeline'
+                    }));
+
+                    res.end("]");
+
+                });
+
+                postStream.on('close', function(){
+                    res.end("{}]");
+                });
             });
         }
 
         else{
             res.json({success: false, message: 'Not logged in'});
         }
-    });
-
-    meRouter.get('/newsfeed', function(req, res){
-        Post.find({})
-            .where('author')
-            .in(req.users)
-            .populate('author', 'username profileMedia')
-            .exec(function(err, posts){
-                if(err) throw err;
-
-                if(posts){
-                    res.json({success: true, result: posts});
-                }
-            });
     });
 
     //saves posts to the database
@@ -227,6 +251,9 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
                             if (err.errors.title) error.errors.push(err.errors.title.message);
                             if (err.errors.body) error.errors.push(err.errors.body.message);
                             if (err.errors.date) error.errors.push(err.errors.date.message);
+
+                            if (!post.body) res.status(406);
+                            else res.status(400);
                             res.send(error);
                         }
                     }
@@ -277,122 +304,6 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
                     message: 'User not logged in'
                 });
             }
-        });
-
-    //get all the users the person is following
-    meRouter.get('/following', function(req, res){
-        Follow.find({user: req.decoded._id})
-            .populate('follows', 'username')
-            .select('follows -_id')
-            .exec(function(err, users){
-                if(err || !users){
-                    res.json({
-                        success: false,
-                        result: 'request could not be completed'
-                    });
-                }
-
-                else{
-                    res.json({
-                        success: true,
-                        result: users
-                    });
-                }
-            });
-    });
-
-    //get all the users following the person
-    meRouter.get('/followers', function(req, res){
-        Follow.find({follows: req.decoded._id})
-            .populate('user', 'username')
-            .select('user -_id')
-            .exec(function(err, users){
-                if(err || !users){
-                    res.json({
-                        success: false,
-                        result: 'request could not be completed'
-                    });
-                }
-
-                else{
-                    res.json({
-                        success: true,
-                        result: users
-                    });
-                }
-            });
-    });
-
-    meRouter.param('user', valUser);
-
-    meRouter.route('/follow/:user')
-        //follow a user
-        .post(function(req, res){
-            var follow = new Follow();
-
-            //get information from request body
-            follow.user = req.decoded._id;
-            follow.follows = req.user._id;
-
-            Follow.findOne({user: follow.user, follows: follow.follows}, function(err, found){
-                if(err) throw err;
-
-                if(!found){
-                    follow.save(function (err) {
-                        if (err) { //handles errors
-                            var error={};
-                            console.log("error: " + err);
-
-                            if (err.errors) {
-                                error.errors = [];
-                                if (err.errors.user) error.errors.push(err.errors.user.message);
-                                if (err.errors.follows) error.errors.push(err.errors.follows.message);
-                                res.send(error.errors);
-                            }
-                        }
-
-                        else { //if no errors, user is saved
-                            User.update({_id: req.user._id}, {$inc: {followers: 1}}, function(){
-                                User.update({_id: req.decoded._id}, {$inc: {following: 1}}, function(){
-                                    res.json({
-                                        success: true,
-                                        message: "User followed"
-                                    });
-                                });
-                            });
-                        }
-                    });
-                }
-                else{
-                    res.json({success: false, message: 'Already following user'});
-                }
-            });
-        })
-
-        //unfollow a user
-        .delete(function(req, res){
-            Follow.findOne({user: req.decoded._id, follows: req.user._id}, function(err, found){
-                if(err) throw err;
-
-                if(found) {
-                    Follow.remove({user: req.decoded._id, follows: req.user._id}, function (err) {
-                        if(!err) {
-                            User.update({_id: req.user._id}, {$inc: {followers: -1}}, function () {
-                                User.update({_id: req.decoded._id}, {$inc: {following: -1}}, function () {
-                                    res.json({
-                                        success: true,
-                                        message: "User Unfollowed"
-                                    });
-                                });
-                            });
-                        }
-                    });
-                }
-
-                else{
-                    res.json({success: false, message: 'You are not following this user'});
-                }
-            });
         });
 
     //find a post. Might remove later on account of redundancy

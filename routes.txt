@@ -1,0 +1,52 @@
+=============================================================================================
+/api/access/register        : POST      -> Sign up
+.............................................................................................
+/api/access/login           : POST      -> Login
+
+=============================================================================================
+
+/api/me/pollInfo            : GET       -> Poll database for changes to user info
+.............................................................................................
+/api/me/info                : GET       -> Gets info for logged in user
+                            : PUT       -> Updates user info
+                            : DELETE    -> Deletes User
+.............................................................................................
+/api/me/newsfeed            : GET       -> Gets the logged in user's newsfeed
+.............................................................................................
+/api/me/posts               : POST      -> Creates new post
+                            : GET       -> Gets all the posts made by the logged in user
+/api/me/comments/:postID    : POST      -> Creates a comment on the post with postID
+                            : GET       -> Gets comments by the user on the post with :postID
+
+=============================================================================================
+
+/api/media/:id              : GET       -> Gets the media with :id
+
+=============================================================================================
+
+/api/posts/top50            : GET       -> Gets the top 50 posts ranked br number of likes
+.............................................................................................
+/api/posts/polltop50        : GET       -> Poll database for changes to top 50 posts
+.............................................................................................
+/api/posts/                 : GET       -> Get all posts
+.............................................................................................
+/api/posts/user/:user       : GET       -> Gets all posts made by :user
+.............................................................................................
+/api/posts/:postID          : GET       -> Gets the post with :postID
+                            : PUT       -> Update the post with :postID
+                            : DELETE    -> Delete the post with :postID
+
+=============================================================================================
+
+/api/users/                 : GET       -> Gets all users
+                            : DELETE    -> Deletes all users
+.............................................................................................
+/api/users/:user            : GET       -> Gets the user with :user
+
+=============================================================================================
+
+/api/comments
+/api/comments
+/api/comments
+
+/api/relations

@@ -11,7 +11,7 @@ var mongoose = require('mongoose'); //for database interactions
 var Schema = mongoose.Schema; //to define structure
 
 var postSchema = new Schema({
-    author: {type: Schema.ObjectId, ref: 'User', required: true}
+    author: {type: Schema.ObjectId, ref: 'User', required: true, index: true}
     , title: String
     , body:{type: String, required: true}
     , date: Date
