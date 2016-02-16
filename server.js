@@ -17,7 +17,7 @@ app.use(function(req, res, next){
     res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization,x-access-token');
-    res.setHeader('X-Powered-By', 'None of ya business');
+    res.setHeader('X-Powered-By', 'The tears of children');
     next();
 });
 

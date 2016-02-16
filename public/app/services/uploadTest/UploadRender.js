@@ -33,6 +33,7 @@ angular.module("UploadRender", [])
             div.innerHTML = "";
             div.style.width = MEDIA_WIDTH+"px";
             div.style.position = "relative";
+            div.style.margin = 0;
 
             var deleteImg = document.createElement("img");
             deleteImg.src = "/assets/img/delete.png";

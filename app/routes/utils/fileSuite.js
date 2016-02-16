@@ -140,8 +140,9 @@ module.exports = function(gfs, eventEmitter){
                     .size("800x450")
                     .aspect("16:9")
                     .autopad("white")
-                    .outputOptions("-preset ultrafast")
+                    .outputOptions("-preset veryfast")
                     .on("end", function(){
+                        console.log("Done encoding");
                         var mp4Stream = fs.createReadStream(mp4Path);
 
                         mp4Stream.on("end", function(){
@@ -150,6 +151,10 @@ module.exports = function(gfs, eventEmitter){
                         mp4Stream.pipe(writeStream);
 
                         fs.unlink(vidPath, function(err){if(err)throw err});
+                        console.log("Deleted file");
+                    })
+                    .on("start", function(){
+                        console.log("Started encoding");
                     })
                     .on("error", function(error){
                         console.log(error);

@@ -39,7 +39,6 @@ body{
 #preview img{
     position: relative;
     margin: auto;
-    margin-top: 20px;
 }
 
 .message{
@@ -67,6 +66,7 @@ body{
 
 #file-input{
     position: absolute;
+    display: none;
     opacity: 0;
     overflow: hidden;
     z-index: -200;

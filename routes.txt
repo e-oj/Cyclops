@@ -45,7 +45,7 @@
 
 =============================================================================================
 
-/api/comments
+/api/comments/              : GET       -> Gets every comment on a post
 /api/comments
 /api/comments
 
