@@ -4,29 +4,30 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
 
         post.files = [];
 
-        post.shelf = function(width){
+        post.shelf = function(width, elem){
             var files = $("#file-input")[0].files;
 
-            addFilesAndPreview(files, width);
+            addFilesAndPreview(files, width, elem);
         };
 
         post.nonEvent = eventStuff;
-        post.drop = function(e, width){
+        post.drop = function(e, width, elem){
             e.preventDefault();
             e.stopPropagation();
 
             //jQuery support: the dataTransfer property is not available with jquery events
             var dt = e.dataTransfer? e.dataTransfer : e.originalEvent.dataTransfer;
 
-            addFilesAndPreview(dt.files, width);
+            addFilesAndPreview(dt.files, width, elem);
         };
         
-        var addFilesAndPreview = function(files, width){
+        var addFilesAndPreview = function(files, width, elem){
             for(var i=0; i<files.length; i++){
                 if (render.validFile(files[i])) post.files.push(files[i]);
+                console.log(files[i].type);
             }
 
-            render.preview(files, width, post);
+            render.preview(files, width, post, elem);
         };
 
         post.saveFiles = function(body, tags, url){

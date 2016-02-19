@@ -87,7 +87,7 @@ angular.module("PostUI", ['NewPostService'])
             uploader.on('dragover', newPost.nonEvent);
 
             uploader.on('drop', function(e){
-                newPost.drop(e, controller.width ? controller.width : DEFAULT_WIDTH);
+                newPost.drop(e, controller.width ? controller.width : DEFAULT_WIDTH, elem);
                 borderDown(e);
             });
 
@@ -95,7 +95,7 @@ angular.module("PostUI", ['NewPostService'])
                 fileInput.val(null);
             });
             fileInput.on('change', function(){
-                newPost.shelf(controller.width ? controller.width : DEFAULT_WIDTH);
+                newPost.shelf(controller.width ? controller.width : DEFAULT_WIDTH, elem);
             });
 
             if(controller.defaultText){

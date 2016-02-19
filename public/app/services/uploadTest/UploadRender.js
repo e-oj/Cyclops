@@ -9,20 +9,21 @@ angular.module("UploadRender", [])
         var currIndex = 0;
         var MEDIA_WIDTH;
         var post;
+        var MAX_FILE_SIZE = 1500000000;
 
-        render.preview = function(files, width, _post){
+        render.preview = function(files, width, _post, elem){
             if(!MEDIA_WIDTH) MEDIA_WIDTH = width;
             post = _post;
 
             for(var i=0; i<files.length; i++){
-                if(render.validFile(files[i])){
+                if(render.validFile(files[i], true)){
                     var div = document.createElement("div");
 
                     div.innerHTML = "<p>Processing...</p>";
                     div.id = currIndex;
                     currIndex++;
 
-                    document.getElementById('preview').appendChild(div);
+                    elem.find('#preview').append(div);
 
                     display(readFile(files[i]), div);
                 }
@@ -57,16 +58,30 @@ angular.module("UploadRender", [])
             div.appendChild(media);
         };
 
-        render.validFile = function(file){
+        //TODO: Add view for error message
+        render.validFile = function(file, showErr){
             var allowedTypes = ['image', 'video', 'audio'];
+            var isValid = false;
 
             for(var i=0; i<allowedTypes.length; i++){
                 if(file.type.toLowerCase().indexOf(allowedTypes[i]) > -1){
-                    return true;
+                    isValid = true;
                 }
             }
 
-            return false;
+            if(!isValid && showErr){
+                alert(file.name + " has an unsupported format");
+                return isValid
+            }
+
+            isValid = isValid && file.size <= MAX_FILE_SIZE;
+
+            if(!isValid && showErr){
+                console.log(file);
+                alert(file.name + " is too large");
+            }
+
+            return isValid;
         };
 
         var dropMedia = function(index){

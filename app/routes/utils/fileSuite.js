@@ -139,10 +139,10 @@ module.exports = function(gfs, eventEmitter){
                 video.format("mp4")
                     .size("800x450")
                     .aspect("16:9")
-                    .autopad("white")
+                    .autopad("black")
                     .outputOptions("-preset veryfast")
                     .on("end", function(){
-                        console.log("Done encoding");
+                        //console.log("Done encoding");
                         var mp4Stream = fs.createReadStream(mp4Path);
 
                         mp4Stream.on("end", function(){
@@ -152,9 +152,6 @@ module.exports = function(gfs, eventEmitter){
 
                         fs.unlink(vidPath, function(err){if(err)throw err});
                         console.log("Deleted file");
-                    })
-                    .on("start", function(){
-                        console.log("Started encoding");
                     })
                     .on("error", function(error){
                         console.log(error);
