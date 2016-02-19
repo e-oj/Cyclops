@@ -15,6 +15,7 @@
       <w>onloadedmetadata</w>
       <w>onloadstart</w>
       <w>preload</w>
+      <w>unfollows</w>
       <w>usernames</w>
     </words>
   </dictionary>

@@ -141,7 +141,7 @@ module.exports = function(express, mongoose, Post, User, Comment, tkRouter, valU
 
         //update the comment
         .put(function (req, res) {
-            //boolean to determine if there's info to update user with
+            //boolean to determine if there's info to update comment with
             var info = false;
 
             if (req.body.title) {//if there's a new value for comment title

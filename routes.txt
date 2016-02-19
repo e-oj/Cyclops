@@ -46,7 +46,24 @@
 =============================================================================================
 
 /api/comments/              : GET       -> Gets every comment on a post
-/api/comments
-/api/comments
+.............................................................................................
+/api/comments/post/postID   : GET       -> Gets all the comments for the post with id :postID
+.............................................................................................
+/api/comments/user/:user    : GET       -> Gets all the comments made by :user
+.............................................................................................
+/api/comments/:commentID    : GET       -> Gets the comment with :commentID
+                            : PUT       -> Updates the comment with :commentID
+                            : DELETE    -> Deletes the comment with :commentID
 
-/api/relations
+=============================================================================================
+/api/relations/following        : GET       -> Gets all the users the logged in user follows
+.............................................................................................
+/api/relations/followers        : GET       -> Gets all the users following the logged in user
+.............................................................................................
+/api/relations/:user/following  : GET       -> Gets all the users the :user follows
+.............................................................................................
+/api/relations/:user/followers  : GET       -> Gets all the users following :user
+.............................................................................................
+/api/relations/follow/:user     : POST      -> Allows logged in user follow :user
+                                : DELETE    -> Logged in user unfollows :user
+.............................................................................................
