@@ -42,7 +42,7 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
     //saves media in a buffer
     meRouter.use(multer({
         putSingleFilesInArray: true
-        ,inMemory: true
+        ,dest: "./uploads"
     }));
 
     //Perform all necessary operations and save media to GridFS
@@ -252,8 +252,14 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
                             if (err.errors.body) error.errors.push(err.errors.body.message);
                             if (err.errors.date) error.errors.push(err.errors.date.message);
 
-                            if (!post.body) res.status(406);
-                            else res.status(400);
+                            if (!post.body){
+                                res.status(406);
+                                error.message = "Can't create empty post"
+                            }
+                            else {
+                                res.status(400);
+                                error.message = "ooops!! Something went wrong"
+                            }
                             res.send(error);
                         }
                     }
@@ -268,6 +274,7 @@ module.exports = function(Follow, User, Comment, Post, tkRouter, valUser, mediaS
             }
 
             else{
+                res.status(403);
                 res.json({
                     success: false,
                     message: 'User not logged in'

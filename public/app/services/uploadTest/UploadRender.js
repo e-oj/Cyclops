@@ -9,7 +9,7 @@ angular.module("UploadRender", [])
         var currIndex = 0;
         var MEDIA_WIDTH;
         var post;
-        var MAX_FILE_SIZE = 1500000000;
+        var MAX_FILE_SIZE = 3500000000;
 
         render.preview = function(files, width, _post, elem){
             if(!MEDIA_WIDTH) MEDIA_WIDTH = width;

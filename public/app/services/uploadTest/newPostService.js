@@ -82,7 +82,7 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                 var emptyPost = "Can't make empty Post";
                 var unexpectedError = "ooops!! Something went wrong";
 
-                loadingFeedback(err.status == 403? notLoggedIn : err.status == 406? emptyPost : unexpectedError);
+                loadingFeedback(err.data.message);
             });
         };
 

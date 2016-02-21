@@ -2,17 +2,15 @@
  * Module dependencies.
  */
 
-var url = require('url')
-  , utils = require('./utils')
-  , EventEmitter = require('events').EventEmitter
-  , driver = global.MONGOOSE_DRIVER_PATH || 'node-mongodb-native'
-  , Model = require('./model')
-  , Schema = require('./schema')
-  , Collection  = require('./drivers/' + driver + '/collection')
-  , STATES = require('./connectionstate')
-  , MongooseError = require('./error')
-  , assert =require('assert')
-  , muri = require('muri')
+var utils = require('./utils'),
+    EventEmitter = require('events').EventEmitter,
+    driver = global.MONGOOSE_DRIVER_PATH || './drivers/node-mongodb-native',
+    Schema = require('./schema'),
+    Collection = require(driver + '/collection'),
+    STATES = require('./connectionstate'),
+    MongooseError = require('./error'),
+    muri = require('muri'),
+    PromiseProvider = require('./promise_provider');
 
 /*!
  * Protocol prefix regexp.
@@ -21,6 +19,16 @@ var url = require('url')
  */
 
 var rgxProtocol = /^(?:.)+:\/\//;
+
+/*!
+ * A list of authentication mechanisms that don't require a password for authentication.
+ * This is used by the authMechanismDoesNotRequirePassword method.
+ *
+ * @api private
+ */
+var authMechanismsWhichDontRequirePassword = [
+  'MONGODB-X509'
+];
 
 /**
  * Connection constructor
@@ -41,7 +49,7 @@ var rgxProtocol = /^(?:.)+:\/\//;
  * @api public
  */
 
-function Connection (base) {
+function Connection(base) {
   this.base = base;
   this.collections = {};
   this.models = {};
@@ -58,7 +66,7 @@ function Connection (base) {
   this._readyState = STATES.disconnected;
   this._closeCalled = false;
   this._hasOpened = false;
-};
+}
 
 /*!
  * Inherit from EventEmitter
@@ -86,25 +94,28 @@ Connection.prototype.__proto__ = EventEmitter.prototype;
  */
 
 Object.defineProperty(Connection.prototype, 'readyState', {
-    get: function(){ return this._readyState; }
-  , set: function (val) {
-      if (!(val in STATES)) {
-        throw new Error('Invalid connection state: ' + val);
-      }
-
-      if (this._readyState !== val) {
-        this._readyState = val;
-        // loop over the otherDbs on this connection and change their state
-        for (var i=0; i < this.otherDbs.length; i++) {
-          this.otherDbs[i].readyState = val;
-        }
-
-        if (STATES.connected === val)
-          this._hasOpened = true;
-
-        this.emit(STATES[val]);
-      }
+  get: function() {
+    return this._readyState;
+  },
+  set: function(val) {
+    if (!(val in STATES)) {
+      throw new Error('Invalid connection state: ' + val);
     }
+
+    if (this._readyState !== val) {
+      this._readyState = val;
+      // loop over the otherDbs on this connection and change their state
+      for (var i = 0; i < this.otherDbs.length; i++) {
+        this.otherDbs[i].readyState = val;
+      }
+
+      if (STATES.connected === val) {
+        this._hasOpened = true;
+      }
+
+      this.emit(STATES[val]);
+    }
+  }
 });
 
 /**
@@ -162,33 +173,37 @@ Connection.prototype.config;
  * @api public
  */
 
-Connection.prototype.open = function (host, database, port, options, callback) {
-  var self = this
-    , parsed
-    , uri;
+Connection.prototype.open = function(host, database, port, options, callback) {
+  var parsed;
 
-  if ('string' === typeof database) {
+  if (typeof database === 'string') {
     switch (arguments.length) {
       case 2:
         port = 27017;
+        break;
       case 3:
         switch (typeof port) {
           case 'function':
-            callback = port, port = 27017;
+            callback = port;
+            port = 27017;
             break;
           case 'object':
-            options = port, port = 27017;
+            options = port;
+            port = 27017;
             break;
         }
         break;
       case 4:
-        if ('function' === typeof options)
-          callback = options, options = {};
+        if (typeof options === 'function') {
+          callback = options;
+          options = {};
+        }
     }
   } else {
     switch (typeof database) {
       case 'function':
-        callback = database, database = undefined;
+        callback = database;
+        database = undefined;
         break;
       case 'object':
         options = database;
@@ -234,43 +249,45 @@ Connection.prototype.open = function (host, database, port, options, callback) {
   }
 
   // authentication
-  if (options && options.user && options.pass) {
+  if (this.optionsProvideAuthenticationData(options)) {
     this.user = options.user;
     this.pass = options.pass;
-
   } else if (parsed && parsed.auth) {
     this.user = parsed.auth.user;
     this.pass = parsed.auth.pass;
 
-  // Check hostname for user/pass
+    // Check hostname for user/pass
   } else if (/@/.test(host) && /:/.test(host.split('@')[0])) {
     host = host.split('@');
     var auth = host.shift().split(':');
     host = host.pop();
     this.user = auth[0];
     this.pass = auth[1];
-
   } else {
     this.user = this.pass = undefined;
   }
 
   // global configuration options
   if (options && options.config) {
-    if (options.config.autoIndex === false){
-      this.config.autoIndex = false;
-    }
-    else {
-      this.config.autoIndex = true;
-    }
-
+    this.config.autoIndex = options.config.autoIndex !== false;
   }
 
   this.name = database;
   this.host = host;
   this.port = port;
 
-  this._open(callback);
-  return this;
+  var _this = this;
+  var Promise = PromiseProvider.get();
+  return new Promise.ES6(function(resolve, reject) {
+    _this._open(!!callback, function(error) {
+      callback && callback(error);
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve();
+    });
+  });
 };
 
 /**
@@ -317,12 +334,10 @@ Connection.prototype.open = function (host, database, port, options, callback) {
  * @api public
  */
 
-Connection.prototype.openSet = function (uris, database, options, callback) {
+Connection.prototype.openSet = function(uris, database, options, callback) {
   if (!rgxProtocol.test(uris)) {
     uris = 'mongodb://' + uris;
   }
-
-  var self = this;
 
   switch (arguments.length) {
     case 3:
@@ -337,7 +352,7 @@ Connection.prototype.openSet = function (uris, database, options, callback) {
           break;
       }
 
-      if ('function' === typeof options) {
+      if (typeof options === 'function') {
         callback = options;
         options = {};
       }
@@ -348,10 +363,12 @@ Connection.prototype.openSet = function (uris, database, options, callback) {
           this.name = database;
           break;
         case 'function':
-          callback = database, database = null;
+          callback = database;
+          database = null;
           break;
         case 'object':
-          options = database, database = null;
+          options = database;
+          database = null;
           break;
       }
   }
@@ -378,31 +395,33 @@ Connection.prototype.openSet = function (uris, database, options, callback) {
   }
 
   // authentication
-  if (options && options.user && options.pass) {
+  if (this.optionsProvideAuthenticationData(options)) {
     this.user = options.user;
     this.pass = options.pass;
-
   } else if (parsed && parsed.auth) {
     this.user = parsed.auth.user;
     this.pass = parsed.auth.pass;
-
   } else {
     this.user = this.pass = undefined;
   }
 
   // global configuration options
   if (options && options.config) {
-    if (options.config.autoIndex === false){
-      this.config.autoIndex = false;
-    }
-    else {
-      this.config.autoIndex = true;
-    }
-
+    this.config.autoIndex = options.config.autoIndex !== false;
   }
 
-  this._open(callback);
-  return this;
+  var _this = this;
+  var Promise = PromiseProvider.get();
+  return new Promise.ES6(function(resolve, reject) {
+    _this._open(!!callback, function(error) {
+      callback && callback(error);
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve();
+    });
+  });
 };
 
 /**
@@ -416,10 +435,12 @@ Connection.prototype.openSet = function (uris, database, options, callback) {
  * @api private
  */
 
-Connection.prototype.error = function (err, callback) {
-  if (callback) return callback(err);
+Connection.prototype.error = function(err, callback) {
+  if (callback) {
+    return callback(err);
+  }
   this.emit('error', err);
-}
+};
 
 /**
  * Handles opening the connection with the appropriate method based on connection type.
@@ -428,31 +449,33 @@ Connection.prototype.error = function (err, callback) {
  * @api private
  */
 
-Connection.prototype._open = function (callback) {
+Connection.prototype._open = function(emit, callback) {
   this.readyState = STATES.connecting;
   this._closeCalled = false;
 
-  var self = this;
+  var _this = this;
 
   var method = this.replica
-    ? 'doOpenSet'
-    : 'doOpen';
+      ? 'doOpenSet'
+      : 'doOpen';
 
   // open connection
-  this[method](function (err) {
+  this[method](function(err) {
     if (err) {
-      self.readyState = STATES.disconnected;
-      if (self._hasOpened) {
-        if (callback) callback(err);
+      _this.readyState = STATES.disconnected;
+      if (_this._hasOpened) {
+        if (callback) {
+          callback(err);
+        }
       } else {
-        self.error(err, callback);
+        _this.error(err, emit && callback);
       }
       return;
     }
 
-    self.onOpen(callback);
+    _this.onOpen(callback);
   });
-}
+};
 
 /**
  * Called when the connection is opened
@@ -460,34 +483,37 @@ Connection.prototype._open = function (callback) {
  * @api private
  */
 
-Connection.prototype.onOpen = function (callback) {
-  var self = this;
+Connection.prototype.onOpen = function(callback) {
+  var _this = this;
 
   function open(err, isAuth) {
     if (err) {
-      self.readyState = isAuth ? STATES.unauthorized : STATES.disconnected;
-      if (self._hasOpened) {
-        if (callback) callback(err);
+      _this.readyState = isAuth ? STATES.unauthorized : STATES.disconnected;
+      if (_this._hasOpened) {
+        if (callback) {
+          callback(err);
+        }
       } else {
-        self.error(err, callback);
+        _this.error(err, callback);
       }
       return;
     }
 
-    self.readyState = STATES.connected;
+    _this.readyState = STATES.connected;
 
     // avoid having the collection subscribe to our event emitter
     // to prevent 0.3 warning
-    for (var i in self.collections)
-      self.collections[i].onOpen();
+    for (var i in _this.collections) {
+      _this.collections[i].onOpen();
+    }
 
     callback && callback();
-    self.emit('open');
-  };
+    _this.emit('open');
+  }
 
-  // re-authenticate
-  if (self.user && self.pass) {
-    self.db.authenticate(self.user, self.pass, self.options.auth, function(err) {
+  // re-authenticate if we're not already connected #3871
+  if (this._readyState !== STATES.connected && this.shouldAuthenticate()) {
+    _this.db.authenticate(_this.user, _this.pass, _this.options.auth, function(err) {
       open(err, true);
     });
   } else {
@@ -503,11 +529,32 @@ Connection.prototype.onOpen = function (callback) {
  * @api public
  */
 
-Connection.prototype.close = function (callback) {
-  var self = this;
+Connection.prototype.close = function(callback) {
+  var _this = this;
+  var Promise = PromiseProvider.get();
+  return new Promise.ES6(function(resolve, reject) {
+    _this._close(function(error) {
+      callback && callback(error);
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve();
+    });
+  });
+};
+
+/**
+ * Handles closing the connection
+ *
+ * @param {Function} callback
+ * @api private
+ */
+Connection.prototype._close = function(callback) {
+  var _this = this;
   this._closeCalled = true;
 
-  switch (this.readyState){
+  switch (this.readyState) {
     case 0: // disconnected
       callback && callback();
       break;
@@ -515,25 +562,27 @@ Connection.prototype.close = function (callback) {
     case 1: // connected
     case 4: // unauthorized
       this.readyState = STATES.disconnecting;
-      this.doClose(function(err){
-        if (err){
-          self.error(err, callback);
+      this.doClose(function(err) {
+        if (err) {
+          _this.error(err, callback);
         } else {
-          self.onClose();
+          _this.onClose();
           callback && callback();
         }
       });
       break;
 
     case 2: // connecting
-      this.once('open', function(){
-        self.close(callback);
+      this.once('open', function() {
+        _this.close(callback);
       });
       break;
 
     case 3: // disconnecting
-      if (!callback) break;
-      this.once('close', function () {
+      if (!callback) {
+        break;
+      }
+      this.once('close', function() {
         callback();
       });
       break;
@@ -548,13 +597,14 @@ Connection.prototype.close = function (callback) {
  * @api private
  */
 
-Connection.prototype.onClose = function () {
+Connection.prototype.onClose = function() {
   this.readyState = STATES.disconnected;
 
   // avoid having the collection subscribe to our event emitter
   // to prevent 0.3 warning
-  for (var i in this.collections)
+  for (var i in this.collections) {
     this.collections[i].onClose();
+  }
 
   this.emit('close');
 };
@@ -570,9 +620,10 @@ Connection.prototype.onClose = function () {
  * @api public
  */
 
-Connection.prototype.collection = function (name, options) {
-  if (!(name in this.collections))
+Connection.prototype.collection = function(name, options) {
+  if (!(name in this.collections)) {
     this.collections[name] = new Collection(name, this, options);
+  }
   return this.collections[name];
 };
 
@@ -608,31 +659,31 @@ Connection.prototype.collection = function (name, options) {
  * @api public
  */
 
-Connection.prototype.model = function (name, schema, collection) {
+Connection.prototype.model = function(name, schema, collection) {
   // collection name discovery
-  if ('string' == typeof schema) {
+  if (typeof schema === 'string') {
     collection = schema;
     schema = false;
   }
 
-  if (utils.isObject(schema) && !(schema instanceof Schema)) {
+  if (utils.isObject(schema) && !schema.instanceOfSchema) {
     schema = new Schema(schema);
   }
 
   if (this.models[name] && !collection) {
     // model exists but we are not subclassing with custom collection
-    if (schema instanceof Schema && schema != this.models[name].schema) {
+    if (schema && schema.instanceOfSchema && schema !== this.models[name].schema) {
       throw new MongooseError.OverwriteModelError(name);
     }
     return this.models[name];
   }
 
-  var opts = { cache: false, connection: this }
+  var opts = {cache: false, connection: this};
   var model;
 
-  if (schema instanceof Schema) {
+  if (schema && schema.instanceOfSchema) {
     // compile a model
-    model = this.base.model(name, schema, collection, opts)
+    model = this.base.model(name, schema, collection, opts);
 
     // only the first model with this name is cached to allow
     // for one-offs with custom collection names etc.
@@ -660,8 +711,8 @@ Connection.prototype.model = function (name, schema, collection) {
     throw new MongooseError.MissingSchemaError(name);
   }
 
-  if (this == model.prototype.db
-      && (!collection || collection == model.collection.name)) {
+  if (this === model.prototype.db
+      && (!collection || collection === model.collection.name)) {
     // model already uses this connection.
 
     // only the first model with this name is cached to allow
@@ -672,8 +723,8 @@ Connection.prototype.model = function (name, schema, collection) {
 
     return model;
   }
-
-  return this.models[name] = model.__subclass(this, schema, collection);
+  this.models[name] = model.__subclass(this, schema, collection);
+  return this.models[name];
 };
 
 /**
@@ -682,15 +733,51 @@ Connection.prototype.model = function (name, schema, collection) {
  * @return {Array}
  */
 
-Connection.prototype.modelNames = function () {
+Connection.prototype.modelNames = function() {
   return Object.keys(this.models);
 };
 
-/*!
- * Noop.
+/**
+ * @brief Returns if the connection requires authentication after it is opened. Generally if a
+ * username and password are both provided than authentication is needed, but in some cases a
+ * password is not required.
+ * @api private
+ * @return {Boolean} true if the connection should be authenticated after it is opened, otherwise false.
  */
+Connection.prototype.shouldAuthenticate = function() {
+  return (this.user !== null && this.user !== void 0) &&
+      ((this.pass !== null || this.pass !== void 0) || this.authMechanismDoesNotRequirePassword());
+};
 
-function noop () {}
+/**
+ * @brief Returns a boolean value that specifies if the current authentication mechanism needs a
+ * password to authenticate according to the auth objects passed into the open/openSet methods.
+ * @api private
+ * @return {Boolean} true if the authentication mechanism specified in the options object requires
+ *  a password, otherwise false.
+ */
+Connection.prototype.authMechanismDoesNotRequirePassword = function() {
+  if (this.options && this.options.auth) {
+    return authMechanismsWhichDontRequirePassword.indexOf(this.options.auth.authMechanism) >= 0;
+  }
+  return true;
+};
+
+/**
+ * @brief Returns a boolean value that specifies if the provided objects object provides enough
+ * data to authenticate with. Generally this is true if the username and password are both specified
+ * but in some authentication methods, a password is not required for authentication so only a username
+ * is required.
+ * @param {Object} [options] the options object passed into the open/openSet methods.
+ * @api private
+ * @return {Boolean} true if the provided options object provides enough data to authenticate with,
+ *   otherwise false.
+ */
+Connection.prototype.optionsProvideAuthenticationData = function(options) {
+  return (options) &&
+      (options.user) &&
+      ((options.pass) || this.authMechanismDoesNotRequirePassword());
+};
 
 /*!
  * Module exports.

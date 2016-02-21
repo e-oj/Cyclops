@@ -18,7 +18,7 @@ module.exports = function(gfs, eventEmitter){
      * to GFS. It filters out files with unsupported formats
      * (non image/video/audio files) and doesn't moves on to the
      * next middleware/route until all files are done uploading
-     * and the doneWithUpload event
+     * and the doneWithUpload event fires.
      *
      * @param req The request
      * @param res The response
@@ -39,15 +39,34 @@ module.exports = function(gfs, eventEmitter){
                 var files = req.files['file'];
                 var index = 0;
                 var validTypes = ["image", "video", "audio"];
+                var MAX_FILE_SIZE = 1500000000;
+
+                var isValidFile = function(file){
+                    return validTypes.indexOf(file.mimetype.split("/")[0]) > -1 && file.size <= MAX_FILE_SIZE;
+                };
 
                 //if there's a files array and it's not empty, proceed
                 if(files && files.length) {
+                    var validFiles = [];
+
                     files.forEach(function(file){
-                        //f the file's mime type is a validType
-                        if(validTypes.indexOf(file.mimetype.split("/")[0]) > -1){
-                            fileSuite.saveFile(req, file);
-                        }
+                        if(isValidFile(file)) validFiles.push(file);
                     });
+
+                    if(validFiles.length) {
+                        req.files.file = validFiles;
+
+                        validFiles.forEach(function (file) {
+                            fileSuite.saveFile(req, file);
+                        });
+                    } else{
+                        console.log("File(s) too large");
+                        res.status(406);
+                        res.json({
+                            success: false
+                            , message: "File(s) too large"
+                        });
+                    }
 
                     /**
                      * Checks if all the files are done uploading.
@@ -57,8 +76,8 @@ module.exports = function(gfs, eventEmitter){
                      * the next function and exits the middleware.
                      */
                     var checkDone = function(){
-                        if(index < files.length) {
-                            if(index == files.length-1){
+                        if(index < validFiles.length) {
+                            if(index == validFiles.length - 1){
                                 eventEmitter.emit("doneWithUpload");
                             }
                             index++;
@@ -77,12 +96,9 @@ module.exports = function(gfs, eventEmitter){
                         eventEmitter.removeAllListeners("savedFile");
                     });
                     eventEmitter.on("doneWithUpload", next);
-                }
-                else next();
-            }
-            else next();
-        }
-        else next();
+                } else next();
+            } else next();
+        } else next();
     };
 
     /**

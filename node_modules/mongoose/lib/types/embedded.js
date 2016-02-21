@@ -1,10 +1,11 @@
+/* eslint no-func-assign: 1 */
+
 /*!
  * Module dependencies.
  */
 
 var Document = require('../document_provider')();
-var inspect = require('util').inspect;
-var Promise = require('../promise');
+var PromiseProvider = require('../promise_provider');
 
 /**
  * EmbeddedDocument constructor.
@@ -16,7 +17,7 @@ var Promise = require('../promise');
  * @api private
  */
 
-function EmbeddedDocument (obj, parentArr, skipId, fields, index) {
+function EmbeddedDocument(obj, parentArr, skipId, fields, index) {
   if (parentArr) {
     this.__parentArray = parentArr;
     this.__parent = parentArr._parent;
@@ -28,16 +29,16 @@ function EmbeddedDocument (obj, parentArr, skipId, fields, index) {
 
   Document.call(this, obj, fields, skipId);
 
-  var self = this;
-  this.on('isNew', function (val) {
-    self.isNew = val;
+  var _this = this;
+  this.on('isNew', function(val) {
+    _this.isNew = val;
   });
 }
 
 /*!
  * Inherit from Document
  */
-EmbeddedDocument.prototype = Object.create( Document.prototype );
+EmbeddedDocument.prototype = Object.create(Document.prototype);
 EmbeddedDocument.prototype.constructor = EmbeddedDocument;
 
 /**
@@ -54,10 +55,12 @@ EmbeddedDocument.prototype.constructor = EmbeddedDocument;
  * @receiver EmbeddedDocument
  */
 
-EmbeddedDocument.prototype.markModified = function (path) {
-  if (!this.__parentArray) return;
-
+EmbeddedDocument.prototype.markModified = function(path) {
   this.$__.activePaths.modify(path);
+  if (!this.__parentArray) {
+    return;
+  }
+
   if (this.isNew) {
     // Mark the WHOLE parent array as modified
     // if this is a new document (i.e., we are initializing
@@ -80,38 +83,12 @@ EmbeddedDocument.prototype.markModified = function (path) {
  * @api private
  */
 
-EmbeddedDocument.prototype.save = function (fn) {
-  var promise = new Promise(fn);
-  promise.fulfill();
-  return promise;
-}
-
-/**
- * Removes the subdocument from its parent array.
- *
- * @param {Function} [fn]
- * @api public
- */
-
-EmbeddedDocument.prototype.remove = function (fn) {
-  if (!this.__parentArray) return this;
-
-  var _id;
-  if (!this.willRemove) {
-    _id = this._doc._id;
-    if (!_id) {
-      throw new Error('For your own good, Mongoose does not know ' +
-                      'how to remove an EmbeddedDocument that has no _id');
-    }
-    this.__parentArray.pull({ _id: _id });
-    this.willRemove = true;
-    registerRemoveListener(this);
-  }
-
-  if (fn)
-    fn(null);
-
-  return this;
+EmbeddedDocument.prototype.save = function(fn) {
+  var Promise = PromiseProvider.get();
+  return new Promise.ES6(function(resolve) {
+    fn && fn();
+    resolve();
+  });
 };
 
 /*!
@@ -122,18 +99,49 @@ EmbeddedDocument.prototype.remove = function (fn) {
  * @api private
  */
 
-function registerRemoveListener (sub) {
+function registerRemoveListener(sub) {
   var owner = sub.ownerDocument();
 
-  owner.on('save', emitRemove);
-  owner.on('remove', emitRemove);
-
-  function emitRemove () {
+  function emitRemove() {
     owner.removeListener('save', emitRemove);
     owner.removeListener('remove', emitRemove);
     sub.emit('remove', sub);
-    owner = sub = emitRemove = null;
-  };
+    owner = sub = null;
+  }
+
+  owner.on('save', emitRemove);
+  owner.on('remove', emitRemove);
+}
+
+/**
+ * Removes the subdocument from its parent array.
+ *
+ * @param {Function} [fn]
+ * @api public
+ */
+
+EmbeddedDocument.prototype.remove = function(fn) {
+  if (!this.__parentArray) {
+    return this;
+  }
+
+  var _id;
+  if (!this.willRemove) {
+    _id = this._doc._id;
+    if (!_id) {
+      throw new Error('For your own good, Mongoose does not know ' +
+          'how to remove an EmbeddedDocument that has no _id');
+    }
+    this.__parentArray.pull({_id: _id});
+    this.willRemove = true;
+    registerRemoveListener(this);
+  }
+
+  if (fn) {
+    fn(null);
+  }
+
+  return this;
 };
 
 /**
@@ -141,9 +149,9 @@ function registerRemoveListener (sub) {
  * @api private
  */
 
-EmbeddedDocument.prototype.update = function () {
+EmbeddedDocument.prototype.update = function() {
   throw new Error('The #update method is not available on EmbeddedDocuments');
-}
+};
 
 /**
  * Helper for console.log
@@ -151,8 +159,8 @@ EmbeddedDocument.prototype.update = function () {
  * @api public
  */
 
-EmbeddedDocument.prototype.inspect = function () {
-  return inspect(this.toObject());
+EmbeddedDocument.prototype.inspect = function() {
+  return this.toObject();
 };
 
 /**
@@ -164,9 +172,9 @@ EmbeddedDocument.prototype.inspect = function () {
  * @api public
  */
 
-EmbeddedDocument.prototype.invalidate = function (path, err, val, first) {
+EmbeddedDocument.prototype.invalidate = function(path, err, val, first) {
   if (!this.__parent) {
-    var msg = 'Unable to invalidate a subdocument that has not been added to an array.'
+    var msg = 'Unable to invalidate a subdocument that has not been added to an array.';
     throw new Error(msg);
   }
 
@@ -218,11 +226,8 @@ EmbeddedDocument.prototype.$markValid = function(path) {
 EmbeddedDocument.prototype.$isValid = function(path) {
   var index = this.__index;
   if (typeof index !== 'undefined') {
-    var parentPath = this.__parentArray._path;
-    var fullPath = [parentPath, index, path].join('.');
-
     return !this.__parent.$__.validationError ||
-      !this.__parent.$__.validationError.errors[path];
+      !this.__parent.$__.validationError.errors[this.$__fullPath(path)];
   }
 
   return true;
@@ -234,20 +239,23 @@ EmbeddedDocument.prototype.$isValid = function(path) {
  * @return {Document}
  */
 
-EmbeddedDocument.prototype.ownerDocument = function () {
+EmbeddedDocument.prototype.ownerDocument = function() {
   if (this.$__.ownerDocument) {
     return this.$__.ownerDocument;
   }
 
   var parent = this.__parent;
-  if (!parent) return this;
+  if (!parent) {
+    return this;
+  }
 
   while (parent.__parent) {
     parent = parent.__parent;
   }
 
-  return this.$__.ownerDocument = parent;
-}
+  this.$__.ownerDocument = parent;
+  return this.$__.ownerDocument;
+};
 
 /**
  * Returns the full path to this document. If optional `path` is passed, it is appended to the full path.
@@ -259,10 +267,12 @@ EmbeddedDocument.prototype.ownerDocument = function () {
  * @memberOf EmbeddedDocument
  */
 
-EmbeddedDocument.prototype.$__fullPath = function (path) {
+EmbeddedDocument.prototype.$__fullPath = function(path) {
   if (!this.$__.fullPath) {
-    var parent = this;
-    if (!parent.__parent) return path;
+    var parent = this; // eslint-disable-line consistent-this
+    if (!parent.__parent) {
+      return path;
+    }
 
     var paths = [];
     while (parent.__parent) {
@@ -279,9 +289,9 @@ EmbeddedDocument.prototype.$__fullPath = function (path) {
   }
 
   return path
-    ? this.$__.fullPath + '.' + path
-    : this.$__.fullPath;
-}
+      ? this.$__.fullPath + '.' + path
+      : this.$__.fullPath;
+};
 
 /**
  * Returns this sub-documents parent document.
@@ -289,9 +299,9 @@ EmbeddedDocument.prototype.$__fullPath = function (path) {
  * @api public
  */
 
-EmbeddedDocument.prototype.parent = function () {
+EmbeddedDocument.prototype.parent = function() {
   return this.__parent;
-}
+};
 
 /**
  * Returns this sub-documents parent array.
@@ -299,9 +309,9 @@ EmbeddedDocument.prototype.parent = function () {
  * @api public
  */
 
-EmbeddedDocument.prototype.parentArray = function () {
+EmbeddedDocument.prototype.parentArray = function() {
   return this.__parentArray;
-}
+};
 
 /*!
  * Module exports.

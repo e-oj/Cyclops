@@ -13,14 +13,19 @@ var MongooseError = require('../error.js');
  * @api private
  */
 
-function CastError (type, value, path) {
+function CastError(type, value, path, reason) {
   MongooseError.call(this, 'Cast to ' + type + ' failed for value "' + value + '" at path "' + path + '"');
-  Error.captureStackTrace && Error.captureStackTrace(this, arguments.callee);
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this);
+  } else {
+    this.stack = new Error().stack;
+  }
   this.name = 'CastError';
   this.kind = type;
   this.value = value;
   this.path = path;
-};
+  this.reason = reason;
+}
 
 /*!
  * Inherits from MongooseError.

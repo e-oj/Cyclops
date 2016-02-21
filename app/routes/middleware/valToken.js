@@ -31,7 +31,7 @@ module.exports = function(express) {
                     res.status(403);
                     res.json({
                         success: false,
-                        message: 'failed to authenticate token'
+                        message: "You're not logged in"
                     })
                 }
 
@@ -45,7 +45,7 @@ module.exports = function(express) {
         else {
             res.json({
                 success: false,
-                message: 'no token provided'
+                message: "You're not logged in"
             });
         }
     });
