@@ -57,7 +57,7 @@ module.exports = function(gfs, eventEmitter){
                         req.files.file = validFiles;
 
                         validFiles.forEach(function (file) {
-                            fileSuite.saveFile(req, file);
+                            fileSuite.saveFile(req, res, file);
                         });
                     } else{
                         console.log("File(s) too large");
@@ -185,15 +185,14 @@ module.exports = function(gfs, eventEmitter){
     /**
      * Checks if the specified media exists.
      *
-     * TODO: Destroy this God forsaken function. It's useless.
-     *
      * @param id the id of the media to check for
+     * @param callback function to pass the result to
      */
-    mediaSuite.mediaExists = function(id){
+    mediaSuite.mediaExists = function(id, callback){
         gfs.findOne({_id: id}, function(err, found){
             if(err) throw err;
 
-            return (found)? true : false;
+            process.nextTick(function(){callback(found ? true : false)});
         });
     };
 

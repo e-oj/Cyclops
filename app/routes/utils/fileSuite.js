@@ -1,3 +1,11 @@
+var gm = require('gm').subClass({imageMagick: true});
+var streamifier = require('streamifier');
+var mongoose = require("mongoose");
+var ffmpeg = require("fluent-ffmpeg");
+var fs = require("fs");
+var fileSuite = {};
+var UPLOADS_DIR = "./uploads/";
+
 /**
  * This module contains functions that enables media
  * uploads.
@@ -8,13 +16,6 @@
  * @returns An object containing the saveFile function.
  */
 module.exports = function(gfs, eventEmitter){
-    var gm = require('gm').subClass({imageMagick: true});
-    var streamifier = require('streamifier');
-    var mongoose = require("mongoose");
-    var ffmpeg = require("fluent-ffmpeg");
-    var fs = require("fs");
-    var fileSuite = {};
-
     /**
      * This function creates a MongoDB id to be assigned to the
      * uploaded file, a writeStream that allows us to write files to
@@ -22,13 +23,16 @@ module.exports = function(gfs, eventEmitter){
      * has finished uploading.
      *
      * @param req The request
+     * @param res The response
      * @param file The file to upload
      */
-    fileSuite.saveFile = function(req, file){
+    fileSuite.saveFile = function(req, res, file){
         //console.log("File ===> ", file);
 
         //id to be assigned to file in GridFS
         var id = mongoose.Types.ObjectId();
+        var FILE_PATH = UPLOADS_DIR + file.name;
+
         var writeStream = gfs.createWriteStream({
             _id: id
             , filename: file.name
@@ -41,12 +45,14 @@ module.exports = function(gfs, eventEmitter){
 
         //when the file has been written to GridFS
         writeStream.on('close', function (file) {
+            fs.unlink(FILE_PATH, function(err){if(err) console.log(err)});
+
             console.log(file.filename + ' has been uploaded');
             eventEmitter.emit("savedFile");
         });
 
         //writes the file to GridFS
-        writeToDb(req, file, id, writeStream);
+        writeToDb(req, res, file, id, writeStream);
     };
 
     /**
@@ -55,114 +61,85 @@ module.exports = function(gfs, eventEmitter){
      * piping them to the write stream. Videos, Audio and GIFs are piped
      * without any checks.
      *
-     * TODO: Add video/audio compression
-     *
      * @param req The request
+     * @param res The response
      * @param file the file to upload
      * @param id the id assigned to the file
      * @param writeStream the write stream that handles the upload
      */
-    function writeToDb(req, file, id, writeStream){
+    function writeToDb(req, res, file, id, writeStream){
         //The maximum width for any image
         var IMAGE_SIZE = 800;
-
-        var write = false;
-
-        //the content of this file stored as binary data
-        var buffer = file.buffer;
+        var FILE_PATH = "./uploads/" + file.name;
+        var readStream = fs.createReadStream(FILE_PATH);
 
         if(fileIs('image', file)){
+            var gmImage = gm(FILE_PATH);
 
-            var fileBuffer = gm(buffer, file.name);
-
-            fileBuffer.size(function(err, size){
+            gmImage.size(function(err, size){
                 if(err){
-                    console.log(err);
+                    sendErrResponse(res);
                 }
-
-                //resize if width > 800 and image is not a gif
                 else if(size.width > 800 && !fileIs("gif", file)){
-                    fileBuffer = fileBuffer.resize(IMAGE_SIZE);
+                    gmImage = gmImage.resize(IMAGE_SIZE);
 
-                    fileBuffer.size(function(err, newSize){
-                        fileBuffer.stream().pipe(writeStream);
+                    gmImage.size(function(err, newSize){
+                        if(err){
+                            sendErrResponse(res);
+                        }
+                        else {
+                            gmImage.stream("png").pipe(writeStream);
 
-                        //save the mediaID
-                        req.mediaIds.push({
-                            media: id
-                            , mediaType: 'image'
-                            , dimension: {
-                                width: newSize.width
-                                , height: newSize.height
-                            }
-                        });
-                    });
-                }
-
-                else{
-                    fileBuffer.stream().pipe(writeStream);
-
-                    //save the mediaID
-                    req.mediaIds.push({
-                        media: id
-                        , mediaType: 'image'
-                        , dimension: {
-                            width: size.width
-                            , height: size.height
+                            //save the mediaID
+                            req.mediaIds.push(getFileObject("image", id, newSize.width, newSize.height));
                         }
                     });
                 }
+                else{
+                    gmImage.stream().pipe(writeStream);
+
+                    //save the mediaID
+                    req.mediaIds.push(getFileObject("image", id, size.width, size.height));
+                }
 
             });
-            //}
-            //else write = true;
         }
         else if (fileIs('audio', file)){
             //save the mediaID
-            req.mediaIds.push({media: id, mediaType: 'audio'});
-            write = true
+            req.mediaIds.push(getFileObject("audio", id));
+            readStream.pipe(writeStream);
         }
         else if (fileIs('video', file)) {
-            var vidPath = "./uploads/" + file.name;
+            var video = ffmpeg(readStream);
+            var mp4Path = "./uploads/" + id + ".mp4";
 
-            //writes the file to the filesystem so we can convert it to mp4
-            fs.writeFile(vidPath, buffer, function(err){
-                if(err) console.log(err);
+            //save the mediaID
+            req.mediaIds.push(getFileObject("video", id));
 
-                var video = ffmpeg(vidPath);
-                var mp4Path = "./uploads/" + id + ".mp4";
+            //Convert the video to mp4
 
-                //save the mediaID
-                req.mediaIds.push({media: id, mediaType: 'video'});
+            video.format("mp4")
+                .size("800x450")
+                .aspect("16:9")
+                .autopad("black")
+                .outputOptions("-preset veryfast")
+                .on("end", function(){
+                    //console.log("Done encoding");
+                    var mp4Stream = fs.createReadStream(mp4Path);
 
-                //Convert the video to mp4
-                video.format("mp4")
-                    .size("800x450")
-                    .aspect("16:9")
-                    .autopad("black")
-                    .outputOptions("-preset veryfast")
-                    .on("end", function(){
-                        //console.log("Done encoding");
-                        var mp4Stream = fs.createReadStream(mp4Path);
-
-                        mp4Stream.on("end", function(){
-                            fs.unlink(mp4Path, function(err){if(err) throw err});
+                    mp4Stream.on("end", function(){
+                        fs.unlink(mp4Path, function(err){if(err) console.log(err)});
+                    });
+                    mp4Stream.pipe(writeStream);
+                })
+                .on("error", function(){
+                    fs.unlink(FILE_PATH, function(){
+                        fs.unlink(mp4Path, function(){
+                            sendErrResponse(res);
                         });
-                        mp4Stream.pipe(writeStream);
-
-                        fs.unlink(vidPath, function(err){if(err)throw err});
-                        console.log("Deleted file");
-                    })
-                    .on("error", function(error){
-                        console.log(error);
-                    })
-                .save(mp4Path);
-            });
-        }
-
-        //pipes the buffer to the writeStream if write is true
-        if(write){
-            streamifier.createReadStream(buffer).pipe(writeStream);
+                    });
+                })
+            .save(mp4Path);
         }
     }
 
@@ -176,6 +153,39 @@ module.exports = function(gfs, eventEmitter){
      */
     function fileIs(type, file){
         return (file.mimetype).indexOf(type) > -1
+    }
+
+    function getFileObject(fileType, id, width, height){
+        if(!fileType) throw errIsRequired("fileType argument", "getFileObject");
+        if(!id) throw errIsRequired("id argument", "getFileObject");
+        if((width && !height) || height && !width) throw errIsRequired("the width, and the height", "getFileObject");
+
+        fileType = fileType.toLowerCase();
+
+        var file = {};
+
+        file.media = id;
+        file.mediaType = fileType;
+
+        if(fileType == "image" && width && height){
+            file.dimension = {
+                width: width
+                , height: height
+            }
+        }
+
+        return file;
+    }
+
+    function errIsRequired(requiredItem, requiredBy){
+        return new Error(requiredItem + " is required " + requiredBy ? "by" + requiredBy : "function");
+    }
+
+    function sendErrResponse(res){
+        res.status(400);
+        res.json({
+            message: "oops!!! something went wrong"
+        });
     }
 
     return fileSuite;
