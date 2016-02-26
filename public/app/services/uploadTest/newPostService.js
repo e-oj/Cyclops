@@ -38,6 +38,9 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
             var loadingImg = document.createElement("img");
             var loadingMsg = angular.element(document.createElement("p"));
             var elem = angular.element("#uploader");
+            var submit = elem.find("button")[0];
+
+            submit.disabled = true;
 
             var loadingFeedback = function(message){
                 var confirm = angular.element(document.createElement("button"));
@@ -55,6 +58,7 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                 loadingMsg.remove();
                 loadingDiv.append(confirmMsg);
                 loadingDiv.append(confirm);
+                submit.disabled = false
             };
 
             loadingImg.src = "/assets/img/loading.GIF";
@@ -78,11 +82,8 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                 loadingFeedback("Post Uploaded");
                 console.log(res);
             }, function(err){
-                var notLoggedIn = "You are not logged in";
-                var emptyPost = "Can't make empty Post";
-                var unexpectedError = "ooops!! Something went wrong";
-
-                loadingFeedback(err.data.message);
+                console.log(err);
+                loadingFeedback(err.data && err.data.message ? err.data.message : "oops!!! something went wrong");
             });
         };
 

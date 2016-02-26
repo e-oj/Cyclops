@@ -24,7 +24,7 @@ module.exports = function(express, User, multer, mediaSuite){
     //saves media in a buffer
     accessRouter.use(multer({
         putSingleFilesInArray: true
-        ,inMemory: true
+        ,dest: "./uploads"
     }));
 
     //saves profileMedia if any

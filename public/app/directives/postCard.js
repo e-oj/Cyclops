@@ -12,7 +12,8 @@ angular.module('PostCard', ["ngResource"
         , "dateUtils"
         , "postUtils"
         , "constants"
-        , function($resource, dateUtils, postUtils, constants){
+        , "$timeout"
+        , function($resource, dateUtils, postUtils, constants, $timeout){
             var link = function(scope, elem){
                 if(!scope.bodyJson)throw new Error("oj-post-card requires a value for the body-json field");
                 if(!scope.width)throw new Error("oj-post-card requires a value for the width field");
@@ -88,6 +89,12 @@ angular.module('PostCard', ["ngResource"
 
                 //elem.append("<oj-post dest-url='/api/me/posts' width=" + scope.width + "></oj-post>");
                 //$compile(elem.contents())(scope);
+
+                $timeout(function(){
+                    elem.attr("body-json", "avenger");
+                    elem.attr("ng-repeat", "avenger in home.marvel");
+                });
+
             };
 
             return{

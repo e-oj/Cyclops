@@ -25,14 +25,13 @@ angular.module('authService', ['ngResource', 'ConstFactory'])
                     AuthToken.setToken(res.token);
                     reply.message = res.message;
                     reply.failed = false;
-                    //console.log(res);
+                    console.log(res);
                 }
-
+                console.log("in");
                 reply.processing = false;
-
             }, function(err){
                 console.log(err);
-                reply.message = err.data.message;
+                reply.message = err.data && err.data.message ? err.data.message : "oops!!! something went wrong";
                 reply.failed = true;
                 reply.processing = false;
             });
