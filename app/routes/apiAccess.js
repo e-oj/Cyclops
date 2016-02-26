@@ -3,7 +3,7 @@ var jwt = require('jsonwebtoken'); //JSON web token for authentication
 var config = require('../../config'), //Configuration
     secret = config.secret; //secret for token
 var bCrypt = require('bcrypt-nodejs'); //bcrypt for validating hashed passwords
-var TOKEN_LIFESPAN = 1440; //lifespan of a token
+var TOKEN_LIFESPAN = 1440;
 
 /**
  * This module contains the routes for access to the
