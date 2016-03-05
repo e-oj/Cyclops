@@ -17,6 +17,7 @@ angular.module("AudioPlayer", [])
             var volumeTracker = angular.element(audioDiv.find(".tracking-div")[1]);
             var volumeIcon = audioDiv.find(".volume-icon");
 
+            //dimensions of the element
             var dimensions = {
                 width: scope.ojWidth
                 , height: scope.ojWidth/4
