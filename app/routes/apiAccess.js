@@ -3,7 +3,7 @@ var jwt = require('jsonwebtoken'); //JSON web token for authentication
 var config = require('../../config'), //Configuration
     secret = config.secret; //secret for token
 var bCrypt = require('bcrypt-nodejs'); //bcrypt for validating hashed passwords
-var TOKEN_LIFESPAN = 1440;
+var TOKEN_LIFESPAN = 86400;
 
 /**
  * This module contains the routes for access to the
@@ -97,7 +97,7 @@ module.exports = function(express, User, multer, mediaSuite){
                             //assign a token
                             var repUser = {_id: user._id, username: user.username};
 
-                            var token = jwt.sign(repUser, secret, {expiresInMinutes: TOKEN_LIFESPAN});
+                            var token = jwt.sign(repUser, secret, {expiresIn: TOKEN_LIFESPAN});
                             res.status(202);
 
                             res.json({
