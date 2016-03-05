@@ -58,7 +58,8 @@ module.exports = function(gfs, eventEmitter){
     /**
      * This function pipes (writes) the given file to the given writeStream.
      * It re-sizes non-gif images with a width greater than 800px before
-     * piping them to the write stream. Videos, Audio and GIFs are piped
+     * piping them to the write stream, videos are compressed and converted
+     * to mp4 for cross browser compatibility while Audio and GIFs are piped
      * without any checks.
      *
      * @param req The request
@@ -177,14 +178,29 @@ module.exports = function(gfs, eventEmitter){
         return file;
     }
 
+  /**
+   * This function returns an error which indicates that
+   * a parameter required by a function is not present
+   *
+   * @param requiredItem the required parameter
+   * @param requiredBy the function that requires it
+   * @returns {Error}
+   */
     function errIsRequired(requiredItem, requiredBy){
         return new Error(requiredItem + " is required " + requiredBy ? "by" + requiredBy : "function");
     }
 
-    function sendErrResponse(res){
+  /**
+   * This function sends a generic error response if
+   * an unexpected error occurs during file processing
+   *
+   * @param res the response
+   * @param message (optional) message to be sent.
+   */
+  function sendErrResponse(res, message){
         res.status(400);
         res.json({
-            message: "oops!!! something went wrong"
+            message: message || "oops!!! something went wrong"
         });
     }
 

@@ -27,17 +27,17 @@ var userSchema = new Schema({//Schema for User model
 });
 
 userSchema.pre('save', function(next){
-    var user = this;
+    var document = this;
 
     //hash the password only if the password has been changed or the user is new
-    if(!user.isModified('password')) return next();
+    if(!document.isModified('password')) return next();
 
     //generate the hash
-    bCrypt.hash(user.password, null, null, function(err, hash){
+    bCrypt.hash(document.password, null, null, function(err, hash){
         if(err) return next(err);
 
         //change the password to the hashed version
-        user.password = hash;
+        document.password = hash;
         next();
     });
 });

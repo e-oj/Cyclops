@@ -65,7 +65,7 @@ app.get('/testAudio', function(req, res){
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
-        res.send('error', {
+        res.send({
             message: err.message,
             error: err
         });

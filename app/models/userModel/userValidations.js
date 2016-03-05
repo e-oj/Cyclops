@@ -24,12 +24,13 @@ validator.extend('validPassword', function(str){
         else if(str[i]== str[i].toLowerCase()) lower = true;//if it's lowercase
     }
 
-    return upper&&lower&&num;
+    return upper && lower && num;
 });
 
 /**
  * This is where the heavy lifting is done after
  * the groundwork is laid with the above functions
+ *
  * @param User - User to be operated on
  * @returns the User with all the validations applied
  */
