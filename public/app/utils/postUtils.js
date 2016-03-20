@@ -67,6 +67,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
         };
 
         utils.loadMedia = function(scope, mediaElem, file){
+            var mediaSrc = constants.media + "/" + file.media;
             var dim = file.dimension;
             var mediaDiv = angular.element(document.createElement("div"));
             var loading = document.createElement("img");
@@ -74,16 +75,20 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
             var width = 0;
             var height = 0;
             var media;
-            var audio = false;
+            var isImage = false;
+            var isAudio = false;
 
             loading.src = "/assets/img/loading.GIF";
             loading.width = scope.width * 0.05;
 
             if(file.mediaType == "image"){
                 media = document.createElement("img");
+                isImage = true;
+
                 //TODO Remove the check for dim. It will always be available in the future
                 var useScopeWidth = dim? dim.width > scope.width : true;
                 width = useScopeWidth? scope.width : dim.width;
+
                 if(dim) height = useScopeWidth? (width / (dim.width/dim.height)) : dim.height;
                 else height = width/ASPECT_RATIO;
 
@@ -101,30 +106,43 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                 media = document.createElement("video");
                 width = scope.width;
                 height = width/ASPECT_RATIO;
+                var currTime = 0;
 
                 media.width = width;
-                media.preload = "metadata";
+                media.preload = "none";
+                media.controls = true;
 
-                media.onloadedmetadata = function(){
-                    media.id = file.media;
-                    media.className += "video-js vjs-default-skin";
-                    angular.element(loading).replaceWith(media);
-                    videojs(media, {
-                        "controls": true
-                        , "autoplay": false
-                        , "preload": "metadata"
-                    });
-                    mediaDiv.css({
-                        height: "auto"
+                media.id = file.media;
+                media.className += "video-js vjs-default-skin";
+                mediaDiv.append(media);
+
+                videojs(media, {
+                    // "controls": true
+                    "autoplay": false
+                    , "preload": "none"
+                    , "BigPlayButton": false
+                }, function(){
+                    this.userActive(true);
+                    this.on(media, "play", function() {
+                        this.currentTime(currTime);
+                        console.log(this.currentSrc());
                     });
 
-                    media.onloadedmetadata = null;
-                    console.log("loadedmetadata");
-                };
+                    this.on(media, "pause", function(){
+                        console.log(this.paused());
+                        currTime = this.currentTime();
+                        this.src(this.currentSrc());
+                        // console.log(this.currentSrc());
+                    })
+                });
+
+                mediaDiv.css({
+                    height: "auto"
+                });
             }
 
             else if(file.mediaType == "audio"){
-                audio = true;
+                isAudio = true;
                 width = scope.width;
                 height = width/4;
 
@@ -149,9 +167,12 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
             loading.style.top = "45%";
             mediaElem.append(mediaDiv);
 
-            if(!audio){
+            if(isImage) {
                 mediaDiv.append(loading);
-                media.src = constants.media + "/" + file.media;
+            }
+
+            if(!isAudio){
+                media.src = mediaSrc;
             }
         };
 

@@ -23,7 +23,9 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
         
         var addFilesAndPreview = function(files, width, elem){
             for(var i=0; i<files.length; i++){
-                if (render.validFile(files[i])) post.files.push(files[i]);
+                if (render.validFile(files[i])){
+                    post.files.push(files[i]);
+                }
                 console.log(files[i].type);
             }
 

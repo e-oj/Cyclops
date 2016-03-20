@@ -16,6 +16,7 @@ angular.module("AudioPlayer", [])
             var volume = angular.element(audioDiv.find(".oj-slider")[1]);
             var volumeTracker = angular.element(audioDiv.find(".tracking-div")[1]);
             var volumeIcon = audioDiv.find(".volume-icon");
+            var currTime = 0;
 
             //dimensions of the element
             var dimensions = {
@@ -29,16 +30,20 @@ angular.module("AudioPlayer", [])
             loadingImg.src = "/assets/img/loading.GIF";
             loadingImg.width = scope.ojWidth * 0.05;
             loadingImg.className = "audio-loading-img";
-            audioDiv.replaceWith(loadingImg);
+            // audioDiv.replaceWith(loadingImg);
 
 
             playImg.on("click", function(){
                 if(audio.paused){
+                    audio.src = scope.ojSrc;
+                    audio.currentTime = currTime;
                     audio.play();
                     playImg[0].src =  "/assets/img/pause.png";
                 }
                 else{
+                    currTime = audio.currentTime;
                     audio.pause();
+                    audio.src = "";
                     playImg[0].src =  "/assets/img/play.png";
                 }
             });
@@ -100,6 +105,8 @@ angular.module("AudioPlayer", [])
                 playImg.attr("src", "/assets/img/play.png");
 
                 audio.currentTime = 0;
+                currTime = 0;
+                audio.src = "";
 
                 track.val(0);
 
@@ -107,6 +114,21 @@ angular.module("AudioPlayer", [])
                     width: 0
                 });
             });
+
+            // audio.addEventListener("waiting", function(){
+            //    audioImg.replaceWith(loadingImg);
+            // });
+            //
+            // audio.addEventListener("canplay", function(){
+            //    angular.element(loadingImg).replaceWith(audioImg);
+            // });
+
+            var initTime = function(){
+                timeLeftDiv.text(parseSeconds(audio.duration - audio.currentTime));
+                audio.removeEventListener("loadedmetadata", initTime);
+            };
+
+            audio.addEventListener("loadedmetadata", initTime);
 
             var initAudioPlayer = function(){
                 if(scope.width < 400){
@@ -120,16 +142,12 @@ angular.module("AudioPlayer", [])
                     });
                 }
 
-                timeLeftDiv.text(parseSeconds(audio.duration));
-
-                audio.removeEventListener("loadedmetadata", initAudioPlayer);
-
-                angular.element(loadingImg).replaceWith(audioDiv);
+                timeLeftDiv.text(scope.ojDuration ? parseSeconds(scope.ojDuration) : "0:00");
             };
 
-            audio.addEventListener("loadedmetadata", initAudioPlayer);
+            initAudioPlayer();
 
-            audio.preload = "metadata";
+            audio.preload = "none";
             audio.volume = 1;
             audio.src = scope.ojSrc;
         };
@@ -155,6 +173,7 @@ angular.module("AudioPlayer", [])
                 , ojWidth: "="
                 , ojImgSrc: "@"
                 , ojObject: "="
+                , ojDuration: "="
             }
             , templateUrl: "/app/views/templates/audioPlayer.html"
             , restrict: "E"
