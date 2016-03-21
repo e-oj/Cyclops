@@ -115,13 +115,15 @@ angular.module("AudioPlayer", [])
                 });
             });
 
-            // audio.addEventListener("waiting", function(){
-            //    audioImg.replaceWith(loadingImg);
-            // });
-            //
-            // audio.addEventListener("canplay", function(){
-            //    angular.element(loadingImg).replaceWith(audioImg);
-            // });
+            audio.addEventListener("waiting", function(){
+                audioImg.replaceWith(loadingImg);
+            });
+
+            audio.addEventListener("canplay", function(){
+               setTimeout(function(){
+                   angular.element(loadingImg).replaceWith(audioImg);
+               }, 200);
+            });
 
             var initTime = function(){
                 timeLeftDiv.text(parseSeconds(audio.duration - audio.currentTime));
