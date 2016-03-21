@@ -122,7 +122,7 @@ angular.module("AudioPlayer", [])
             audio.addEventListener("canplay", function(){
                setTimeout(function(){
                    angular.element(loadingImg).replaceWith(audioImg);
-               }, 200);
+               }, 100);
             });
 
             var initTime = function(){
