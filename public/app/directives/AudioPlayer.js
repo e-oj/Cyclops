@@ -50,8 +50,6 @@ angular.module("AudioPlayer", [])
             });
 
             track.on("input", function(){
-                console.log("clicked");
-                console.log(Math.floor(duration * track.val()));
                 audio.currentTime = Math.floor(duration * track.val());
                 currTime = audio.currentTime;
 
