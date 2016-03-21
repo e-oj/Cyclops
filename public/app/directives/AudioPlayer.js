@@ -17,6 +17,7 @@ angular.module("AudioPlayer", [])
             var volumeTracker = angular.element(audioDiv.find(".tracking-div")[1]);
             var volumeIcon = audioDiv.find(".volume-icon");
             var currTime = 0;
+            var duration = 0;
 
             //dimensions of the element
             var dimensions = {
@@ -49,13 +50,16 @@ angular.module("AudioPlayer", [])
             });
 
             track.on("input", function(){
-                audio.currentTime = Math.floor(audio.duration * track.val());
+                console.log("clicked");
+                console.log(Math.floor(duration * track.val()));
+                audio.currentTime = Math.floor(duration * track.val());
+                currTime = audio.currentTime;
 
                 progressTracker.css({
                     width: track.val() * 98 + "%"
                 });
 
-                timeLeftDiv.text(parseSeconds(audio.duration - audio.currentTime));
+                timeLeftDiv.text(parseSeconds(duration - audio.currentTime));
             });
 
             volume.on("input", function(){
@@ -120,13 +124,12 @@ angular.module("AudioPlayer", [])
             });
 
             audio.addEventListener("canplay", function(){
-               setTimeout(function(){
-                   angular.element(loadingImg).replaceWith(audioImg);
-               }, 100);
+                angular.element(loadingImg).replaceWith(audioImg);
             });
 
             var initTime = function(){
                 timeLeftDiv.text(parseSeconds(audio.duration - audio.currentTime));
+                duration = audio.duration;
                 audio.removeEventListener("loadedmetadata", initTime);
             };
 
