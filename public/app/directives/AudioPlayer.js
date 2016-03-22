@@ -17,6 +17,7 @@ angular.module("AudioPlayer", [])
             var volumeTracker = angular.element(audioDiv.find(".tracking-div")[1]);
             var volumeIcon = audioDiv.find(".volume-icon");
             var currTime = 0;
+            var loading = false;
             var duration = 0;
 
             //dimensions of the element
@@ -40,6 +41,11 @@ angular.module("AudioPlayer", [])
                     playImg[0].src =  "/assets/img/pause.png";
                 }
                 else{
+                    if(loading){
+                        angular.element(loadingImg).replaceWith(audioImg);
+                        loading = false;
+                    }
+
                     currTime = audio.currentTime;
                     audio.pause();
                     audio.src = "";
@@ -116,10 +122,12 @@ angular.module("AudioPlayer", [])
             });
 
             audio.addEventListener("waiting", function(){
+                loading = true;
                 audioImg.replaceWith(loadingImg);
             });
 
             audio.addEventListener("canplay", function(){
+                loading = false;
                 angular.element(loadingImg).replaceWith(audioImg);
             });
 

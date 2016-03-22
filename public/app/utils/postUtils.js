@@ -30,6 +30,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
 
                 //can move if its real width is greater than 0.9 of it's containers width
                 var movable = elemWidth > (containerWidth * 0.9);
+
                 if(movable){
                     var distance = elemWidth - containerWidth;
                     if(distance < 0) distance = 0;
@@ -45,7 +46,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                         setTimeout(function(){
                             $elem.css({
                                 'left': 0
-                            })
+                            });
                         }, 1000);
                     });
                 }
@@ -109,30 +110,22 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                 var currTime = 0;
 
                 media.width = width;
-                media.preload = "none";
-                media.controls = true;
-
                 media.id = file.media;
                 media.className += "video-js vjs-default-skin";
                 mediaDiv.append(media);
 
                 videojs(media, {
-                    // "controls": true
-                    "autoplay": false
+                    "controls": true
+                    , "autoplay": false
                     , "preload": "none"
-                    , "BigPlayButton": false
                 }, function(){
-                    this.userActive(true);
                     this.on(media, "play", function() {
                         this.currentTime(currTime);
-                        console.log(this.currentSrc());
                     });
 
                     this.on(media, "pause", function(){
-                        console.log(this.paused());
                         currTime = this.currentTime();
                         this.src(this.currentSrc());
-                        // console.log(this.currentSrc());
                     })
                 });
 
