@@ -31,8 +31,6 @@ angular.module("AudioPlayer", [])
             loadingImg.src = "/assets/img/loading.GIF";
             loadingImg.width = scope.ojWidth * 0.05;
             loadingImg.className = "audio-loading-img";
-            // audioDiv.replaceWith(loadingImg);
-
 
             playImg.on("click", function(){
                 if(audio.paused){
