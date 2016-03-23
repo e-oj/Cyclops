@@ -108,6 +108,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                 width = scope.width;
                 height = width/ASPECT_RATIO;
                 var currTime = 0;
+                var isLoading = false;
 
                 media.width = width;
                 media.id = file.media;
@@ -119,18 +120,43 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                     , "autoplay": false
                     , "preload": "none"
                 }, function(){
+                    var resetTimer = null;
+                    var TIMEOUT = 15000;
+
                     this.on(media, "play", function() {
+                        if(resetTimer != null){
+                            clearTimeout(resetTimer);
+                            resetTimer = null;
+                        }
+
                         this.currentTime(currTime);
                     });
 
                     this.on(media, "pause", function(){
-                        currTime = this.currentTime();
-                        this.src(this.currentSrc());
+                        var self = this;
+                        currTime = self.currentTime();
+
+                        var resetConnection = function () {
+                            self.src(self.currentSrc());
+                            resetTimer = null;
+                        };
+
+                        if(!isLoading && !resetTimer) {
+                            resetTimer = setTimeout(resetConnection, TIMEOUT);
+                        }
                     });
 
                     this.on(media, "ended", function(){
                         currTime = 0;
                         this.currentTime(currTime);
+                    });
+
+                    this.on(media, "waiting", function(){
+                        isLoading = true;
+                    });
+
+                    this.on(media, "canplay", function(){
+                        isLoading = false;
                     });
                 });
 
