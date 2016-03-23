@@ -84,6 +84,10 @@ module.exports = function(gfs, eventEmitter){
                         }
                     };
 
+                    eventEmitter.on("ERROR", function(){
+                        sendErrResponse(res);
+                    });
+
                     //calls checkDone every time a file uploads successfully.
                     eventEmitter.on("savedFile", checkDone);
 
@@ -208,6 +212,13 @@ module.exports = function(gfs, eventEmitter){
             else console.log('Media with id ' + id +' has been Removed');
         });
     };
+
+    function sendErrResponse(res, message){
+        res.status(400);
+        res.json({
+            message: message || "oops!!! something went wrong"
+        });
+    }
 
     return mediaSuite;
 };

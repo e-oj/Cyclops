@@ -9,7 +9,7 @@ angular.module("UploadRender", [])
         var currIndex = 0;
         var MEDIA_WIDTH;
         var post;
-        var MAX_FILE_SIZE = 3500000000;
+        var MAX_FILE_SIZE = 1500000000;
 
         render.preview = function(files, width, _post, elem){
             if(!MEDIA_WIDTH) MEDIA_WIDTH = width;
@@ -23,14 +23,14 @@ angular.module("UploadRender", [])
                     div.id = currIndex;
                     currIndex++;
 
-                    elem.find('#preview').append(div);
+                    elem.find('.preview').append(div);
 
-                    display(readFile(files[i]), div);
+                    display(readFile(files[i]), div, elem);
                 }
             }
         };
 
-        var display = function(media, div){
+        var display = function(media, div, elem){
             div.innerHTML = "";
             div.style.width = MEDIA_WIDTH+"px";
             div.style.position = "relative";
@@ -51,7 +51,7 @@ angular.module("UploadRender", [])
             style.cursor = "pointer";
 
             deleteImg.addEventListener("click", function(){
-                dropMedia(parseInt(this.parentNode.id))
+                dropMedia(parseInt(this.parentNode.id), elem)
             });
 
             div.appendChild(deleteImg);
@@ -84,10 +84,10 @@ angular.module("UploadRender", [])
             return isValid;
         };
 
-        var dropMedia = function(index){
+        var dropMedia = function(index, elem){
             if(index<0 || index>=post.files.length) return;
 
-            var prevDiv = document.getElementById("preview");
+            var prevDiv = elem.find(".preview")[0];
 
             post.files.splice(index, 1);
             currIndex--;

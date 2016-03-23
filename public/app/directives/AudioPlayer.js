@@ -119,6 +119,8 @@ angular.module("AudioPlayer", [])
                 progressTracker.css({
                     width: 0
                 });
+
+                timeLeftDiv.text(parseSeconds(duration));
             });
 
             audio.addEventListener("waiting", function(){

@@ -86,7 +86,7 @@ module.exports = function(gfs, eventEmitter){
 
                     gmImage.size(function(err, newSize){
                         if(err){
-                            sendErrResponse(res);
+                            eventEmitter.emit("ERROR")
                         }
                         else {
                             gmImage.stream("png").pipe(writeStream);
@@ -111,7 +111,7 @@ module.exports = function(gfs, eventEmitter){
             readStream.pipe(writeStream);
         }
         else if (fileIs('video', file)) {
-            var video = ffmpeg(readStream);
+            var video = ffmpeg(FILE_PATH);
             var mp4Path = "./uploads/" + id + ".mp4";
 
             //save the mediaID
@@ -133,10 +133,12 @@ module.exports = function(gfs, eventEmitter){
                     });
                     mp4Stream.pipe(writeStream);
                 })
-                .on("error", function(){
+                .on("error", function(err){
+                    console.log(err ? err : file);
                     fs.unlink(FILE_PATH, function(){
-                        fs.unlink(mp4Path, function(){
-                            sendErrResponse(res);
+                        fs.unlink(mp4Path, function(err){
+                            console.log(err || file);
+                            eventEmitter.emit("ERROR");
                         });
                     });
                 })
@@ -197,7 +199,7 @@ module.exports = function(gfs, eventEmitter){
    * @param res the response
    * @param message (optional) message to be sent.
    */
-  function sendErrResponse(res, message){
+    function sendErrResponse(res, message){
         res.status(400);
         res.json({
             message: message || "oops!!! something went wrong"

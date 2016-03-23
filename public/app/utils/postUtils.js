@@ -126,7 +126,12 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                     this.on(media, "pause", function(){
                         currTime = this.currentTime();
                         this.src(this.currentSrc());
-                    })
+                    });
+
+                    this.on(media, "ended", function(){
+                        currTime = 0;
+                        this.currentTime(currTime);
+                    });
                 });
 
                 mediaDiv.css({

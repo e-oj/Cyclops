@@ -1,15 +1,40 @@
-<div id="uploader">
-    <div class="bottom-border">
-        <label for="file-input" id="file-input-label">
-            <img src="/assets/img/upload.png" width="15px">
-            Select media
-        </label>
-    </div>
-    <input type="file" multiple id="file-input">
-
-    <div id="drop-zone">
-        <div id="preview">
+<div>
+    <div class="uploader">
+        <div class="bottom-border">
+            <label class="file-input-label">
+                <img src="/assets/img/upload.png" width="15px">
+                Select media
+                <input type="file" multiple class="file-input">
+            </label>
         </div>
+
+        <div class="drop-zone">
+            <div class="preview">
+            </div>
+        </div>
+        <form class="upload-form">
+            <textarea class="post-body"
+                      ng-model="uploadCt.postBody"
+                      placeholder="Enter text"
+                      onclick="toggleFocus(this)"
+            >
+            </textarea>
+            <input type="text"
+                   class="tags"
+                   ng-model="uploadCt.tags"
+                   placeholder="Tag your post"
+                   onclick="toggleFocus(this)"
+            >
+        </form>
+
+        <div class="upload-controls">
+            <button class="upload-btn" ng-click="uploadCt.post()">
+                <img src="/assets/img/post.png" width="15px">
+                <span class="submit-prompt">CREATE POST</span>
+            </button>
+        </div>
+
+        <div class="upload-overlay"></div>
     </div>
     <script>
         function toggleFocus(elem){
@@ -23,27 +48,4 @@
             elem.addEventListener('blur', reset);
         }
     </script>
-    <form id="upload-form">
-        <textarea id="post-body"
-                  ng-model="uploadCt.postBody"
-                  placeholder="Enter text"
-                  onclick="toggleFocus(this)"
-        >
-        </textarea>
-        <input type="text"
-               id="tags"
-               ng-model="uploadCt.tags"
-               placeholder="Tag your post"
-               onclick="toggleFocus(this)"
-        >
-    </form>
-
-    <div class="upload-controls">
-        <button id="upload-btn" ng-click="uploadCt.post()">
-            <img src="/assets/img/post.png" width="15px">
-            CREATE POST
-        </button>
-    </div>
-
-    <div id="upload-overlay"></div>
 </div>

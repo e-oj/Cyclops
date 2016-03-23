@@ -1,4 +1,4 @@
-#uploader{
+.uploader{
     position: absolute;
     text-align: center;
     background: white;
@@ -11,18 +11,18 @@ body{
     color: darkcyan;
 }
 
-#drop-zone{
+.drop-zone{
     background-color: #FFFFFF;
     max-height: 700px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-#upload-form{
+.upload-form{
     margin-top: 10px;
 }
 
-#post-body {
+.post-body {
     border: 1px solid lightgray;
     background-color: #FFFFFF;
     resize: none;
@@ -36,7 +36,7 @@ body{
     font-family: verdana, sans-serif;
 }
 
-#preview img{
+.preview img{
     position: relative;
     margin: auto;
 }
@@ -49,7 +49,7 @@ body{
     padding: 10px;
 }
 
-#tags{
+.tags{
     margin: 10px;
     width: 250px;
     outline: none;
@@ -64,7 +64,7 @@ body{
     border-bottom: 1px solid lightgray;
 }
 
-#file-input{
+.file-input{
     position: absolute;
     display: none;
     opacity: 0;
@@ -72,7 +72,7 @@ body{
     z-index: -200;
 }
 
-#file-input-label{
+.file-input-label{
     position: relative;
     cursor: pointer;
     display: inline-block;
@@ -83,7 +83,7 @@ body{
     color: darkcyan;
 }
 
-#upload-btn{
+.upload-btn{
     margin: 10px;
     padding: 5px;
     color: darkcyan;
@@ -107,7 +107,7 @@ body{
     cursor: pointer;
 }
 
-#upload-overlay{
+.upload-overlay{
     position: absolute;
     width: 280px;
     height: 200px;

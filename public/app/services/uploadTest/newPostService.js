@@ -5,7 +5,7 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
         post.files = [];
 
         post.shelf = function(width, elem){
-            var files = $("#file-input")[0].files;
+            var files = elem.find(".file-input")[0].files;
 
             addFilesAndPreview(files, width, elem);
         };
@@ -32,17 +32,16 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
             render.preview(files, width, post, elem);
         };
 
-        post.saveFiles = function(body, tags, url){
+        post.saveFiles = function(body, tags, url, elem){
             var sendFile = $resource(url);
             var loadingDiv = document.createElement("div");
                 loadingDiv.id = "uploadLoadingDiv";
                 loadingDiv = angular.element(loadingDiv);
             var loadingImg = document.createElement("img");
             var loadingMsg = angular.element(document.createElement("p"));
-            var elem = angular.element("#uploader");
-            var submit = elem.find("button")[0];
-
-            submit.disabled = true;
+            var uploader = elem.find(".uploader");
+            var submit = uploader.find(".upload-button");
+                submit.disabled = true;
 
             var loadingFeedback = function(message){
                 var confirm = angular.element(document.createElement("button"));
@@ -63,16 +62,18 @@ angular.module('NewPostService', ['ngResource', 'UploadRender'])
                 submit.disabled = false
             };
 
+            elem.find("audio, video").each(function(){this.pause()});
+
             loadingImg.src = "/assets/img/loading.GIF";
             loadingImg.className = "loading-img";
             loadingMsg.text("Uploading Post...");
 
-            loadingDiv.height(elem.height());
-            loadingDiv.width(elem.width());
+            loadingDiv.height(uploader.height());
+            loadingDiv.width(uploader.width());
             loadingDiv.addClass("loading-div");
             loadingDiv.append(loadingImg);
             loadingDiv.append(loadingMsg);
-            elem.append(loadingDiv);
+            uploader.append(loadingDiv);
 
             $http.defaults.headers.post['x-access-token'] = $window.localStorage.getItem('token');
 
