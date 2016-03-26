@@ -53,12 +53,6 @@ angular.module('PostCard', ["ngResource"
                         date.css({
                             top: ($media.height()/2) + "px"
                         });
-
-                        if(scope.width < 400){
-                            date.css({
-                                fontSize: "0.4em"
-                            });
-                        }
                     }
                 }
 

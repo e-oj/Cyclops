@@ -3,8 +3,8 @@
     width: 100%;
     height: inherit;
     background-color: whitesmoke;
-    border-left: 1px solid darkcyan;
-    border-right: 1px solid darkcyan;
+    border-left: 0.05em solid darkcyan;
+    border-right: 0.05em solid darkcyan;
     box-sizing: border-box;
 }
 
@@ -39,7 +39,7 @@
 .audio-div .controls-div .playback-div{
     position: relative;
     height: 25%;
-    min-height: 25px;
+    min-height: 1.25em;
     top: 25%;
 }
 
@@ -49,7 +49,7 @@
     height: 100%;
     width: 8%;
     left: 1%;
-    min-width: 25px;
+    min-width: 1.25em;
     margin: 0 1% 0 1%;
     display: flex;
     flex-direction: column;
@@ -59,7 +59,7 @@
 .volume-ctrl-div{
     position: relative;
     height: 25%;
-    min-height: 25px;
+    min-height: 1.25em;
     top: 25%;
 }
 
@@ -69,7 +69,7 @@
     height: 100%;
     width: 4%;
     left: 25%;
-    min-width: 13px;
+    min-width: 0.65em;
     margin: 0 1% 0 1%;
     display: flex;
     flex-direction: column;
@@ -80,7 +80,7 @@
     position: relative;
     height: 40%;
     width: 100%;
-    min-height: 12px;
+    min-height: 0.6em;
     transition: all 0.1s linear;
     cursor: pointer;
 }
@@ -137,7 +137,7 @@
 .tracking-div, .track-color{
     position: absolute;
     top: 48%;
-    height: 2px;
+    height: 0.1em;
 }
 
 .tracking-div{
@@ -156,7 +156,7 @@
     -moz-appearance: none;
     width: 100%;
     background: transparent;
-    height: 2px;
+    height: 0.1em;
     z-index: 1;
     cursor: pointer;
     margin: 0;
@@ -166,9 +166,9 @@
 
 .oj-slider::-webkit-slider-thumb{
     -webkit-appearance: none;
-    margin-top: -2px;
-    height: 8px;
-    width: 8px;
+    margin-top: -0.16em;
+    height: 0.6em;
+    width: 0.6em;
     border-radius: 50%;
     background-color: #008b8b;
     cursor: pointer;
@@ -176,9 +176,9 @@
 }
 
 .oj-slider::-moz-range-thumb{
-    margin-top: -3px;
-    height: 8px;
-    width: 8px;
+    margin-top: -0.15em;
+    height: 0.6em;
+    width: 0.6em;
     border-radius: 50%;
     background-color: #008b8b;
     cursor: pointer;
@@ -187,9 +187,9 @@
 }
 
 .oj-slider::-ms-thumb{
-    margin-top: -3px;
-    height: 8px;
-    width: 8px;
+    margin-top: -0.15em;
+    height: 0.6em;
+    width: 0.6em;
     border-radius: 50%;
     background-color: #008b8b;
     cursor: pointer;
@@ -198,14 +198,14 @@
 
 .oj-slider::-webkit-slider-runnable-track{
     width: 100%;
-    height: 2px;
+    height: 0.1em;
     cursor: pointer;
     background-color: transparent;
 }
 
 .oj-slider::-moz-range-track{
     width: 100%;
-    height: 2px;
+    height: 0.1em;
     cursor: pointer;
     background-color: transparent;
 }
@@ -217,7 +217,7 @@
 
 .oj-slider::-ms-track{
     width: 100%;
-    height: 2px;
+    height: 0.2em;
     cursor: pointer;
     background-color: #d3d3d3;
     border-color: transparent;
@@ -240,7 +240,7 @@
     justify-content: center;
     font-family: "Courier New", Tahoma, sans-serif;
     color: #008b8b;
-    font-size: 0.85em;
+    font-size: 0.7em;
 }
 
 .audio-loading-img{

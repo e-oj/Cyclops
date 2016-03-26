@@ -52,12 +52,17 @@ app.get('/makepost', function(req, res){
 //card directive test
 app.get('/testCard', function(req, res){
     //res.send("Hello World");
-    res.sendFile(path.join(__dirname, '/public/app/directives/testCard.html'));
+    res.sendFile(path.join(__dirname, '/public/app/views/newIndex.html'));
 });
 
 app.get('/testAudio', function(req, res){
     //res.send("Hello World");
     res.sendFile(path.join(__dirname, '/public/app/directives/testAudio.html'));
+});
+
+app.get('/gritzle', function(req, res){
+    //res.send("Hello World");
+    res.sendFile(path.join(__dirname, '/public/app/views/newIndex.html'));
 });
 
 // development error handler

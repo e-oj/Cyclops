@@ -1,86 +1,32 @@
-angular.module('Home', ['Post', 'DateUtils', "PostUtils", 'ngResource', 'ConstFactory'])
+angular.module('Home', ['Post', 'DateUtils', "PostUtils", 'ngResource', 'ConstFactory', "AlignCards"])
     .controller('homeController', ['top50'
         , '$scope'
         , 'dateUtils'
         , 'postUtils'
         , '$resource'
         , 'constants'
-        , function(top50, $scope, dateUtils, postUtils, $resource, constants){
+        , "alignCards"
+        , "$timeout"
+        , function(top50, $scope, dateUtils, postUtils, $resource, constants, alignCards, $timeout){
 
             var self = this;
             var mediaUrl = constants.api + "/media/";
             self.top50 = top50;
 
-            function updateMe(me){
-                var top50 = $resource(constants.api + "/posts/pollTop50");
-                top50.get({}).$promise.then(function(data){
-                    if(data.success) {
-                        self.top50 = data;
-                    }
-                    setTimeout(function(){
-                        updateMe(me);
-                    }, 10000);
-                });
-            }
+            $timeout(alignCards.loadCards, 1000);
 
-            //updateMe(self.top50);
-
-            //TODO: Get all these timeouts the fuck out of here
-            $scope.$on('LastElementReached', function(){
-                $scope.$evalAsync(function() {
-                    setTimeout(function () {
-                        loadCards();
-                    }, 10);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 50);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 100);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 200);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 500);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 1000);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 5000);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 10000);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 20000);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 60000);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 95000);
-
-                    setTimeout(function () {
-                        loadCards();
-                    }, 120000);
-
-                })
+            angular.element(window).on("resize", function(){
+                alignCards.reset();
+                alignCards.loadCards();
             });
+            //updateMe(self.top50);
 
             self.getMediaUrl = function(mediaId){
                 return mediaUrl+mediaId;
+            };
+
+            self.getPostWidth = function(){
+              return 0.20834 * screen.availWidth;
             };
 
             self.postText = postUtils.addTags;

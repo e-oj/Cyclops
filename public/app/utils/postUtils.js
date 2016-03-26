@@ -78,6 +78,8 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
             var media;
             var isImage = false;
             var isAudio = false;
+            var select = angular.element;
+            // var BODY_FONT = window.parseInt(select("body").css("font-size").split("px")[0]);
 
             loading.src = "/assets/img/loading.GIF";
             loading.width = scope.width * 0.05;
@@ -98,7 +100,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                     mediaDiv.css({
                         height: "auto"
                     });
-                    angular.element(loading).replaceWith(media);
+                    select(loading).replaceWith(media);
                 };
             }
 
@@ -178,11 +180,10 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                 });
             }
 
-            mediaDiv.width(width);
-            mediaDiv.height(height);
-
             mediaDiv.css({
-                "margin": file.mediaType == "image"? "0 auto 5px auto" : "0 0 5px 0"
+                margin: file.mediaType == "image"? "0 auto 5px auto" : "0 0 5px 0"
+                , width: width
+                , height: height
             });
 
             loading.style.display = "block";

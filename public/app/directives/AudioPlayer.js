@@ -44,6 +44,7 @@ angular.module("AudioPlayer", [])
                     if(loading){
                         angular.element(loadingImg).replaceWith(audioImg);
                         loading = false;
+                        console.log("replaced");
                     }
 
                     currTime = audio.currentTime;
@@ -98,13 +99,16 @@ angular.module("AudioPlayer", [])
             }
 
             audio.addEventListener("timeupdate", function(){
-                track.val(audio.currentTime/audio.duration);
+                var time = audio.currentTime || currTime;
+                var totalTime = audio.duration || duration;
+
+                track.val(time/totalTime);
 
                 progressTracker.css({
                     width: track.val() * 98 + "%"
                 });
 
-                timeLeftDiv.text(parseSeconds(audio.duration - audio.currentTime));
+                timeLeftDiv.text(parseSeconds(totalTime - time));
             });
 
             audio.addEventListener("ended", function(){
@@ -124,13 +128,17 @@ angular.module("AudioPlayer", [])
             });
 
             audio.addEventListener("waiting", function(){
-                loading = true;
-                audioImg.replaceWith(loadingImg);
+                if(!loading) {
+                    loading = true;
+                    audioImg.replaceWith(loadingImg);
+                }
             });
 
             audio.addEventListener("canplay", function(){
-                loading = false;
-                angular.element(loadingImg).replaceWith(audioImg);
+                if(loading) {
+                    loading = false;
+                    angular.element(loadingImg).replaceWith(audioImg);
+                }
             });
 
             var initTime = function(){
