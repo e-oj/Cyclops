@@ -64,6 +64,7 @@ angular.module("AlignCards", [])
 
           setTimeout(function(){
             clearInterval(checkHeight);
+            console.log("cleared", checkHeight);
           }, 600000);
         }
 
