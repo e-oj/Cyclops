@@ -41,7 +41,7 @@ angular.module("AlignCards", [])
     };
 
     function positionCards(cardList){
-      cards.each(function(i){
+      cards.each(function(){
         var min = getMin(cardList);
         var index = min.index;
         var leftPos = margin + (index * (colWidth + margin));
@@ -52,7 +52,19 @@ angular.module("AlignCards", [])
           , top: min.height + min.top + "px"
         });
 
-        self.on("resize", align.loadCards);
+        //support for previous versions of the cards.
+        if(self.hasClass("non-dir")){
+          var height = self.height();
+          var checkHeight = setInterval(function(){
+            if(self.height() !== height){
+              align.loadCards();
+            }
+          }, 1000);
+
+          setTimeout(function(){
+            clearInterval(checkHeight);
+          }, 600000);
+        }
 
         cardList[index] = {
           height: min.height + min.top + self.outerHeight()
