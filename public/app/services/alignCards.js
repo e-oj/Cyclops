@@ -54,11 +54,11 @@ angular.module("AlignCards", [])
 
         //support for previous versions of the cards.
         // if(self.hasClass("non-dir")){
-          var height = self.height();
+          var height = self.outerHeight();
           var checkHeight = setInterval(function(){
-            var currHeight = self.height();
+            var currHeight = self.outerHeight();
 
-            if(height != currHeight && Math.abs(height - currHeight) !== 1){
+            if(height != currHeight){
               console.log(height, self.height(), "rearranging");
               clearInterval(checkHeight);
               clearTimeout(clearHeightCheck);
