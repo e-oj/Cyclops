@@ -52,6 +52,8 @@ angular.module("AlignCards", [])
           , top: min.height + min.top + "px"
         });
 
+        self.on("resize", align.loadCards);
+
         cardList[index] = {
           height: min.height + min.top + self.outerHeight()
           , top: min.top
