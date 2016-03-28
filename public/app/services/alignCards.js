@@ -58,7 +58,7 @@ angular.module("AlignCards", [])
           var checkHeight = setInterval(function(){
             var currHeight = self.outerHeight();
 
-            if(height != currHeight){
+            if(height != currHeight  && Math.abs(height - currHeight) !== 1){
               console.log(height, self.height(), "rearranging");
               clearInterval(checkHeight);
               clearTimeout(clearHeightCheck);
