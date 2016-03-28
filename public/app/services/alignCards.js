@@ -56,15 +56,18 @@ angular.module("AlignCards", [])
         // if(self.hasClass("non-dir")){
           var height = self.height();
           var checkHeight = setInterval(function(){
-            if(height != self.height()){
+            var currHeight = self.height();
+
+            if(height != currHeight && Math.abs(height - currHeight != 1)){
               console.log(height, self.height(), "rearranging");
               clearInterval(checkHeight);
+              clearTimeout(clearHeightCheck);
               align.reset();
               align.loadCards();
             }
           }, 1000);
 
-          setTimeout(function(){
+          var clearHeightCheck = setTimeout(function(){
             clearInterval(checkHeight);
             console.log("cleared", checkHeight);
           }, 600000);
