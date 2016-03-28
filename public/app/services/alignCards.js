@@ -56,8 +56,8 @@ angular.module("AlignCards", [])
         // if(self.hasClass("non-dir")){
           var height = self.height();
           var checkHeight = setInterval(function(){
-            if(self.height() !== height){
-              console.log("rearranging");
+            if(height != self.height()){
+              console.log(height, self.height(), "rearranging");
               height = self.height();
               align.reset();
               align.loadCards();
