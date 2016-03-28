@@ -53,7 +53,7 @@ angular.module("AlignCards", [])
         });
 
         //support for previous versions of the cards.
-        if(self.hasClass("non-dir")){
+        // if(self.hasClass("non-dir")){
           var height = self.height();
           var checkHeight = setInterval(function(){
             if(self.height() !== height){
@@ -68,7 +68,7 @@ angular.module("AlignCards", [])
             clearInterval(checkHeight);
             console.log("cleared", checkHeight);
           }, 600000);
-        }
+        // }
 
         cardList[index] = {
           height: min.height + min.top + self.outerHeight()
