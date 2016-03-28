@@ -52,26 +52,21 @@ angular.module("AlignCards", [])
           , top: min.height + min.top + "px"
         });
 
-        //support for previous versions of the cards.
-        // if(self.hasClass("non-dir")){
-          var height = self.outerHeight();
-          var checkHeight = setInterval(function(){
-            var currHeight = self.outerHeight();
+        var height = self.outerHeight();
+        var checkHeight = setInterval(function(){
+          var currHeight = self.outerHeight();
 
-            if(height != currHeight  && Math.abs(height - currHeight) !== 1){
-              console.log(height, self.height(), "rearranging");
-              clearInterval(checkHeight);
-              clearTimeout(clearHeightCheck);
-              align.reset();
-              align.loadCards();
-            }
-          }, 1000);
-
-          var clearHeightCheck = setTimeout(function(){
+          if(height != currHeight && Math.abs(height - currHeight) !== 1){
             clearInterval(checkHeight);
-            console.log("cleared", checkHeight);
-          }, 600000);
-        // }
+            clearTimeout(clearHeightCheck);
+            align.reset();
+            align.loadCards();
+          }
+        }, 1000);
+
+        var clearHeightCheck = setTimeout(function(){
+          clearInterval(checkHeight);
+        }, 600000);
 
         cardList[index] = {
           height: min.height + min.top + self.outerHeight()
