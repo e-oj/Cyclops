@@ -29,16 +29,4 @@ angular.module('Home', ['Post', 'DateUtils', "PostUtils", 'ngResource', 'ConstFa
             self.postText = postUtils.addTags;
             self.parseDate = dateUtils.parseDate;
         }
-    ])
-
-    //lets us know when ngRepeat is over so we can
-    //set cards
-    .directive('setCards', [function(){
-        return function(scope){
-            if(scope.$last){
-                scope.$evalAsync(function(){
-                    scope.$emit('LastElementReached');
-                });
-            }
-        };
-    }]);
+    ]);

@@ -5,8 +5,7 @@
 <div id="cards" ng-controller="homeController as home">
     <div ng-if="home.top50.result.length"
          ng-repeat="post in home.top50.result"
-         set-cards
          ng-include="'/app/views/partials/postmodel.html'"
-         class="card non-dir">
+         class="card">
     </div>
 </div>
