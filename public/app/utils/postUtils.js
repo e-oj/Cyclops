@@ -72,7 +72,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
             var dim = file.dimension;
             var mediaDiv = angular.element(document.createElement("div"));
             var loading = document.createElement("img");
-            var ASPECT_RATIO = 16/9;
+            var ASPECT_RATIO = dim? dim.width/dim.height : 16/9;
             var width = 0;
             var height = 0;
             var media;
@@ -92,8 +92,7 @@ angular.module("PostUtils", ["ngSanitize", "ConstFactory", "AudioPlayer"])
                 var useScopeWidth = dim? dim.width > scope.width : true;
                 width = useScopeWidth? scope.width : dim.width;
 
-                if(dim) height = useScopeWidth? (width / (dim.width/dim.height)) : dim.height;
-                else height = width/ASPECT_RATIO;
+                height = useScopeWidth? width/ASPECT_RATIO : dim.height;
 
                 media.width = width;
                 media.onload = function(){

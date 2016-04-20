@@ -11,6 +11,7 @@ angular.module('Home', ['Post', 'DateUtils', "PostUtils", 'ngResource', 'ConstFa
 
             var self = this;
             var mediaUrl = constants.api + "/media/";
+            var genericWidth = null;
             self.top50 = top50;
 
             $timeout(alignCards.loadCards, 1000);
@@ -26,7 +27,11 @@ angular.module('Home', ['Post', 'DateUtils', "PostUtils", 'ngResource', 'ConstFa
             };
 
             self.getPostWidth = function(){
-              return 0.20834 * screen.availWidth;
+              if(!genericWidth){
+                genericWidth = 0.20834 * screen.availWidth;
+              }
+
+              return genericWidth;
             };
 
             self.postText = postUtils.addTags;
