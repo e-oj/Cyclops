@@ -153,13 +153,13 @@ module.exports = function(express, mongoose, Post, User, Comment, tkRouter, valU
                 info = true;
             }
 
-            if (req.body.likes) {//if there's a new value for comment likes
-                req.comment.meta.likes = req.body.likes;
+            if (req.body.bumps) {//if there's a new value for comment bumps
+                req.comment.meta.bumps = req.body.bumps;
                 info = true;
             }
 
-            if (req.body.dislikes) {//if there's a new value for comment dislikes
-                req.comment.meta.dislikes = req.body.dislikes;
+            if (req.body.dumps) {//if there's a new value for comment dumps
+                req.comment.meta.dumps = req.body.dumps;
                 info = true;
             }
 

@@ -12,7 +12,10 @@
  * @returns apiRouter
  */
 
-//models
+/*
+    models
+    TODO: move require calls for models to module which returns them as part of one object to reduce num of vars passed a
+ */
 var User = require('../models/userModel/user');
 var Post = require('../models/postCommentModel/post');
 var Comment =require('../models/postCommentModel/comment');

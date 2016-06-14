@@ -27,8 +27,8 @@ var postSchema = new Schema({
         }
     }]
     , meta: {
-        likes: {type: Number, default: 0}
-        , dislikes: {type: Number, default: 0}
+        bumps: {type: Number, default: 0}
+        , dumps: {type: Number, default: 0}
         , comments: {type: Number, default: 0}
         , shares: {type: Number, default: 0}
     }

@@ -22,7 +22,7 @@
 module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs, _, pollSuite){
     var postRouter = express.Router();
 
-    //get the top 50 posts ranked by number of likes
+    //get the top 50 posts ranked by number of bumps
     postRouter.get('/top50', function(req, res){
         Post.find({})
             .populate('author', 'username profileMedia')
@@ -31,12 +31,10 @@ module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs,
             .exec(function(err, posts){
                 if(err) throw err;
 
-                else{
-                    res.json({
-                        "success": true,
-                        "result": posts
-                    })
-                }
+                res.json({
+                    "success": true,
+                    "result": posts
+                })
             });
 
     });
@@ -49,10 +47,8 @@ module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs,
             .exec(function(err, posts){
                 if(err) throw err;
 
-                else{
-                    req.top50 = posts;
-                    next();
-                }
+                req.top50 = posts;
+                next();
             });
 
     });
@@ -71,12 +67,10 @@ module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs,
             .exec(function(err, posts){
                 if(err) throw err;
 
-                else{
-                    res.json({
-                        success: true,
-                        result: posts
-                    });
-                }
+                res.json({
+                    success: true,
+                    result: posts
+                });
             });
     });
 
@@ -100,13 +94,10 @@ module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs,
                     })
                 }
 
-                else{
-                    res.json({
-                        success: true,
-                        result: posts
-                    })
-                }
-
+                res.json({
+                    success: true,
+                    result: posts
+                });
             });
     });
 
@@ -186,7 +177,7 @@ module.exports = function(express, mongoose, Post, User, tkRouter, valUser, gfs,
 
                     if (req.body.body) req.found.body = req.body.body;
 
-                    if (req.body.dislikes) req.found.meta.dislikes = req.body.dislikes;
+                    if (req.body.dumps) req.found.meta.dumps = req.body.dumps;
 
                     if (req.body.tags) req.found.tags = req.body.tags.toLowerCase().split(' ');
 

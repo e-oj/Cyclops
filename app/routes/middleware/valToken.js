@@ -20,7 +20,7 @@ module.exports = function(express) {
 
     tokenRouter.use(function (req, res, next) {
         //check header, url or post parameters for token
-        var token = req.headers['x-access-token'] || req.query.token || req.body.token;
+        var token = req.body.token.toString();
 
         //decode token
         if (token) {

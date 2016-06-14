@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-    'port': process.env.PORT || 8080, //server runs on this port
-    'database': 'mongodb://127.0.0.1:27017/userDB', //database url
-    'secret': 'blah' //secret for signing tokens
+    port: process.env.PORT || 8080, //server runs on this port
+    database: 'mongodb://127.0.0.1:27017/userDB', //database url
+    secret: 'blah' //secret for signing tokens
 };

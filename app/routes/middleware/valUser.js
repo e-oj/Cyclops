@@ -16,6 +16,9 @@ var mongoose = require('mongoose');
 var User = require('../../models/userModel/user');
 
 module.exports = function (req, res, next, user) {
+    //protects against query injection
+    user = user.toString();
+
     //checks if user is valid id
     if (mongoose.Types.ObjectId.isValid(user)) {
         //if it is, find the user and save it to req.user

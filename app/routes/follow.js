@@ -127,16 +127,16 @@ module.exports = function(express, mongoose, User, Follow, tkRouter, valUser){
                 });
             }
             else{
-                var follow = new Follow();
-
-                //get information from request body
-                follow.user = req.decoded._id;
-                follow.follows = req.user._id;
-
                 Follow.findOne({user: follow.user, follows: follow.follows}, function (err, found) {
                     if (err) throw err;
 
                     if (!found) {
+                        var follow = new Follow();
+
+                        //get information from request body
+                        follow.user = req.decoded._id;
+                        follow.follows = req.user._id;
+                        
                         follow.save(function (err) {
                             if (err) { //handles errors
                                 var error = {};
@@ -151,12 +151,10 @@ module.exports = function(express, mongoose, User, Follow, tkRouter, valUser){
                             }
 
                             else { //if no errors, user is saved
-                                User.update({_id: req.user._id}, {$inc: {followers: 1}}, function () {
-                                    User.update({_id: req.decoded._id}, {$inc: {following: 1}}, function () {
-                                        res.json({
-                                            success: true,
-                                            message: "User followed"
-                                        });
+                                User.update({_id: req.user._id}, {$inc: {followers: 1, following: 1}}, function () {
+                                    res.json({
+                                        success: true,
+                                        message: "User followed"
                                     });
                                 });
                             }
@@ -175,14 +173,12 @@ module.exports = function(express, mongoose, User, Follow, tkRouter, valUser){
                 if(err) throw err;
 
                 if(found) {
-                    Follow.remove({user: req.decoded._id, follows: req.user._id}, function (err) {
+                    found.remove(function(err){
                         if(!err) {
-                            User.update({_id: req.user._id}, {$inc: {followers: -1}}, function () {
-                                User.update({_id: req.decoded._id}, {$inc: {following: -1}}, function () {
-                                    res.json({
-                                        success: true,
-                                        message: "User Unfollowed"
-                                    });
+                            User.update({_id: req.user._id}, {$inc: {followers: -1, following: -1}}, function(){
+                                res.json({
+                                    success: true,
+                                    message: "User Unfollowed"
                                 });
                             });
                         }
