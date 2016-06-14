@@ -9,8 +9,8 @@ module.exports = function(Posts, Verdict, tkRouter){
       var postId = req.body.postId.toString();
       var gotBumped = req.body.bump;
       var judge = req.decoded._id;
-      var bump = {bump: true};
-      var dump = {dump: true};
+      var bump = {bump: true, dump: false};
+      var dump = {dump: true, bump: false};
 
       if(!postId || gotBumped == undefined || typeof gotBumped != "boolean"){
         res.status(400);
