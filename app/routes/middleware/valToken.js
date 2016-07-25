@@ -13,42 +13,44 @@
 
 var jwt = require('jsonwebtoken'); //JSON web token for authentication
 var config = require('../../../config'), //Configuration
-    secret = config.secret; //secret for token
+  secret = config.secret; //secret for token
 
 module.exports = function(express) {
-    var tokenRouter = express.Router();
+  var tokenRouter = express.Router();
 
-    tokenRouter.use(function (req, res, next) {
-        //check header, url or post parameters for token
-        var token = req.body.token.toString();
+  tokenRouter.use(function (req, res, next) {
+    //check header, url or post parameters for token
+    var token = req.body.token || req.headers['x-access-token'];
 
-        //decode token
-        if (token) {
-            //verifies secret and checks exp
-            jwt.verify(token, secret, function (err, decoded) {
-                if (err) {
-                    //console.log(err);
-                    res.status(403);
-                    res.json({
-                        success: false,
-                        message: "You're not logged in"
-                    })
-                }
-
-                else {
-                    req.decoded = decoded;
-                    next();
-                }
-            })
+    //decode token
+    if (token) {
+      token = token.toString();
+      //verifies secret and checks exp
+      jwt.verify(token, secret, function (err, decoded) {
+        if (err) {
+          console.log(err);
+          res.status(403);
+          res.json({
+            success: false,
+            message: "You're not logged in"
+          })
         }
 
         else {
-            res.json({
-                success: false,
-                message: "You're not logged in"
-            });
+          req.decoded = decoded;
+          next();
         }
-    });
+      })
+    }
 
-    return tokenRouter;
+    else {
+      // console.log("GET OUTT!!!");
+      res.json({
+        success: false,
+        message: "You're not logged in"
+      });
+    }
+  });
+
+  return tokenRouter;
 };
