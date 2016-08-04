@@ -1,9 +1,9 @@
 # Cyclops
 This is a social web app that's still in progress. 
 
-Go to www.webct.net:8080/home to see the hosted version (Many changes are being made. Might be glitchy).
+Go to www.gritzle.com/home to see the hosted version (Many changes are being made. Might be glitchy).
 
-New interface (no login form): www.webct.net:8080/gritzle
+New interface (no login form): www.gritzle.com/gritzle
 
-Audioplayer : www.webct.net:8080/testAudio
+Audioplayer : www.gritzle.com/testAudio
 
