@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRouter);
 
 //homepage
-app.get('/home', function(req, res){
+app.get('/', function(req, res){
     //res.send("Hello World");
     res.sendFile(path.join(__dirname, '/public/app/views/index.html'));
 });
